@@ -23,8 +23,8 @@
         <a href="#home" class="navlink active">Home</a>
         <a href="#about" class="navlink">About me</a>
         <a href="#experience" class="navlink">Experience</a>
-        <a href="#certifications" class="navlink">Certifications</a>
         <a href="#education" class="navlink">Education</a>
+        <a href="#certifications" class="navlink">Certifications</a>
       </nav>
     </div>
   </header>
@@ -83,6 +83,26 @@
       </div>
     </section>
 
+    <section id="education" class="card">
+      <div class="section-head">
+        <h2><span class="grad">Education</span></h2>
+      </div>
+      <div class="section-body">
+        <div class="media-row">
+          <div class="media-images one">
+            <img class="media-image" src="./Brock.jpg" alt="Brock University" />
+          </div>
+          <div class="media-copy">
+            <h2>Brock University</h2>
+            <p>Honours Bachelor of Science, Computer Science
+               2028 (Expected)</p>
+            <p>Honours Bachelor of Business administration
+               2022</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="certifications" class="card">
       <div class="section-head">
         <h2><span class="grad">Certifications</span></h2>
@@ -105,25 +125,6 @@
           <div class="media-copy">
             <h2>Certified Associate in Project Management (CAPM)®</h2>
             <p>Project Management Institute - 2023</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="education" class="card">
-      <div class="section-head">
-        <h2><span class="grad">Education</span></h2>
-      </div>
-      <div class="section-body">
-        <div class="media-row">
-          <div class="media-images one">
-            <img class="media-image" src="./Brock.jpg" alt="Brock University" />
-          </div>
-          <div class="media-copy">
-            <h2>Brock University</h2>
-            <p>Honours Bachelor of Science, Computer Science - 2028 (Expected)</p>
-
-            <p>Honours Bachelor of Business Administration - 2022</p>
           </div>
         </div>
       </div>
@@ -152,7 +153,7 @@
       });
     });
 
-    const ids = ["home","about","experience","certifications","education"];
+    const ids = ["home","about","experience","education","certifications"];
     const links = Array.from(document.querySelectorAll(".navlink"));
     const sections = ids
       .map(id => document.getElementById(id))
