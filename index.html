@@ -23,6 +23,7 @@
         <a href="#home" class="navlink active">Home</a>
         <a href="#about" class="navlink">About me</a>
         <a href="#experience" class="navlink">Experience</a>
+        <a href="#certifications" class="navlink">Certifications</a>
         <a href="#education" class="navlink">Education</a>
       </nav>
     </div>
@@ -82,6 +83,33 @@
       </div>
     </section>
 
+    <section id="certifications" class="card">
+      <div class="section-head">
+        <h2><span class="grad">Certifications</span></h2>
+      </div>
+      <div class="section-body">
+        <div class="media-row">
+          <div class="media-images one">
+            <img class="media-image" src="./meta.avif" alt="Meta" />
+          </div>
+          <div class="media-copy">
+            <h2>Data Analyst Certificate</h2>
+            <p>Meta - 2024</p>
+          </div>
+        </div>
+
+        <div class="media-row">
+          <div class="media-images one">
+            <img class="media-image" src="./PMI.jpg" alt="Project Management Institute" />
+          </div>
+          <div class="media-copy">
+            <h2>Certified Associate in Project Management (CAPM)®</h2>
+            <p>Project Management Institute - 2023</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="education" class="card">
       <div class="section-head">
         <h2><span class="grad">Education</span></h2>
@@ -124,7 +152,7 @@
       });
     });
 
-    const ids = ["home","about","experience","education"];
+    const ids = ["home","about","experience","certifications","education"];
     const links = Array.from(document.querySelectorAll(".navlink"));
     const sections = ids
       .map(id => document.getElementById(id))
