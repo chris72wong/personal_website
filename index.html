@@ -15,8 +15,13 @@
     <div class="nav-inner">
       <a class="brand" href="#home">Christopher Wong</a>
 
-      <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navLinks">
-        Menu
+      <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navLinks" aria-label="Menu">
+        <span class="sr-only">Menu</span>
+        <span class="hamburger" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
       </button>
 
       <nav class="nav-links" id="navLinks">
@@ -142,6 +147,7 @@
 
     const menuBtn = document.getElementById("menuBtn");
     const navLinks = document.getElementById("navLinks");
+    const mqMobile = window.matchMedia('(max-width: 640px)');
 
     menuBtn.addEventListener("click", () => {
       const open = navLinks.classList.toggle("open");
@@ -190,6 +196,17 @@
       return bestId;
     };
 
+    const updateMobileNavState = () => {
+      const scrolled = (window.scrollY || 0) > 10;
+      const isMobile = mqMobile.matches;
+      document.body.classList.toggle('is-mobile-scrolled', isMobile && scrolled);
+      if (!isMobile || !scrolled) {
+        // Ensure menu is reset when leaving mobile/scroll state
+        navLinks.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded', 'false');
+      }
+    };
+
     const onScroll = () => {
       if (ticking) return;
       ticking = true;
@@ -205,13 +222,16 @@
 
         const id = getCurrentId();
         if (id) setActive(id);
+        updateMobileNavState();
         ticking = false;
       });
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    window.addEventListener("resize", () => { onScroll(); updateMobileNavState(); });
+    mqMobile.addEventListener?.('change', updateMobileNavState);
     onScroll();
+    updateMobileNavState();
   </script>
 </body>
 </html>
