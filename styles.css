@@ -115,7 +115,7 @@ body{
 
   background:
     linear-gradient(180deg, rgba(11,16,32,.72), rgba(11,16,32,.55)),
-    url("https://upload.wikimedia.org/wikipedia/commons/6/64/Skyline_of_Toronto_%2833560711480%29.jpg");
+    url("./Background.jpg");
   background-size: cover;
   background-position: center;
 }
