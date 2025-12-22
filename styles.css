@@ -213,6 +213,17 @@ h1{
 }
 .section-body p:last-child{ margin-bottom:0; }
 
+#education .media-copy p,
+#certifications .media-copy p{
+  margin: 0;
+}
+
+#education .year,
+#certifications .year{
+  color: rgba(255,255,255,.72);
+  font-weight: 400;
+}
+
 .section-body h3{
   margin:16px 0 8px;
   font-size:20px;
