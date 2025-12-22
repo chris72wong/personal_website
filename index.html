@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chris | Personal Site</title>
   <meta name="description" content="Chris — Home, About, Experience, Education." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -27,8 +30,10 @@
 
   <main class="wrap">
     <section id="home" class="card hero">
-      <h1><span class="grad">Christopher W</span></h1>
-      <p class="subtitle">Computer Science Student</p>
+      <div class="hero-inner">
+        <h1><span class="grad">Christopher W</span></h1>
+        <p class="subtitle">Computer Science Student</p>
+      </div>
     </section>
 
     <section id="about" class="card">
@@ -63,9 +68,8 @@
               Strengths include attention to detail, clear documentation, and collaborating across teams to keep operations running smoothly.
             </p>
           </div>
-          <div class="media-images two">
-            <img class="media-image" src="https://placehold.co/420x280?text=Finance+1" alt="Finance related image 1" />
-            <img class="media-image" src="https://placehold.co/420x280?text=Finance+2" alt="Finance related image 2" />
+          <div class="media-images one">
+            <img class="media-image" src="https://placehold.co/560x360?text=Finance" alt="Finance related image" />
           </div>
         </div>
 
@@ -80,9 +84,8 @@
               Known for reliability, professionalism, and delivering consistent service in high‑volume settings.
             </p>
           </div>
-          <div class="media-images two">
-            <img class="media-image" src="https://placehold.co/420x280?text=Hospitality+1" alt="Hospitality related image 1" />
-            <img class="media-image" src="https://placehold.co/420x280?text=Hospitality+2" alt="Hospitality related image 2" />
+          <div class="media-images one">
+            <img class="media-image" src="https://placehold.co/560x360?text=Hospitality" alt="Hospitality related image" />
           </div>
         </div>
       </div>
@@ -138,18 +141,61 @@
 
     const ids = ["home","about","experience","education"];
     const links = Array.from(document.querySelectorAll(".navlink"));
-    const sections = ids.map(id => document.getElementById(id));
+    const sections = ids
+      .map(id => document.getElementById(id))
+      .filter(Boolean);
 
     const setActive = (id) => {
       links.forEach(l => l.classList.toggle("active", l.getAttribute("href") === `#${id}`));
     };
 
-    const obs = new IntersectionObserver((entries) => {
-      const v = entries.filter(e => e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
-      if (v?.target?.id) setActive(v.target.id);
-    }, { rootMargin: "-30% 0px -60% 0px", threshold: [0.1, 0.2, 0.3] });
+    links.forEach(l => {
+      l.addEventListener("click", () => {
+        const href = l.getAttribute("href") || "";
+        if (href.startsWith("#")) setActive(href.slice(1));
+      });
+    });
 
-    sections.forEach(s => obs.observe(s));
+    let ticking = false;
+    const getCurrentId = () => {
+      const offset = 120;
+      let bestId = sections[0]?.id;
+      let bestDist = Number.POSITIVE_INFINITY;
+
+      for (const s of sections) {
+        const r = s.getBoundingClientRect();
+        const dist = Math.abs(r.top - offset);
+        if (r.bottom > offset && dist < bestDist) {
+          bestDist = dist;
+          bestId = s.id;
+        }
+      }
+
+      return bestId;
+    };
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const hero = document.getElementById("home");
+        if (hero) {
+          const heroHeight = Math.max(1, hero.offsetHeight);
+          const y = Math.min(window.scrollY || 0, heroHeight);
+          const t = Math.max(0, Math.min(1, y / heroHeight));
+          document.documentElement.style.setProperty("--curtainY", `${(1 - t) * 100}%`);
+          document.documentElement.style.setProperty("--heroShift", `${-y * 0.15}px`);
+        }
+
+        const id = getCurrentId();
+        if (id) setActive(id);
+        ticking = false;
+      });
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    onScroll();
   </script>
 </body>
 </html>
