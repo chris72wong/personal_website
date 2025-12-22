@@ -20,6 +20,8 @@
   --nav-offset: 110px;
 
   --badge-size: 72px;
+
+  --h2-size: clamp(22px, 2.2vw, 30px);
 }
 
 *{box-sizing:border-box}
@@ -198,7 +200,7 @@ h1{
   padding-bottom:14px;
   border-bottom:1px solid rgba(255,255,255,.08);
 }
-.section-head h2{ margin:0; font-size:22px; letter-spacing:.2px; }
+.section-head h2{ margin:0; font-size:var(--h2-size); letter-spacing:.2px; }
 .section-head p{ margin:0; color:var(--muted); font-size:13px; }
 
 .section-body{
@@ -231,6 +233,12 @@ h1{
 
 .media-copy{ flex: 1 1 60%; }
 
+.media-copy h2{
+  margin:0 0 8px;
+  font-size: var(--h2-size);
+  letter-spacing:.2px;
+}
+
 .media-images{
   flex: 0 0 auto;
   display:grid;
@@ -248,6 +256,10 @@ h1{
   object-position: center;
   border-radius: var(--radius-sm);
   border:1px solid rgba(255,255,255,.10);
+}
+
+.media-image.left{
+  object-position: left center;
 }
 
 
