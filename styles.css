@@ -1,7 +1,7 @@
 :root{
   --bg:#0b1020;
-  --text:rgba(255,255,255,.88);
-  --muted:rgba(255,255,255,.62);
+  --text:#ffffff;
+  --muted:#ffffff;
   --card:rgba(255,255,255,.06);
   --card2:rgba(255,255,255,.10);
   --border:rgba(255,255,255,.12);
@@ -9,22 +9,48 @@
   --shadow:0 20px 60px rgba(0,0,0,.35);
   --radius:12px;
   --radius-sm:10px;
+
+  --curtainY: 100%;
+  --heroShift: 0px;
 }
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
+html, body{ font-family: "Roboto", system-ui, -apple-system, "Segoe UI", Arial, sans-serif; }
+body, button, input, textarea{ font-family: inherit; }
 body{
   margin:0;
-  font-family: "Times New Roman", Times, serif;
-  font-size:18px;
+  font-size:20px;
   font-weight: 500;
   color:var(--text);
-  background:
-    radial-gradient(900px 600px at 20% 10%, rgba(124,58,237,.35), transparent 55%),
-    radial-gradient(800px 600px at 80% 30%, rgba(59,130,246,.28), transparent 55%),
-    radial-gradient(900px 700px at 60% 90%, rgba(16,185,129,.20), transparent 55%),
-    var(--bg);
+  background: var(--bg);
   min-height:100vh;
+  position:relative;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    linear-gradient(180deg, rgba(11,16,32,.40), rgba(11,16,32,.25)),
+    url("./Background.jpg");
+  background-size: cover;
+  background-position: center;
+  z-index:-2;
+  pointer-events:none;
+}
+
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  background: var(--bg);
+  transform: translateY(var(--curtainY));
+  transition: none;
+  z-index:-1;
+  pointer-events:none;
+  will-change: transform;
 }
 
 .nav{
@@ -65,7 +91,7 @@ body{
   padding:10px 2px;
   border-radius:0;
   font-weight:700;
-  font-size:16px;
+  font-size:18px;
   letter-spacing:.2px;
   border-bottom:2px solid transparent;
 }
@@ -94,6 +120,8 @@ body{
   max-width:var(--max);
   margin:0 auto;
   padding:28px 18px 80px;
+  position:relative;
+  z-index:1;
 }
 
 .card{
@@ -114,19 +142,18 @@ body{
   position:relative;
   overflow:hidden;
 
-  background:
-    linear-gradient(180deg, rgba(11,16,32,.72), rgba(11,16,32,.55)),
-    url("./Background.jpg");
-  background-size: cover;
-  background-position: center;
-  border:1px solid rgba(255,255,255,.10);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  background: transparent;
+  border:none;
+  border-radius:0;
+  box-shadow:none;
 }
-.hero > *{ position:relative; z-index:1; }
+.hero-inner{
+  transform: translateY(var(--heroShift));
+  will-change: transform;
+}
 h1{
   margin:14px 0 10px;
-  font-size: clamp(36px, 4.2vw, 54px);
+  font-size: clamp(38px, 4.2vw, 56px);
   line-height:1.06;
   letter-spacing:-.6px;
 }
@@ -138,7 +165,7 @@ h1{
 }
 .subtitle{
   margin:0 0 18px;
-  color: rgba(255,255,255,.80);
+  color: var(--text);
   font-weight:800;
   letter-spacing:.2px;
 }
@@ -151,7 +178,7 @@ h1{
   padding-bottom:14px;
   border-bottom:1px solid rgba(255,255,255,.08);
 }
-.section-head h2{ margin:0; font-size:20px; letter-spacing:.2px; }
+.section-head h2{ margin:0; font-size:22px; letter-spacing:.2px; }
 .section-head p{ margin:0; color:var(--muted); font-size:13px; }
 
 .section-body{
@@ -166,7 +193,7 @@ h1{
 
 .section-body h3{
   margin:16px 0 8px;
-  font-size:18px;
+  font-size:20px;
   letter-spacing:.2px;
 }
 .section-body h3:first-child{ margin-top:0; }
@@ -204,8 +231,8 @@ h1{
 .footer{
   margin-top:22px;
   text-align:center;
-  color: rgba(255,255,255,.52);
-  font-size:14px;
+  color: var(--text);
+  font-size:16px;
 }
 
 @media (max-width:640px){
