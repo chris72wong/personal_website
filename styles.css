@@ -16,10 +16,15 @@
 
   --curtainY: 100%;
   --heroShift: 0px;
+
+  --nav-offset: 110px;
 }
 
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{
+  scroll-behavior:smooth;
+  scroll-padding-top: var(--nav-offset);
+}
 html, body{ font-family: "Roboto", system-ui, -apple-system, "Segoe UI", Arial, sans-serif; }
 body, button, input, textarea{ font-family: inherit; }
 body{
@@ -30,6 +35,10 @@ body{
   background: var(--bg-gradient);
   min-height:100vh;
   position:relative;
+}
+
+section[id]{
+  scroll-margin-top: var(--nav-offset);
 }
 
 p{
@@ -245,6 +254,7 @@ h1{
 }
 
 @media (max-width:640px){
+  :root{ --nav-offset: 140px; }
   .menu-btn{ display:none; }
   .nav-inner{ flex-wrap:wrap; justify-content:space-between; }
   .brand{ position:static; }
