@@ -1,5 +1,9 @@
 :root{
   --bg:#0b1020;
+  --bg-gradient:
+    radial-gradient(1200px circle at 15% 10%, rgba(59,130,246,.22), transparent 55%),
+    radial-gradient(900px circle at 85% 20%, rgba(124,58,237,.18), transparent 55%),
+    linear-gradient(180deg, #0b1020 0%, #070a14 100%);
   --text:#ffffff;
   --muted:#ffffff;
   --card:rgba(255,255,255,.06);
@@ -23,9 +27,13 @@ body{
   font-size:20px;
   font-weight: 500;
   color:var(--text);
-  background: var(--bg);
+  background: var(--bg-gradient);
   min-height:100vh;
   position:relative;
+}
+
+p{
+  font-weight: 400;
 }
 
 body::before{
@@ -45,7 +53,7 @@ body::after{
   content:"";
   position:fixed;
   inset:0;
-  background: var(--bg);
+  background: var(--bg-gradient);
   transform: translateY(var(--curtainY));
   transition: none;
   z-index:-1;
