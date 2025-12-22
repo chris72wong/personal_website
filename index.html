@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chris | Personal Site</title>
+  <meta name="description" content="Chris — Home, About, Experience, Education." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="#home">Chris</a>
+
+      <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navLinks">
+        Menu
+      </button>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="#home" class="navlink active">Home</a>
+        <a href="#about" class="navlink">About me</a>
+        <a href="#experience" class="navlink">Experience</a>
+        <a href="#education" class="navlink">Education</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="home" class="card hero">
+      <p class="kicker">Portfolio</p>
+      <h1>Hey — I’m <span class="grad">Chris</span>.</h1>
+      <p class="lead">CS student. I build practical software and I’m aiming for a summer internship.</p>
+
+      <div class="cta">
+        <a class="btn primary" href="#experience">See experience</a>
+        <a class="btn" href="#about">About me</a>
+        <a class="btn" href="mailto:youremail@example.com">Email</a>
+      </div>
+    </section>
+
+    <section id="about" class="card">
+      <div class="section-head">
+        <h2>About me</h2>
+        <p>Who you are, what you like building, how you work.</p>
+      </div>
+      <div class="grid">
+        <div class="tile">
+          <h3>My approach</h3>
+          <p>Detail-oriented, iterative, and I like clean UI + solid fundamentals.</p>
+        </div>
+        <div class="tile">
+          <h3>Skills</h3>
+          <p>Java • Python • HTML/CSS • Git/GitHub</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience" class="card">
+      <div class="section-head">
+        <h2>Experience</h2>
+        <p>Jobs, projects, clubs, volunteering.</p>
+      </div>
+      <div class="grid">
+        <div class="tile">
+          <div class="row">
+            <h3>Project / Role</h3><span class="tag">2025</span>
+          </div>
+          <p>1–2 lines: what you built/did, tech used, and impact.</p>
+        </div>
+        <div class="tile">
+          <div class="row">
+            <h3>Another experience</h3><span class="tag">2024</span>
+          </div>
+          <p>Keep it punchy. Results + tools + collaboration.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="education" class="card">
+      <div class="section-head">
+        <h2>Education</h2>
+        <p>Program, courses, achievements.</p>
+      </div>
+      <div class="grid">
+        <div class="tile">
+          <div class="row">
+            <h3>BSc Computer Science</h3><span class="tag">202X–202X</span>
+          </div>
+          <p>Brock University • Key courses: OOP, Discrete Math, DSA</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      © <span id="year"></span> Chris
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const menuBtn = document.getElementById("menuBtn");
+    const navLinks = document.getElementById("navLinks");
+
+    menuBtn.addEventListener("click", () => {
+      const open = navLinks.classList.toggle("open");
+      menuBtn.setAttribute("aria-expanded", String(open));
+    });
+
+    document.querySelectorAll(".navlink").forEach(a => {
+      a.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuBtn.setAttribute("aria-expanded", "false");
+      });
+    });
+
+    const ids = ["home","about","experience","education"];
+    const links = Array.from(document.querySelectorAll(".navlink"));
+    const sections = ids.map(id => document.getElementById(id));
+
+    const setActive = (id) => {
+      links.forEach(l => l.classList.toggle("active", l.getAttribute("href") === `#${id}`));
+    };
+
+    const obs = new IntersectionObserver((entries) => {
+      const v = entries.filter(e => e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
+      if (v?.target?.id) setActive(v.target.id);
+    }, { rootMargin: "-30% 0px -60% 0px", threshold: [0.1, 0.2, 0.3] });
+
+    sections.forEach(s => obs.observe(s));
+  </script>
+</body>
+</html>
