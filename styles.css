@@ -7,14 +7,16 @@
   --border:rgba(255,255,255,.12);
   --max:1100px;
   --shadow:0 20px 60px rgba(0,0,0,.35);
-  --radius:18px;
+  --radius:12px;
+  --radius-sm:10px;
 }
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
   margin:0;
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+  font-family: system-ui, -apple-system, "Segoe UI Variable Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 500;
   color:var(--text);
   background:
     radial-gradient(900px 600px at 20% 10%, rgba(124,58,237,.35), transparent 55%),
@@ -49,7 +51,7 @@ body{
   display:flex;
   gap:6px;
   padding:6px;
-  border-radius:999px;
+  border-radius: var(--radius);
   border:1px solid rgba(255,255,255,.10);
   background: rgba(255,255,255,.04);
 }
@@ -57,7 +59,7 @@ body{
   text-decoration:none;
   color:var(--muted);
   padding:10px 12px;
-  border-radius:999px;
+  border-radius: var(--radius-sm);
   font-weight:700;
   font-size:14px;
 }
@@ -76,7 +78,7 @@ body{
   border:1px solid rgba(255,255,255,.12);
   background: rgba(255,255,255,.06);
   color:var(--text);
-  border-radius:12px;
+  border-radius: var(--radius-sm);
   padding:10px 12px;
   cursor:pointer;
 }
@@ -115,7 +117,7 @@ body{
 .kicker{
   display:inline-block;
   padding:8px 12px;
-  border-radius:999px;
+  border-radius: var(--radius-sm);
   border:1px solid rgba(255,255,255,.12);
   background: rgba(255,255,255,.06);
   color: var(--muted);
@@ -153,14 +155,14 @@ h1{
   border:1px solid rgba(255,255,255,.14);
   background: rgba(255,255,255,.06);
   color:var(--text);
-  border-radius:14px;
+  border-radius: var(--radius-sm);
   padding:10px 14px;
   font-weight:800;
   text-decoration:none;
   display:inline-flex;
   align-items:center;
 }
-.btn:hover{ background: rgba(255,255,255,.10); transform: translateY(-1px); }
+.btn:hover{ background: rgba(255,255,255,.10); }
 .btn.primary{
   border-color: rgba(59,130,246,.35);
   background: linear-gradient(135deg, rgba(59,130,246,.28), rgba(124,58,237,.22));
@@ -185,7 +187,7 @@ h1{
 }
 .tile{
   padding:16px;
-  border-radius:16px;
+  border-radius: var(--radius);
   border:1px solid rgba(255,255,255,.10);
   background: rgba(255,255,255,.05);
 }
@@ -198,7 +200,7 @@ h1{
   background: rgba(255,255,255,.08);
   border:1px solid rgba(255,255,255,.10);
   padding:6px 10px;
-  border-radius:999px;
+  border-radius: var(--radius-sm);
   white-space:nowrap;
 }
 
