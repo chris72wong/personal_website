@@ -96,7 +96,22 @@ body{
   padding:22px;
 }
 
-.hero{ padding:26px; }
+.hero{
+  padding:26px;
+  min-height: calc(100vh - 92px);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  position:relative;
+  overflow:hidden;
+
+  background:
+    linear-gradient(180deg, rgba(11,16,32,.72), rgba(11,16,32,.55)),
+    url("https://upload.wikimedia.org/wikipedia/commons/6/64/Skyline_of_Toronto_%2833560711480%29.jpg");
+  background-size: cover;
+  background-position: center;
+}
+.hero > *{ position:relative; z-index:1; }
 .kicker{
   display:inline-block;
   padding:8px 12px;
@@ -123,6 +138,14 @@ h1{
   margin:0 0 18px;
   color: var(--muted);
   line-height:1.6;
+}
+
+.subtitle{
+  margin:0 0 18px;
+  color: rgba(255,255,255,.80);
+  font-weight:800;
+  letter-spacing:.2px;
+  text-transform: lowercase;
 }
 
 .cta{ display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
