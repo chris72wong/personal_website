@@ -200,6 +200,10 @@ h1{
   margin: 0;
 }
 
+.degree-block + .degree-block{
+  margin-top: 12px;
+}
+
 #education .year,
 #certifications .year{
   color: rgba(255,255,255,.72);
