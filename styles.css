@@ -160,6 +160,7 @@ h1{
   font-size: clamp(38px, 4.2vw, 56px);
   line-height:1.06;
   letter-spacing:-.6px;
+  font-weight:400;
 }
 .grad{
   background: linear-gradient(135deg, rgba(59,130,246,1), rgba(124,58,237,1));
@@ -212,7 +213,8 @@ h1{
 
 .section-body h3{
   margin:16px 0 8px;
-  font-size:20px;
+  font-size:26px;
+  font-weight:400;
   letter-spacing:.2px;
 }
 .section-body h3:first-child{ margin-top:0; }
@@ -257,6 +259,16 @@ h1{
 
 .media-image.left{
   object-position: left center;
+}
+
+.media-images.project{
+  width: 480px;
+}
+
+.media-image.project{
+  width: 480px;
+  height: auto;
+  border-radius: 0;
 }
 
 
