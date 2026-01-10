@@ -17,6 +17,7 @@
         <a href="#home" class="navlink active">Home</a>
         <a href="#about" class="navlink">About me</a>
         <a href="#experience" class="navlink">Experience</a>
+        <a href="#projects" class="navlink">Projects</a>
         <a href="#education" class="navlink">Education</a>
         <a href="#certifications" class="navlink">Certificates</a>
       </nav>
@@ -72,6 +73,24 @@
               Experienced in hospitality within fast-paced, team-oriented environments that required multitasking, adaptability, and strong customer service skills. 
               Built effective communication and teamwork abilities while consistently delivering reliable service under pressure.
             </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="card">
+      <div class="section-head">
+        <h2><span class="grad">Projects</span></h2>
+      </div>
+      <div class="section-body">
+        <div class="media-row">
+          <div class="media-copy">
+            <h2>Euclidean Image Manipulator</h2>
+            <ul>
+              <li>Implemented a pixel-by-pixel image processing algorithm applying a circular gradient effect using Euclidean distance calculations, with dynamic radius detection based on image dimensions.</li>
+              <li>Generated position-based RGB gradients and blended them with original pixel values using weighted ratios.</li>
+              <li>Applied object-oriented design principles and modular helper methods for readability and reuse, ensuring color channel safety through bounds checking and value clipping.</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -140,7 +159,7 @@
 
     const navLinks = document.getElementById("navLinks");
 
-    const ids = ["home","about","experience","education","certifications"];
+    const ids = ["home","about","experience","projects","education","certifications"];
     const links = Array.from(document.querySelectorAll(".navlink"));
     const sections = ids
       .map(id => document.getElementById(id))
