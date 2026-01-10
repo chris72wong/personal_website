@@ -55,7 +55,7 @@ body::before{
   inset:0;
   background:
     linear-gradient(180deg, rgba(11,16,32,.40), rgba(11,16,32,.25)),
-    url("./Background.jpg");
+    url("./images/Background.jpg");
   background-size: cover;
   background-position: center;
   z-index:-2;
