@@ -16,9 +16,9 @@
       <nav class="nav-links" id="navLinks">
         <a href="#home" class="navlink active">Home</a>
         <a href="#about" class="navlink">About me</a>
+        <a href="#education" class="navlink">Education</a>
         <a href="#experience" class="navlink">Experience</a>
         <a href="#projects" class="navlink">Projects</a>
-        <a href="#education" class="navlink">Education</a>
         <a href="#certifications" class="navlink">Certificates</a>
       </nav>
     </div>
@@ -28,7 +28,6 @@
     <section id="home" class="card hero">
       <div class="hero-inner">
         <h1><span>Christopher Wong</span></h1>
-        <p class="subtitle"><span class="grad">Computer Science Student</span></p>
       </div>
     </section>
 
@@ -42,6 +41,50 @@
           Working in fast-paced, team-oriented environments taught me to multitask effectively, adapt quickly, and collaborate in a team. 
           I also hold a degree in business administration, which complements technical studies with a solid understanding of analytics, finance, operations, and decision-making. 
         </p>
+      </div>
+    </section>
+
+    <section id="education" class="card">
+      <div class="section-head">
+        <h2><span class="grad">Education</span></h2>
+      </div>
+      <div class="section-body">
+        <div class="media-row">
+          <div class="media-images one">
+            <img class="media-image" src="./images/Brock.jpg" alt="Brock University" />
+          </div>
+          <div class="media-copy">
+            <h2>Brock University</h2>
+            <div class="degree-block">
+              <p>Honours Bachelor of Science, Computer Science</p>
+              <p><span class="year">2028</span></p>
+            </div>
+            <div class="degree-block">
+              <p>Honours Bachelor of Business Administration</p>
+              <p><span class="year">2022</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="card">
+      <div class="section-head">
+        <h2><span class="grad">Projects</span></h2>
+      </div>
+      <div class="section-body">
+        <div class="media-row">
+          <div class="media-copy">
+            <h2>Euclidean Image Manipulator</h2>
+            <p>
+              Built a pixel-by-pixel image processor that applies a Euclidean-distance radial gradient across the canvas. 
+              The tool blends position-based RGB values with original pixels and uses modular helpers to keep the transformations safe and readable.
+            </p>
+          </div>
+          <div class="media-images one">
+            <img class="media-image" src="./images/Euclidean Project Image" alt="Euclidean project" />
+          </div>
+        </div>
       </div>
     </section>
 
@@ -73,48 +116,6 @@
               Experienced in hospitality within fast-paced, team-oriented environments that required multitasking, adaptability, and strong customer service skills. 
               Built effective communication and teamwork abilities while consistently delivering reliable service under pressure.
             </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="projects" class="card">
-      <div class="section-head">
-        <h2><span class="grad">Projects</span></h2>
-      </div>
-      <div class="section-body">
-        <div class="media-row">
-          <div class="media-copy">
-            <h2>Euclidean Image Manipulator</h2>
-            <ul>
-              <li>Implemented a pixel-by-pixel image processing algorithm applying a circular gradient effect using Euclidean distance calculations, with dynamic radius detection based on image dimensions.</li>
-              <li>Generated position-based RGB gradients and blended them with original pixel values using weighted ratios.</li>
-              <li>Applied object-oriented design principles and modular helper methods for readability and reuse, ensuring color channel safety through bounds checking and value clipping.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="education" class="card">
-      <div class="section-head">
-        <h2><span class="grad">Education</span></h2>
-      </div>
-      <div class="section-body">
-        <div class="media-row">
-          <div class="media-images one">
-            <img class="media-image" src="./images/Brock.jpg" alt="Brock University" />
-          </div>
-          <div class="media-copy">
-            <h2>Brock University</h2>
-            <div class="degree-block">
-              <p>Honours Bachelor of Science, Computer Science</p>
-              <p><span class="year">2028</span></p>
-            </div>
-            <div class="degree-block">
-              <p>Honours Bachelor of Business Administration</p>
-              <p><span class="year">2022</span></p>
-            </div>
           </div>
         </div>
       </div>
@@ -159,7 +160,7 @@
 
     const navLinks = document.getElementById("navLinks");
 
-    const ids = ["home","about","experience","projects","education","certifications"];
+    const ids = ["home","about","education","experience","projects","certifications"];
     const links = Array.from(document.querySelectorAll(".navlink"));
     const sections = ids
       .map(id => document.getElementById(id))
