@@ -41,6 +41,9 @@ body{
   position:relative;
 }
 
+/* Make all images scale down within their containers */
+img{ max-width:100%; height:auto; display:block; }
+
 section[id]{
   scroll-margin-top: var(--nav-offset);
 }
@@ -262,11 +265,12 @@ h1{
 }
 
 .media-images.project{
-  width: 480px;
+  width: 100%;
+  max-width: 480px;
 }
 
 .media-image.project{
-  width: 480px;
+  width: 100%;
   height: auto;
   border-radius: 0;
 }
@@ -294,4 +298,7 @@ h1{
   .navlink{ font-size:16px; padding:10px 0; }
   .media-row, .media-row.reverse{ flex-direction:column; }
   .media-images{ width: var(--badge-size); }
+  /* Ensure project images take full width on small screens */
+  .media-images.project{ width: 100%; max-width: 100%; }
+  .media-image.project{ width: 100%; height: auto; }
 }
