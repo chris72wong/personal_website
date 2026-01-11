@@ -183,6 +183,12 @@
       let bestId = sections[0]?.id;
       let bestDist = Number.POSITIVE_INFINITY;
 
+      // Check if we're at the bottom of the page
+      const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 10;
+      if (atBottom) {
+        return sections[sections.length - 1]?.id || bestId;
+      }
+
       for (const s of sections) {
         const r = s.getBoundingClientRect();
         const dist = Math.abs(r.top - offset);
