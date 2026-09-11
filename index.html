@@ -106,18 +106,40 @@
         <h2><span class="grad">Projects</span></h2>
       </div>
       <div class="section-body">
-        <div class="media-row">
+        <article class="media-row project-row">
           <div class="media-copy">
-            <h3>Euclidean Image Manipulator</h3>
-            <p>
-              Built a pixel-by-pixel image processor that applies a Euclidean-distance radial gradient across the canvas. 
-              The tool blends position-based RGB values with original pixels and uses modular helpers to keep the transformations safe and readable.
-            </p>
+            <div class="project-heading">
+              <h3>Travel Dashboard</h3>
+              <time datetime="2026-08">Aug. 2026</time>
+            </div>
+            <p class="project-stack">Next.js, TypeScript, Tailwind CSS, Vercel</p>
+            <ul class="project-details">
+              <li>Built and deployed a private travel dashboard that centralizes itinerary information in a single web interface.</li>
+              <li>Implemented server-side access control with environment-based secrets, signed HttpOnly cookie sessions, request interception, and login-attempt rate limiting.</li>
+              <li>Structured the codebase into reusable UI components and isolated data, type, routing, and security modules for maintainability.</li>
+            </ul>
           </div>
           <div class="media-images one project">
-            <img class="media-image project" src="./images/project 1 image.png" alt="Euclidean project" />
+            <img class="media-image project" src="./images/travel-dashboard.png" alt="Travel Dashboard calendar organizing flights, accommodations, trains, buses, and cruise stops." width="3752" height="1750" loading="lazy" />
           </div>
-        </div>
+        </article>
+        <article class="media-row project-row">
+          <div class="media-copy">
+            <div class="project-heading">
+              <h3>Gym Partner</h3>
+              <time datetime="2026-04">Apr. 2026</time>
+            </div>
+            <p class="project-stack">Next.js, React, TypeScript, Tailwind CSS, Supabase, PostgreSQL, Vercel</p>
+            <ul class="project-details">
+              <li>Built a full-stack fitness companion with workout planning, calendar-based training logs, progress tracking, stretch checklists, and interactive muscle-group exercise discovery.</li>
+              <li>Developed an adaptive workout-generation system that creates push/pull and full-body routines from structured exercise data, with muscle-group balancing, exercise swaps, and drag-and-drop customization.</li>
+              <li>Implemented real-time shared progress syncing with Supabase, API routes, PostgreSQL-backed state storage, typed validation, and local-storage fallback.</li>
+            </ul>
+          </div>
+          <div class="media-images one project">
+            <img class="media-image project" src="./images/gym-partner.png" alt="Gym Partner showing two progress bars and interactive front and back muscle-group diagrams." width="2396" height="1912" loading="lazy" />
+          </div>
+        </article>
       </div>
     </section>
 

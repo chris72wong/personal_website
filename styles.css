@@ -275,6 +275,38 @@ h1{
   border-radius: 0;
 }
 
+.project-row .media-copy{ min-width:0; }
+.project-heading{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:4px 16px;
+}
+.project-heading time{
+  font-size:16px;
+  font-weight:400;
+  color:rgba(255,255,255,.72);
+}
+.section-body .project-stack{
+  font-size:16px;
+  color:rgba(255,255,255,.8);
+}
+.project-details{
+  margin:12px 0 0;
+  padding-left:22px;
+  font-size:18px;
+  font-weight:400;
+  line-height:1.7;
+}
+.project-details li + li{ margin-top:10px; }
+.project-row + .project-row{ padding-top:28px; }
+
+@media (max-width:900px){
+  .project-row{ flex-direction:column; }
+  .project-row .media-images.project{ max-width:100%; }
+}
+
 
 .footer{
   margin-top:22px;
