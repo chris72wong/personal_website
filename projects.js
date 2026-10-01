@@ -21,7 +21,7 @@
   let transitionVersion = 0;
   let isClosing = false;
   let backdropPressed = false;
-  let sceneVisible = false;
+  let sceneVisible = !("IntersectionObserver" in window);
   let sceneEntered = false;
   let pendingReturnPosition;
   const historyState = () => {
@@ -214,6 +214,7 @@
     openProject(window.location.hash.slice(1), { animate: false });
   }
 
+  stage.classList.toggle("city-is-visible", sceneVisible && !preference.matches);
   if ("IntersectionObserver" in window) {
     const observer = new IntersectionObserver(entries => {
       sceneVisible = entries.some(entry => entry.isIntersecting);

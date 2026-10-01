@@ -66,11 +66,11 @@ h1 { font-size: clamp(36px, 5vw, 64px); font-weight: 500; line-height: 1.18; let
 .skyline-backdrop { stroke-width: 1; opacity: .16; }
 .skyline-outline { stroke-width: 1.6; opacity: .9; filter: drop-shadow(0 0 3px rgba(0, 200, 58, .25)) drop-shadow(0 0 10px rgba(0, 200, 58, .08)); }
 .skyline-draw { stroke-dasharray: 100; stroke-dashoffset: 0;  }
-.motion-ready .skyline-draw { animation: skyline-trace 2.8s ease-out both; }
+.motion-ready .skyline-is-visible .skyline-draw { animation: skyline-trace 2.8s ease-out both; }
 .motion-ready .skyline-tower { animation-duration: 3.2s; }
 @keyframes skyline-trace { from { stroke-dashoffset: 100; opacity: 0; } to { stroke-dashoffset: 0; opacity: 1; } }
 .skyline-details { stroke-width: 1; opacity: .24; }
-.motion-ready .skyline-details { animation: skyline-details-in 1s ease-out 2s both; }
+.motion-ready .skyline-is-visible .skyline-details { animation: skyline-details-in 1s ease-out 2s both; }
 @keyframes skyline-details-in { from { opacity: 0; } to { opacity: .24; } }
 @media (max-width: 760px) {
   .hero { grid-template-columns: 1fr; align-content: center; gap: 36px; }
@@ -134,6 +134,9 @@ h3 { font-size: 22px; font-weight: 500; letter-spacing: -.3px; line-height: 1.35
 .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
 .project-city { position: relative; overflow: hidden; background: radial-gradient(ellipse at 22% 48%, #1a2c2a 0, transparent 48%), radial-gradient(ellipse at 85% 15%, #152530 0, transparent 48%), #0c151c; }
 .city-stage { --building-height: 390px; --sky-space: 104px; position: relative; padding: var(--sky-space) 28px 40px; isolation: isolate; }
+.scene-heading { position: absolute; top: 28px; left: 0; right: 0; z-index: 1; width: min(var(--max), 100%); margin-inline: auto; padding-inline: 28px; pointer-events: none; }
+.scene-heading h2 { color: #dce5dc; text-shadow: 0 2px 18px #080c12; }
+#projects.card, #background.card { padding-top: 0; }
 .city-sky { position: absolute; inset: 0 0 auto; height: 380px; z-index: -2; overflow: hidden; pointer-events: none; }
 .city-sky::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(1px 1px at 30px 40px, #a9c8c3 90%, transparent), radial-gradient(1px 1px at 137px 76px, #a9c8c3 90%, transparent); background-size: 237px 169px, 353px 229px; opacity: .32; }
 .city-moon { position: absolute; top: 78px; right: 9%; width: 28px; height: 28px; border-radius: 50%; background: #ced8bd; box-shadow: 0 0 46px 15px #c9d6b410; opacity: .75; }
@@ -144,7 +147,8 @@ h3 { font-size: 22px; font-weight: 500; letter-spacing: -.3px; line-height: 1.35
 .city-pavement { position: absolute; top: calc(var(--sky-space) + var(--building-height) * .82); left: 0; right: 0; height: 72px; background: linear-gradient(160deg, transparent 30%, #819c7b08 31%, transparent 32%), linear-gradient(#31403a, #1b2927); border-bottom: 2px solid #687968; z-index: -1; opacity: .8; }
 .city-street { position: absolute; top: calc(var(--sky-space) + var(--building-height) * .82 + 72px); left: 0; right: 0; height: 25px; background: #101d21; border-bottom: 1px solid #2b3e37; z-index: -1; }
 .city-street span { position: absolute; left: 0; right: 0; top: 11px; height: 1px; background: repeating-linear-gradient(90deg, transparent 0 48px, #a6a48555 48px 72px, transparent 72px 112px); }
-.city-buildings { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: end; gap: 32px; max-width: 1280px; margin-inline: auto; }
+.city-buildings { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: end; gap: 32px; max-width: 1280px; margin-inline: auto; }
+.city-road { display: none; }
 .project-building { --place-accent: #e0bd84; --place-glow: #e0bd8418; position: relative; display: flex; min-width: 0; flex-direction: column; align-items: center; text-align: center; text-decoration: none; padding: 0 4px 10px; border-radius: 8px; -webkit-tap-highlight-color: transparent; }
 .building-travel { --place-accent: #9dc5d0; --place-glow: #9dc5d018; }
 .building-gym { --place-accent: #a3cda4; --place-glow: #a3cda418; }
@@ -217,14 +221,21 @@ body.project-open { position: fixed; top: var(--project-scroll-top); inset-inlin
 }
 @media (max-width: 640px) {
   .project-intro { font-size: 15px; }
-  .city-stage { --building-height: 290px; --sky-space: 40px; padding-bottom: 28px; }
-  .city-buildings { grid-template-columns: 1fr; gap: 48px; }
+  .scene-heading { top: 24px; padding-inline: 22px; }
+  .scene-heading h2 { font-size: clamp(23px, 5.8vw, 32px); letter-spacing: -.8px; }
+  .city-stage { --building-height: 210px; --sky-space: 80px; padding-bottom: 32px; }
+  .city-buildings { grid-template-columns: 1fr; gap: 24px; }
+  .city-road { display: block; position: absolute; top: -24px; left: 0; width: 100%; height: calc(100% + 56px); z-index: -1; overflow: visible; pointer-events: none; }
+  .city-road-pavement { stroke: #3d5147; stroke-width: 58px; }
+  .city-road-surface { stroke: #111e23; stroke-width: 44px; }
+  .city-road-markings { stroke: #c2b98d; stroke-opacity: .55; stroke-width: 2px; stroke-dasharray: 12 16; }
   .city-sky { height: 260px; }
   .city-moon { top: 62px; }
   .city-pavement, .city-street { display: none; }
-  .project-building { width: 100%; max-width: 380px; justify-self: center; }
-  .project-building::before { content: ''; position: absolute; top: calc(var(--building-height) * .83); left: -22px; right: -22px; height: 52px; background: linear-gradient(#31403a80, #1b292744); border-bottom: 1px solid #53695c; z-index: -1; }
-  .building-label { margin-top: 20px; }
+  .project-building { width: min(240px, calc(100% - 60px)); justify-self: start; padding-bottom: 12px; }
+  .project-building.building-travel { justify-self: end; }
+  .building-label { margin-top: 4px; font-size: 16px; }
+  .project-building .building-action { margin-top: 8px; }
   .project-panels { padding-inline: 22px; }
   .project-dialog { width: calc(100% - 24px); max-height: calc(100vh - 24px); max-height: calc(100dvh - 24px); border-radius: 10px; }
   .project-dialog-shell { max-height: calc(100vh - 26px); max-height: calc(100dvh - 26px); }
@@ -252,9 +263,11 @@ body.project-open { position: fixed; top: var(--project-scroll-top); inset-inlin
 
 /* A night train connects the milestones without repeating the project city. */
 #education, #experience, .journey-entry { scroll-margin-top: 24px; }
+#education { scroll-margin-top: 12px; }
 .transit-journey { overflow: hidden; background: #0c161c; }
 .transit-scene { position: relative; }
 .transit-landscape { display: block; width: 100%; height: auto; }
+.transit-scene .scene-heading h2 { font-size: clamp(28px, 3.5vw, 40px); }
 .transit-stops { margin: 0; list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 24px max(22px, calc((100% - var(--max)) / 2)) 20px; background: #101d20; }
 .transit-stop { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; min-width: 0; padding: 8px 8px 10px; text-decoration: none; border-radius: 6px; }
 .transit-stop::before { content: ''; position: absolute; left: 0; right: 0; top: 23px; height: 2px; background: #416355; }
@@ -279,6 +292,7 @@ body.project-open { position: fixed; top: var(--project-scroll-top); inset-inlin
 .journey-entry.is-current .journey-marker, .journey-entry:target .journey-marker { border-color: #b3cca3; color: #d7e4c9; box-shadow: 0 0 0 5px #a3bf980c; }
 @media (max-width: 640px) {
   .transit-landscape { width: 100%; height: auto; aspect-ratio: 600 / 380; }
+  .transit-scene .scene-heading h2 { font-size: clamp(23px, 5.8vw, 32px); }
   .transit-stops { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 0; padding: 18px 8px; }
   .transit-stop:nth-child(2)::before { right: 50%; }
   .transit-stop:nth-child(3)::before { left: 50%; }

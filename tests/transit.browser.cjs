@@ -23,6 +23,9 @@ async function checkBrowser(engine) {
     assert.equal(await page.locator('.building-action').count(), 3);
     assert.equal(await page.locator('.section-scroll-cue').first().innerText(), 'Projects');
     assert.equal(await page.locator('.section-scroll-cue').last().getAttribute('href'), '#education');
+    assert.equal(await page.locator('.navlink[href="#background"]').innerText(), 'Education/Experience');
+    assert.equal(await page.locator('#background-title').innerText(), 'Education/Experience');
+    assert.equal(await page.locator('.section-scroll-cue').last().innerText(), 'Education/Experience');
     assert.equal(await page.locator('#certifications').count(), 0);
     assert.equal(await page.locator('.transit-journey button, .transit-journey a, .transit-status, .journey-heading, .transit-caption, .transit-scene-bar').count(), 0);
     assert.deepEqual(await page.locator('.journey-entry').evaluateAll(entries => entries.map(entry => entry.id)), ['wind-stop', 'business-stop', 'rbc-stop', 'computer-science-stop']);
@@ -104,8 +107,27 @@ async function checkBrowser(engine) {
       assert.equal(bounds.x, 0, 'Train scenery reaches the left edge');
       const pageWidth = await page.evaluate(() => document.body.clientWidth);
       assert.ok(Math.abs(bounds.width - pageWidth) < 1, `Train scenery reaches the right edge: ${bounds.width}/${pageWidth}`);
+      for (const [scene, title] of [['.city-stage', '#projects-title'], ['.transit-scene', '#background-title']]) {
+        const integrated = await page.locator(scene).evaluate((el, title) => {
+          const scene = el.getBoundingClientRect();
+          const heading = el.querySelector(title).getBoundingClientRect();
+          return heading.top >= scene.top && heading.bottom <= scene.bottom && heading.left >= scene.left && heading.right <= scene.right;
+        }, title);
+        assert.ok(integrated, `Heading sits within ${scene} at ${width}px`);
+      }
+      assert.equal(await page.locator('.city-road').isVisible(), width <= 640, 'Vertical road appears only on mobile');
+      const buildings = await page.locator('.project-building').evaluateAll(elements => elements.map(el => {
+        const { x, y, width, height } = el.getBoundingClientRect();
+        return { x, y, width, height };
+      }));
+      if (width <= 640) {
+        assert.ok(buildings[1].x > buildings[0].x && buildings[2].x === buildings[0].x, 'Buildings alternate along the road');
+        assert.ok(buildings[1].y >= buildings[0].y + buildings[0].height && buildings[2].y >= buildings[1].y + buildings[1].height, 'Every mobile project has a separate stop');
+      } else {
+        assert.ok(buildings[0].x < buildings[1].x && buildings[1].x < buildings[2].x, 'Desktop keeps the horizontal neighbourhood');
+      }
       await page.locator('#background').screenshot({ path: path.join(screenshotDirectory, `${engine}-journey-${width}.png`), style: '.nav { visibility: hidden; }' });
-      if (width === 1440 || width === 768) {
+      if ([1440, 768, 640, 390, 320].includes(width)) {
         await page.locator('#projects').screenshot({ path: path.join(screenshotDirectory, `${engine}-projects-${width}.png`), style: '.nav { visibility: hidden; }' });
       }
     }
@@ -128,6 +150,33 @@ async function checkBrowser(engine) {
     await staticPage.locator('[href="#project-gym-partner"]').click();
     await waitUntil(staticPage, () => location.hash === '#project-gym-partner');
     assert.ok((await staticPage.locator('#project-gym-partner').boundingBox()).y >= 0, 'Static project anchor remains visible');
+
+    // Exercise real animation clocks in a fresh mobile/private context, rather
+    // than only checking the reduced-motion popup flows below.
+    const animatedContext = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, reducedMotion: 'no-preference' });
+    const animatedPhone = await animatedContext.newPage();
+    animatedPhone.on('pageerror', error => errors.push(error.message));
+    await animatedPhone.goto(siteUrl);
+    await animatedPhone.locator('.hero-skyline').scrollIntoViewIfNeeded();
+    await waitUntil(animatedPhone, () => document.querySelector('.skyline-draw').getAnimations().some(animation => animation.playState === 'running'));
+    await animatedPhone.locator('.building-travel').scrollIntoViewIfNeeded();
+    await waitUntil(animatedPhone, () => document.querySelector('.city-stage').classList.contains('city-is-visible'));
+    for (const selector of ['.home-tree', '.station-train', '.gym-sign']) {
+      const before = await animatedPhone.locator(selector).evaluate(el => el.getAnimations()[0]?.currentTime);
+      await animatedPhone.waitForTimeout(150);
+      const after = await animatedPhone.locator(selector).evaluate(el => el.getAnimations()[0]?.currentTime);
+      assert.ok(typeof before === 'number' && after > before, `${engine}: ${selector} advances on mobile`);
+    }
+    await animatedPhone.locator('.transit-scene').scrollIntoViewIfNeeded();
+    const trainBefore = await animatedPhone.locator('[data-train-car="0"]').getAttribute('transform');
+    await animatedPhone.waitForTimeout(250);
+    assert.notEqual(await animatedPhone.locator('[data-train-car="0"]').getAttribute('transform'), trainBefore, 'Train moves in a mobile private context');
+    await animatedPhone.emulateMedia({ reducedMotion: 'reduce' });
+    await animatedPhone.waitForTimeout(100);
+    const stillTrain = await animatedPhone.locator('[data-train-car="0"]').getAttribute('transform');
+    await animatedPhone.waitForTimeout(150);
+    assert.equal(await animatedPhone.locator('[data-train-car="0"]').getAttribute('transform'), stillTrain);
+    await animatedContext.close();
 
     // Every context is a fresh private session. Add explicit storage, font, history,
     // and older-media-API restrictions instead of merely resizing a desktop page.

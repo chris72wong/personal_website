@@ -2,11 +2,13 @@ Personal website
 
 Static HTML, CSS, and JavaScript. Serve the repository with a local HTTP server to preview it.
 
-The project neighbourhood and education landscape span the page. Text stays in a centered reading column. Projects sit side by side on desktop and stack vertically on phones, with native links to complete articles when JavaScript or dialog support is unavailable. Popup content scrolls independently, and closing restores the page position. Navigation measures its actual height to keep section headings visible.
+The project neighbourhood and Education/Experience landscape span the page, with section headings integrated into the scenery. Text stays in a centered reading column. Projects sit side by side on desktop; on phones, smaller buildings alternate along a winding vertical road, with native links to complete articles when JavaScript or dialog support is unavailable. Popup content scrolls independently, and closing restores the page position. Navigation measures its actual height to keep section headings visible.
 
 The portfolio does not require cookies or browser storage. Project popups remain usable if browser history updates are denied, media preferences support older Safari listeners, and popup cleanup has a timeout for suspended mobile animations.
 
-The education and experience journey uses an inline SVG landscape and a three-car train that loops from left to right, lighting each milestone as it passes. The animation pauses outside the viewport or in a hidden tab and stays still with reduced motion enabled. All timeline content remains visible without JavaScript.
+The Education/Experience journey uses an inline SVG landscape and a three-car train that loops from left to right, lighting each milestone as it passes. The animation pauses outside the viewport or in a hidden tab and stays still with reduced motion enabled. All timeline content remains visible without JavaScript.
+
+The Toronto skyline traces when it enters the viewport, including on phones, and replays when revisited. Mobile animation checks exercise advancing skyline, train, tree, and sign animation clocks in fresh private contexts. On iPhone, the site respects Settings → Accessibility → Motion → Reduce Motion.
 
 Checks:
 

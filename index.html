@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Christopher Wong</title>
-  <meta name="description" content="Christopher Wong — computer science student with a background in business, personal finance, and hospitality. Explore my education, experience, and projects." />
+  <meta name="description" content="Christopher Wong — computer science student with a background in business, personal finance, and hospitality. Explore my Education/Experience and projects." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -17,7 +17,7 @@
       <nav class="nav-links" id="navLinks" aria-label="Main navigation">
         <a href="#home" class="navlink active">Home</a>
         <a href="#projects" class="navlink">Projects</a>
-        <a href="#background" class="navlink">Education &amp; Experience</a>
+        <a href="#background" class="navlink">Education/Experience</a>
       </nav>
     </div>
   </header>
@@ -52,12 +52,12 @@
       </a>
     </section>
 
-    <section id="projects" class="card">
-      <div class="section-head">
-        <h2><span class="grad">Projects</span></h2>
-      </div>
+    <section id="projects" class="card" aria-labelledby="projects-title">
       <div class="project-city">
         <div class="city-stage">
+          <div class="scene-heading">
+            <h2 id="projects-title">Projects</h2>
+          </div>
           <div class="city-sky" aria-hidden="true">
             <span class="city-moon"></span>
             <svg class="city-skyline" viewBox="0 0 1100 220" fill="none" focusable="false">
@@ -68,6 +68,11 @@
           <div class="city-pavement" aria-hidden="true"></div>
           <div class="city-street" aria-hidden="true"><span></span></div>
           <div class="city-buildings">
+            <svg class="city-road" viewBox="0 0 360 960" preserveAspectRatio="none" fill="none" aria-hidden="true" focusable="false">
+              <path class="city-road-pavement" d="M300-40V270C300 330 70 330 70 390V610C70 670 300 670 300 730V1000" />
+              <path class="city-road-surface" d="M300-40V270C300 330 70 330 70 390V610C70 670 300 670 300 730V1000" />
+              <path class="city-road-markings" d="M300-40V270C300 330 70 330 70 390V610C70 670 300 670 300 730V1000" />
+            </svg>
             <a class="project-building building-dream" href="#project-dream-planner" data-project-link="project-dream-planner" aria-label="View project: Dream Planner">
               <span class="building-model" aria-hidden="true">
                 <svg viewBox="0 0 320 330" fill="none" focusable="false">
@@ -292,15 +297,15 @@
           <div class="project-dialog-content"></div>
         </div>
       </dialog>
-      <a class="section-scroll-cue" href="#education"><span>Education &amp; experience</span><svg viewBox="0 0 24 28" width="24" height="28" aria-hidden="true" focusable="false"><path d="m4 6 8 8 8-8M4 14l8 8 8-8" /></svg></a>
+      <a class="section-scroll-cue" href="#education"><span>Education/Experience</span><svg viewBox="0 0 24 28" width="24" height="28" aria-hidden="true" focusable="false"><path d="m4 6 8 8 8-8M4 14l8 8 8-8" /></svg></a>
     </section>
 
     <section id="background" class="card" aria-labelledby="background-title">
-      <div id="education" class="section-head">
-        <h2 id="background-title"><span class="grad">Education &amp; Experience</span></h2>
-      </div>
       <div class="transit-journey">
-        <div class="transit-scene">
+        <div id="education" class="transit-scene">
+          <div class="scene-heading">
+            <h2 id="background-title">Education/Experience</h2>
+          </div>
           <svg class="transit-landscape" viewBox="0 0 1100 380" fill="none" aria-hidden="true" focusable="false">
             <defs>
               <linearGradient id="transit-sky" x2="0" y2="1"><stop stop-color="#101d2b"/><stop offset="1" stop-color="#182d2c"/></linearGradient>
@@ -346,7 +351,7 @@
             <g opacity=".8"><use href="#transit-pine" x="34" y="287"/><use href="#transit-pine" x="177" y="320"/><use href="#transit-pine" x="1009" y="308"/><use href="#transit-pine" x="1070" y="275"/></g>
           </svg>
         </div>
-        <ol class="transit-stops" aria-label="Education and experience stops">
+        <ol class="transit-stops" aria-label="Education/Experience stops">
           <li class="transit-stop" data-transit-stop="0" data-entry="wind-stop" data-progress="0.18"><span class="stop-number">01</span><span class="stop-label">Wind Group</span><span class="stop-date">2019 – Present</span></li>
           <li class="transit-stop" data-transit-stop="1" data-entry="business-stop" data-progress="0.4"><span class="stop-number">02</span><span class="stop-label">Business</span><span class="stop-date">2022</span></li>
           <li class="transit-stop" data-transit-stop="2" data-entry="rbc-stop" data-progress="0.64"><span class="stop-number">03</span><span class="stop-label">RBC</span><span class="stop-date">2021 – 2024</span></li>
@@ -410,6 +415,21 @@
     let typingTimer;
     const revealAnimations = new Map();
     let revealObserver;
+    const skyline = document.querySelector(".hero-skyline");
+    const syncSkyline = () => {
+      const bounds = skyline.getBoundingClientRect();
+      skyline.classList.toggle("skyline-is-visible", bounds.bottom > 0 && bounds.top < window.innerHeight);
+    };
+    if ("IntersectionObserver" in window) {
+      const skylineObserver = new IntersectionObserver(entries => {
+        skyline.classList.toggle("skyline-is-visible", entries.some(entry => entry.isIntersecting));
+      }, { threshold: 0 });
+      skylineObserver.observe(skyline);
+    } else {
+      window.addEventListener("scroll", syncSkyline, { passive: true });
+      window.addEventListener("resize", syncSkyline);
+    }
+    syncSkyline();
 
     const finishTyping = () => {
       clearTimeout(typingTimer);
