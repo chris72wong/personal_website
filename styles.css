@@ -273,7 +273,6 @@ body.project-open { position: fixed; top: var(--project-scroll-top); inset-inlin
 .back-to-top span { color: var(--accent); font-size: 20px; }
 
 /* A night train connects the milestones without repeating the project city. */
-#education, #experience, .journey-entry { scroll-margin-top: 24px; }
 #education { scroll-margin-top: 12px; }
 .transit-journey { overflow: hidden; background: #0c161c; }
 .transit-scene { position: relative; }
@@ -292,18 +291,6 @@ body.project-open { position: fixed; top: var(--project-scroll-top); inset-inlin
 .stop-date { font: 11px/1.6 'Roboto Mono', monospace; color: #99b0a3; }
 .transit-stop.is-current .stop-logo { border-color: #c1d3ae; box-shadow: 0 0 0 5px #a3bf9814, 0 0 22px #a3bf9826; }
 .transit-stop.is-current .stop-label { color: #c1d3ae; }
-.journey-timeline { position: relative; width: min(calc(100% - 56px), calc(var(--max) - 56px)); margin: 38px auto 0; }
-.journey-timeline::before { content: ''; position: absolute; width: 2px; left: 20px; top: 24px; bottom: 45px; background: linear-gradient(#577c61, #577c6144); }
-.journey-entry { position: relative; display: flex; align-items: flex-start; gap: 24px; padding: 24px 22px 24px 0; border-radius: 8px; transition: background 200ms; }
-.journey-entry + .journey-entry { margin-top: 10px; }
-.journey-marker { position: relative; z-index: 1; flex: 0 0 42px; height: 42px; display: grid; place-items: center; border: 1px solid #58735c; border-radius: 50%; background: var(--bg); color: #9fbd9f; font: 11px/1 'Roboto Mono', monospace; }
-.journey-entry-copy { flex: 1; min-width: 0; }
-.journey-kind { margin: 0 0 8px; color: #9abc9f; font: 11px/1.6 'Roboto Mono', monospace; }
-.journey-entry h3 { font-size: 19px; margin-bottom: 8px; color: #dce5dc; }
-.journey-date { margin: 0; color: var(--muted); font: 13px/1.7 'Roboto Mono', monospace; }
-.journey-logo { flex: 0 0 64px; width: 64px; height: 64px; padding: 8px; object-fit: contain; border: 1px solid #33463b; border-radius: 8px; background: #10191b; }
-.journey-entry.is-current, .journey-entry:target { background: #172a2055; }
-.journey-entry.is-current .journey-marker, .journey-entry:target .journey-marker { border-color: #b3cca3; color: #d7e4c9; box-shadow: 0 0 0 5px #a3bf980c; }
 @media (max-width: 640px) {
   .transit-landscape { width: 100%; height: auto; aspect-ratio: 600 / 380; }
   .transit-scene .scene-heading h2 { font-size: clamp(23px, 5.8vw, 32px); }
@@ -312,12 +299,6 @@ body.project-open { position: fixed; top: var(--project-scroll-top); inset-inlin
   .transit-stop { padding-inline: 16px; }
   .stop-label { font-size: 12px; }
   .stop-date { font-size: 10px; }
-  .journey-entry { gap: 16px; padding-right: 10px; }
-  .journey-entry h3 { font-size: 16px; }
-  .journey-logo { flex-basis: 44px; width: 44px; height: 44px; padding: 5px; }
-  .journey-date { font-size: 11px; }
-  .journey-timeline { width: calc(100% - 44px); }
-  .journey-kind { overflow-wrap: anywhere; }
   .project-dialog-close { min-height: 44px; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -325,4 +306,5 @@ body.project-open { position: fixed; top: var(--project-scroll-top); inset-inlin
 }
 
 [data-track-stop].is-current { filter: drop-shadow(0 0 6px #bddd9d); }
-[data-track-stop].is-current use { stroke: #d8eac2; }
+[data-track-stop] { color: #819c7d; }
+[data-track-stop].is-current { color: #d8eac2; }

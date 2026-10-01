@@ -105,8 +105,9 @@ async function checkBrowser(engine) {
     assert.ok(await page.evaluate(() => Math.abs(document.querySelector('#projects').getBoundingClientRect().bottom - document.querySelector('#background').getBoundingClientRect().top) < 1), 'Projects and Education/Experience are flush');
     assert.equal(await page.locator('#certifications').count(), 0);
     assert.equal(await page.locator('.transit-journey button, .transit-journey a, .transit-status, .journey-heading, .transit-caption, .transit-scene-bar').count(), 0);
-    assert.deepEqual(await page.locator('.journey-entry').evaluateAll(entries => entries.map(entry => entry.id)), ['wind-stop', 'business-stop', 'rbc-stop', 'computer-science-stop']);
-    assert.deepEqual(await page.locator('.transit-stop').evaluateAll(stops => stops.map(stop => stop.dataset.entry)), ['wind-stop', 'business-stop', 'rbc-stop', 'computer-science-stop']);
+    assert.equal(await page.locator('.journey-timeline, .journey-entry').count(), 0);
+    assert.equal(await page.locator('.transit-stop').count(), 4);
+    assert.equal(await page.locator('[data-track-stop] text').count(), 0);
     const car = page.locator('[data-train-car="0"]');
     await page.waitForFunction(() => Number(document.querySelector('[data-train-car="0"]').getAttribute('transform').match(/translate\(([-\d.]+)/)[1]) > -10);
     // Drive animation frames deterministically to check a complete loop quickly.
@@ -146,7 +147,6 @@ async function checkBrowser(engine) {
           x: Number(document.querySelector('[data-train-car="0"]').getAttribute('transform').match(/translate\(([-\d.]+)/)[1]),
           stop: document.querySelector('.transit-stop.is-current')?.dataset.transitStop ?? null,
           sign: document.querySelector('[data-track-stop].is-current')?.dataset.trackStop ?? null,
-          entry: document.querySelector('.journey-entry.is-current')?.id ?? null,
         });
       }
       return history;
@@ -155,7 +155,6 @@ async function checkBrowser(engine) {
     for (const snapshot of snapshots) {
       if (snapshot.stop === null) continue;
       assert.equal(snapshot.sign, snapshot.stop);
-      assert.equal(snapshot.entry, ['wind-stop', 'business-stop', 'rbc-stop', 'computer-science-stop'][Number(snapshot.stop)]);
       if (sequence.at(-1) !== snapshot.stop) sequence.push(snapshot.stop);
     }
     assert.deepEqual(sequence.slice(0, 5), ['0', '1', '2', '3', '0'], `${engine}: ${JSON.stringify([snapshots[0], snapshots.at(-1)])}`);
@@ -221,7 +220,7 @@ async function checkBrowser(engine) {
     assert.deepEqual(errors, []);
     const staticPage = await browser.newPage({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
     await staticPage.goto(siteUrl);
-    assert.equal(await staticPage.locator('.journey-entry').count(), 4);
+    assert.equal(await staticPage.locator('.transit-stop').count(), 4);
     assert.equal(await staticPage.locator('.transit-journey a, .transit-journey button').count(), 0);
     assert.equal(await staticPage.locator('.project-panel:visible').count(), 3);
     assert.equal(await staticPage.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
@@ -235,6 +234,16 @@ async function checkBrowser(engine) {
     const animatedPhone = await animatedContext.newPage();
     animatedPhone.on('pageerror', error => errors.push(error.message));
     await animatedPhone.goto(siteUrl);
+    await waitUntil(animatedPhone, () => !document.documentElement.classList.contains('is-typing'));
+    assert.deepEqual(await animatedPhone.locator('.name-text').allTextContents(), ['Christopher', 'Wong']);
+    await animatedPhone.locator('#background').evaluate(el => el.scrollIntoView({ behavior: 'instant', block: 'start' }));
+    await waitUntil(animatedPhone, () => document.querySelector('.hero h1').getBoundingClientRect().bottom < 0);
+    await animatedPhone.waitForTimeout(100);
+    await animatedPhone.locator('#home').evaluate(el => el.scrollIntoView({ behavior: 'instant', block: 'start' }));
+    await waitUntil(animatedPhone, () => document.documentElement.classList.contains('is-typing'));
+    assert.notDeepEqual(await animatedPhone.locator('.name-text').allTextContents(), ['Christopher', 'Wong'], 'Revisiting the name starts typing again');
+    await waitUntil(animatedPhone, () => !document.documentElement.classList.contains('is-typing'));
+    assert.deepEqual(await animatedPhone.locator('.name-text').allTextContents(), ['Christopher', 'Wong']);
     await animatedPhone.locator('.hero-skyline').scrollIntoViewIfNeeded();
     await waitUntil(animatedPhone, () => document.querySelector('.skyline-draw').getAnimations().some(animation => animation.playState === 'running'));
     await animatedPhone.locator('.building-travel').scrollIntoViewIfNeeded();
@@ -261,6 +270,10 @@ async function checkBrowser(engine) {
     const stillTrain = await animatedPhone.locator('[data-train-car="0"]').getAttribute('transform');
     await animatedPhone.waitForTimeout(150);
     assert.equal(await animatedPhone.locator('[data-train-car="0"]').getAttribute('transform'), stillTrain);
+    await animatedPhone.locator('#home').evaluate(el => el.scrollIntoView({ behavior: 'instant', block: 'start' }));
+    await animatedPhone.waitForTimeout(150);
+    assert.deepEqual(await animatedPhone.locator('.name-text').allTextContents(), ['Christopher', 'Wong']);
+    assert.equal(await animatedPhone.evaluate(() => document.documentElement.classList.contains('is-typing')), false, 'Reduced motion shows the full name without typing');
     await animatedContext.close();
 
     // Every context is a fresh private session. Add explicit storage, font, history,

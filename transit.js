@@ -13,7 +13,6 @@
 
   const length = track.getTotalLength();
   const positions = stops.map(stop => Number(stop.dataset.progress));
-  const entries = stops.map(stop => document.getElementById(stop.dataset.entry));
   const start = -.02;
   const end = 1 + 290 / length;
   let progress = preference.matches ? positions[0] : start;
@@ -63,7 +62,6 @@
     stops.forEach((stop, index) => {
       stop.classList.toggle('is-current', index === active);
       markers[index]?.classList.toggle('is-current', index === active);
-      entries[index]?.classList.toggle('is-current', index === active);
     });
   };
   const running = () => visible && !document.hidden && !preference.matches;
