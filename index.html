@@ -57,102 +57,180 @@
       <div class="section-head">
         <h2><span class="grad">Projects</span></h2>
       </div>
-      <p class="project-intro" id="project-city-help">Choose a building to explore a project.</p>
+      <p class="project-intro" id="project-city-help">A little neighbourhood of things I've built. Choose a place to step inside.</p>
       <div class="project-city" aria-describedby="project-city-help">
         <div class="city-stage">
-          <div class="city-ground" aria-hidden="true"></div>
+          <div class="city-sky" aria-hidden="true">
+            <span class="city-moon"></span>
+            <svg class="city-skyline" viewBox="0 0 1100 220" fill="none" focusable="false">
+              <path class="city-distant-buildings" d="M0 220V166H36V130H64V220H86V113H118V151H150V220H175V145H204V96H240V220H267V158H305V220H344V117H374V81H407V220H432V148H469V220H519V126H550V220H579V144H612V97H642V220H698V128H727V165H764V220H792V87H830V120H858V220H885V151H921V105H956V220H983V133H1018V175H1060V145H1100V220Z" />
+              <path class="city-cn-tower" d="M657 220L665 108H661L656 102V96L663 92V86L668 81V49L672 15L676 49V81L681 86V92L688 96V102L683 108H679L687 220M665 108H679M663 92H681M656 99H688" />
+            </svg>
+          </div>
+          <div class="city-scene-caption" aria-hidden="true"><span class="city-live-dot"></span> A neighbourhood after dark <span class="city-scene-number">01 — 03</span></div>
+          <div class="city-pavement" aria-hidden="true"></div>
+          <div class="city-street" aria-hidden="true"><span></span></div>
           <div class="city-buildings">
-            <a class="project-building building-dream" href="#project-dream-planner" data-project-link="project-dream-planner" aria-label="View Dream Planner">
+            <a class="project-building building-dream" href="#project-dream-planner" data-project-link="project-dream-planner" data-project-place="The dream home" aria-label="Explore Dream Planner, the dream home">
               <span class="building-model" aria-hidden="true">
-                <svg viewBox="0 0 260 330" fill="none" focusable="false">
-                  <defs><pattern id="dream-windows" x="0" y="0" width="23" height="29" patternUnits="userSpaceOnUse"><rect class="building-window" x="6" y="7" width="9" height="15" rx="1" /></pattern></defs>
-                  <ellipse class="building-shadow" cx="137" cy="305" rx="101" ry="13" />
-                  <path class="building-side" d="M192 78L227 59V283L192 305Z" />
-                  <path class="building-roof" d="M67 78L102 59H227L192 78Z" />
-                  <path class="building-face building-outline" d="M67 78H192V305H67Z" />
-                  <path fill="url(#dream-windows)" d="M80 129H181V271H80Z" />
-                  <path class="building-edge" d="M67 121H192M67 279H192M205 91V275M215 86V269" />
-                  <path class="building-side" d="M99 46L123 33H194V59L171 72Z" />
-                  <path class="building-roof" d="M81 47L105 33H194L171 47Z" />
-                  <path class="building-face" d="M81 47H171V72H81Z" />
-                  <path class="building-edge" d="M90 57H161M90 66H161M105 33V24M117 33V26M183 33V23" />
-                  <path class="terrace-plant" d="M104 31V19M104 25L97 21M104 28L111 24M183 31V20M183 25L177 21M183 28L188 25" />
-                  <rect class="building-sign" x="111" y="88" width="36" height="26" rx="2" />
-                  <path class="building-icon" d="M119 108V103H124V98H129V93H139M119 109H139" />
-                  <path class="building-door" d="M116 305V283H142V305M129 284V304" />
-                  <path class="building-step" d="M62 305H196L203 312H55Z" />
+                <svg viewBox="0 0 320 330" fill="none" focusable="false">
+                  <defs>
+                    <linearGradient id="home-glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f4cf88" /><stop offset="1" stop-color="#bc7d46" /></linearGradient>
+                    <radialGradient id="home-lamp"><stop stop-color="#ffdc9a" stop-opacity=".3" /><stop offset="1" stop-color="#ffdc9a" stop-opacity="0" /></radialGradient>
+                  </defs>
+                  <ellipse class="building-shadow" cx="161" cy="299" rx="142" ry="18" />
+                  <path fill="#23392e" stroke="#3c5946" d="M23 285L76 255H260L303 280L252 311H63Z" />
+                  <path fill="#1c2b25" stroke="#3a4d40" d="M237 144L274 121V269L237 291Z" />
+                  <path fill="#344b43" d="M80 147L148 96L230 147Z" />
+                  <path class="building-face building-outline" fill="#344b43" d="M80 147H237V291H80Z" />
+                  <path fill="#2e4140" stroke="#586d64" d="M65 153L147 79L245 153H230L148 96L82 153Z" />
+                  <path fill="#192c2b" stroke="#53665c" d="M147 79L183 59L281 121L245 153Z" />
+                  <path stroke="#405853" d="M174 72L262 134M163 83L250 145M191 84L163 100M218 101L191 119M246 119L216 136" />
+                  <circle class="building-window" fill="url(#home-glass)" stroke="#d4bc86" cx="148" cy="131" r="9" />
+                  <path stroke="#5b604a" d="M148 122V140M139 131H157" />
+                  <path fill="#466052" stroke="#688071" d="M220 95V58L238 49V107M208 65L220 58V95L208 86Z" />
+                  <path fill="#647565" stroke="#839483" d="M205 63L222 53L241 48L224 60Z" />
+                  <path fill="#2d4036" stroke="#5d7262" d="M114 292V204H210V292Z" />
+                  <path class="building-door" fill="#213830" stroke="#94ab88" d="M148 290V220H177V290Z" />
+                  <path class="building-window" fill="url(#home-glass)" d="M154 229H171V262H154Z" />
+                  <circle fill="#f1d298" cx="172" cy="275" r="1.6" />
+                  <rect class="building-window" fill="url(#home-glass)" stroke="#d4bc86" x="94" y="170" width="31" height="42" rx="2" />
+                  <rect class="building-window" fill="url(#home-glass)" stroke="#d4bc86" x="192" y="170" width="31" height="42" rx="2" />
+                  <path stroke="#5b604a" stroke-width="2" d="M109 171V211M95 191H124M207 171V211M193 191H222" />
+                  <path fill="#39534b" stroke="#6b8371" d="M104 214H217L226 225H97Z" />
+                  <path stroke="#78917b" stroke-width="4" d="M107 225V288M217 225V288" />
+                  <path fill="#567065" stroke="#78917b" d="M103 288H220L230 299H96Z M112 299H210L219 307H104Z" />
+                  <path fill="#8c9a84" d="M124 310L150 308L144 314L117 316Z M103 320L132 317L125 323L95 325Z" />
+                  <circle fill="url(#home-lamp)" cx="185" cy="239" r="30" />
+                  <path fill="#ffe0a0" stroke="#c5a778" d="M183 231H188V242H183Z" />
+                  <path stroke="#9aa786" stroke-width="1.5" d="M184 230V227H189" />
+                  <g class="home-tree">
+                    <path stroke="#8b7960" stroke-width="5" d="M54 289V215M54 246L38 231M54 235L69 218" />
+                    <path fill="#2e5942" stroke="#54836a" d="M27 236C12 228 20 208 31 207C20 190 34 179 46 183C50 161 75 164 79 184C100 183 105 205 89 213C103 230 82 249 68 239C54 254 36 251 27 236Z" />
+                    <path stroke="#6c9471" opacity=".55" d="M36 215C46 207 52 194 53 184M62 224L80 198M27 228L47 222" />
+                  </g>
+                  <g fill="#3c6747" stroke="#64815a"><ellipse cx="246" cy="289" rx="18" ry="10" /><ellipse cx="271" cy="285" rx="17" ry="11" /></g>
+                  <g fill="#e6bb77"><circle cx="242" cy="285" r="2" /><circle cx="249" cy="290" r="2" /><circle cx="272" cy="282" r="2" /></g>
+                  <path stroke="#83967c" stroke-width="2" d="M287 280V260M282 263H294" />
+                  <path fill="#567267" stroke="#92a18a" d="M281 252H295V263H281Z" />
+                  <path stroke="#a2ae96" d="M284 256H292" />
                 </svg>
               </span>
+              <span class="building-number">01 / THE DREAM HOME</span>
               <span class="building-label">Dream Planner</span>
-              <span class="building-caption">Financial planning</span>
+              <span class="building-caption">Plan for what's next</span>
+              <span class="building-invitation">Step inside <span aria-hidden="true">↗</span></span>
             </a>
-            <a class="project-building building-travel" href="#project-travel-dashboard" data-project-link="project-travel-dashboard" aria-label="View Travel Dashboard">
+            <a class="project-building building-travel" href="#project-travel-dashboard" data-project-link="project-travel-dashboard" data-project-place="The departure platform" aria-label="Explore Travel Dashboard, the departure platform">
               <span class="building-model" aria-hidden="true">
-                <svg viewBox="0 0 260 330" fill="none" focusable="false">
-                  <ellipse class="building-shadow" cx="132" cy="305" rx="113" ry="13" />
-                  <path class="building-side" d="M213 176L246 155V284L213 305Z" />
-                  <path class="building-face building-outline" d="M29 176H213V305H29Z" />
-                  <path class="building-roof" d="M19 169L54 145H237L246 155L213 180H29Z" />
-                  <path class="building-edge" d="M36 159H220M29 187H213M222 189V280M236 178V273" />
-                  <path class="building-roof" d="M54 145L88 126H206L237 145Z" />
-                  <path class="building-face" d="M73 121H166V145H73Z" />
-                  <path class="building-side" d="M166 121L188 108V130L166 145Z" />
-                  <path class="building-roof" d="M73 121L95 108H188L166 121Z" />
-                  <rect class="building-sign" x="106" y="119" width="29" height="20" rx="2" />
-                  <path class="building-icon" d="M112 129L121 121L129 129M115 131H126M118 134H123" />
-                  <rect class="building-window" x="44" y="207" width="38" height="36" rx="2" />
-                  <rect class="building-window" x="91" y="207" width="38" height="36" rx="2" />
-                  <rect class="building-window" x="138" y="207" width="58" height="36" rx="2" />
-                  <path class="building-edge" d="M63 208V241M110 208V241M158 208V241M178 208V241M44 225H196M44 264H93" />
-                  <path class="building-door" d="M147 305V265H185V305M166 266V304" />
-                  <path class="building-step" d="M25 305H216L224 313H18Z" />
-                  <path class="transit-track" d="M23 321H226M25 325H229M52 318L59 328M84 318L91 328M116 318L123 328M148 318L155 328M180 318L187 328M212 318L219 328" />
-                  <path class="building-edge" d="M39 303V284H80M42 284V274H76V284M72 284V303" />
+                <svg viewBox="0 0 320 330" fill="none" focusable="false">
+                  <defs>
+                    <linearGradient id="station-glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#80b8c5" /><stop offset="1" stop-color="#365a68" /></linearGradient>
+                    <clipPath id="station-platform"><path d="M22 277H296V315H22Z" /></clipPath>
+                  </defs>
+                  <ellipse class="building-shadow" cx="167" cy="299" rx="139" ry="17" />
+                  <path fill="#334348" stroke="#5d7274" d="M21 277L58 251H286L307 273L273 295H21Z" />
+                  <path class="building-face building-outline" fill="#34434b" d="M40 162H238V272H40Z" />
+                  <path fill="#202f37" stroke="#536971" d="M238 162L275 140V250L238 272Z" />
+                  <path fill="#5b7474" stroke="#859992" d="M28 155L65 132H266L286 145L244 170H37Z" />
+                  <path stroke="#9cac9f" d="M45 152H253M62 143H268" />
+                  <path fill="#46575b" stroke="#7b8e88" d="M85 132V94H194V132Z" />
+                  <path fill="#2e4048" stroke="#677c7b" d="M194 94L218 80V119L194 132Z" />
+                  <path fill="#6a807b" stroke="#91a098" d="M76 94L101 78H211L222 83L198 98H80Z" />
+                  <circle fill="#e4dcc0" stroke="#aeb6a0" cx="139" cy="114" r="13" />
+                  <path stroke="#3a514f" stroke-width="2" d="M139 105V114L146 118" />
+                  <rect class="building-window" fill="url(#station-glass)" stroke="#85a3a0" x="54" y="185" width="50" height="57" rx="2" />
+                  <rect class="building-window" fill="url(#station-glass)" stroke="#85a3a0" x="115" y="185" width="48" height="57" rx="2" />
+                  <path stroke="#344d54" stroke-width="2" d="M79 185V242M139 185V242M54 215H163" />
+                  <path class="building-door" fill="#28414b" stroke="#89a6a0" d="M184 273V191H224V273Z" />
+                  <path class="building-window" fill="url(#station-glass)" d="M190 198H218V247H190Z" />
+                  <path stroke="#819e9d" d="M204 198V272M213 255H218" />
+                  <rect fill="#142b31" stroke="#75908a" x="59" y="153" width="96" height="20" rx="2" />
+                  <text class="station-sign" x="107" y="167" text-anchor="middle" fill="#d0ddd0">DEPARTURES</text>
+                  <path fill="#162b30" stroke="#6e8885" d="M244 199L267 185V220L244 234Z" />
+                  <path stroke="#d8c39b" stroke-width="2" d="M249 201L262 194M249 209L258 204M249 216L262 209" />
+                  <path stroke="#779496" stroke-width="3" d="M55 261H99M59 263V272M94 263V272" />
+                  <path fill="#c39967" stroke="#d4b281" d="M119 263H132V276H119Z" />
+                  <path stroke="#d4b281" d="M122 263V258H128V263" />
+                  <path stroke="#849690" d="M23 295H298M23 311H298M36 294L45 315M67 294L76 315M98 294L107 315M129 294L138 315M160 294L169 315M191 294L200 315M222 294L231 315M253 294L262 315M284 294L293 315" />
+                  <g clip-path="url(#station-platform)">
+                    <g class="station-train">
+                      <path fill="#9fb4aa" stroke="#c2cec1" d="M47 280H199C210 280 219 288 221 301H43V286Z" />
+                      <path fill="#466b72" d="M55 285H79V296H55Z M87 285H111V296H87Z M119 285H143V296H119Z M151 285H174V296H151Z M184 285H200L211 296H184Z" />
+                      <path stroke="#b3be9e" d="M82 281V301M146 281V301M180 281V301" />
+                      <path stroke="#63b68f" stroke-width="3" d="M45 299H218" />
+                      <g fill="#101f25" stroke="#7c928b"><circle cx="66" cy="304" r="4" /><circle cx="108" cy="304" r="4" /><circle cx="159" cy="304" r="4" /><circle cx="201" cy="304" r="4" /></g>
+                      <path stroke="#f5d49a" stroke-width="3" d="M215 293L218 296" />
+                    </g>
+                  </g>
+                  <path stroke="#8a9b85" stroke-width="2" d="M288 274V171" />
+                  <path fill="#e8d4a7" stroke="#b3b397" d="M279 173H295V181H279Z" />
+                  <ellipse class="station-lamp-glow" fill="#f4d899" opacity=".08" cx="287" cy="179" rx="26" ry="34" />
                 </svg>
               </span>
+              <span class="building-number">02 / THE DEPARTURE PLATFORM</span>
               <span class="building-label">Travel Dashboard</span>
-              <span class="building-caption">Trips &amp; itineraries</span>
+              <span class="building-caption">Every journey, in one place</span>
+              <span class="building-invitation">Step inside <span aria-hidden="true">↗</span></span>
             </a>
-            <a class="project-building building-gym" href="#project-gym-partner" data-project-link="project-gym-partner" aria-label="View Gym Partner">
+            <a class="project-building building-gym" href="#project-gym-partner" data-project-link="project-gym-partner" data-project-place="The training studio" aria-label="Explore Gym Partner, the training studio">
               <span class="building-model" aria-hidden="true">
-                <svg viewBox="0 0 260 330" fill="none" focusable="false">
-                  <defs><pattern id="gym-windows" x="0" y="0" width="24" height="29" patternUnits="userSpaceOnUse"><rect class="building-window" x="5" y="5" width="14" height="17" rx="1" /></pattern></defs>
-                  <ellipse class="building-shadow" cx="138" cy="305" rx="107" ry="13" />
-                  <path class="building-side" d="M204 142L239 123V284L204 305Z" />
-                  <path class="building-face building-outline" d="M44 142H204V305H44Z" />
-                  <path class="building-roof" d="M44 142L79 123H239L204 142Z" />
-                  <path class="building-face" d="M63 97H183V135H63Z" />
-                  <path class="building-side" d="M183 97L216 79V119L183 135Z" />
-                  <path class="building-roof" d="M63 97L96 79H216L183 97Z" />
-                  <path class="court-line" d="M100 86H191L171 98H80Z M135 86L114 98" />
-                  <rect class="building-sign" x="106" y="105" width="35" height="25" rx="2" />
-                  <path class="building-icon" d="M114 112V123M119 110V125M119 117H129M129 110V125M134 112V123" />
-                  <path fill="url(#gym-windows)" d="M58 160H191V246H58Z" />
-                  <path class="building-edge" d="M44 254H204M44 151H204M215 152V277M228 145V270" />
-                  <path class="building-door" d="M109 305V263H144V305M126 264V304" />
-                  <path class="building-window" d="M59 263H93V290H59Z M160 263H190V290H160Z" />
-                  <path class="building-step" d="M40 305H207L215 313H33Z" />
-                  <path class="terrace-plant" d="M53 303V293M50 294C42 282 51 275 57 283C65 278 69 292 59 295M192 303V294M189 294C181 282 190 275 196 283C204 278 208 292 198 295" />
+                <svg viewBox="0 0 320 330" fill="none" focusable="false">
+                  <defs><linearGradient id="gym-glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#386b56" /><stop offset="1" stop-color="#1d3b33" /></linearGradient></defs>
+                  <ellipse class="building-shadow" cx="159" cy="299" rx="139" ry="17" />
+                  <path fill="#263c34" stroke="#4c6555" d="M25 285L62 263H260L296 282L259 307H54Z" />
+                  <path class="building-face building-outline" fill="#304b41" d="M43 149H239V292H43Z" />
+                  <path fill="#1c302a" stroke="#4e6757" d="M239 149L277 126V269L239 292Z" />
+                  <path fill="#486559" stroke="#7c9780" d="M33 144L74 119H272L286 127L243 155H43Z" />
+                  <path fill="#3c4d46" stroke="#8a9b81" d="M65 135L88 120H250L227 135Z" />
+                  <path class="rooftop-track" stroke="#bf9273" stroke-width="3" d="M98 125H230C243 125 235 132 217 132H88C76 132 83 125 98 125Z" />
+                  <path stroke="#dbc0a0" stroke-width=".7" d="M100 128H221" />
+                  <path stroke="#8aab90" d="M43 134V117L84 92H272V116M84 92V114M116 92V115M148 92V115M180 92V115M212 92V115M244 92V115M272 101H84L43 126" />
+                  <rect fill="#132c24" stroke="#80a286" x="115" y="148" width="54" height="24" rx="3" />
+                  <text class="gym-sign" x="142" y="165" text-anchor="middle" fill="#a6d2a3">GYM</text>
+                  <rect class="building-window gym-front-glass" fill="url(#gym-glass)" stroke="#89ad94" x="58" y="189" width="111" height="76" rx="2" />
+                  <path fill="#40594a" d="M60 247H167V263H60Z" />
+                  <g class="gym-equipment" stroke="#b8c6ac" stroke-width="2">
+                    <path d="M73 246V204H102V246M76 216H100M76 230H100" />
+                    <path stroke-width="4" d="M81 211V221M88 211V221M95 211V221M81 225V235M88 225V235M95 225V235" />
+                    <path d="M118 247V218H153V247M121 225H150M136 216V234" />
+                    <path stroke-width="4" d="M126 220V230M147 220V230" />
+                    <path d="M112 248H148M118 248L114 257M142 248L147 257" />
+                  </g>
+                  <path stroke="#567968" stroke-width="3" d="M112 190V264" />
+                  <path stroke="#8bab96" opacity=".24" stroke-width="5" d="M61 238L92 191M140 263L166 220" />
+                  <path class="building-door" fill="#1d382f" stroke="#8dab91" d="M183 292V190H223V292Z" />
+                  <path class="building-window" fill="url(#gym-glass)" d="M190 199H216V266H190Z" />
+                  <path stroke="#9ab79e" d="M203 199V291M211 272H216" />
+                  <path fill="#597064" stroke="#7c9380" d="M177 292H230L239 300H171Z" />
+                  <path fill="#578064" d="M252 285V268L264 261L272 272L267 285Z M26 286V271L35 265L43 275L39 286Z" />
+                  <path stroke="#80a07e" d="M260 288V272M33 288V276" />
+                  <path stroke="#719180" d="M249 167L270 154M249 184L270 171M249 201L270 188M249 218L270 205M249 235L270 222M249 252L270 239" />
+                  <path stroke="#91b89a" stroke-width="2" d="M49 279H162" />
                 </svg>
               </span>
+              <span class="building-number">03 / THE TRAINING STUDIO</span>
               <span class="building-label">Gym Partner</span>
-              <span class="building-caption">Training &amp; progress</span>
+              <span class="building-caption">Small steps. Stronger habits.</span>
+              <span class="building-invitation">Step inside <span aria-hidden="true">↗</span></span>
             </a>
           </div>
+          <div class="city-footer" aria-hidden="true"><span>Built with curiosity. Open for exploring.</span><span>TORONTO, ON <span class="city-footer-star">✦</span></span></div>
         </div>
       </div>
+      <p class="city-swipe-hint"><span aria-hidden="true">↔</span> Swipe to explore the neighbourhood</p>
       <nav class="mobile-project-picker" aria-label="Choose a project">
         <a href="#project-dream-planner" data-project-link="project-dream-planner">Dream Planner</a>
         <a href="#project-travel-dashboard" data-project-link="project-travel-dashboard">Travel Dashboard</a>
         <a href="#project-gym-partner" data-project-link="project-gym-partner">Gym Partner</a>
       </nav>
-      <p class="project-selection-status visually-hidden" role="status" aria-live="polite"></p>
       <div class="section-body project-panels">
         <article class="media-row project-row project-panel" id="project-dream-planner" aria-labelledby="dream-planner-title">
           <div class="media-copy">
             <div class="project-heading">
               <h3 id="dream-planner-title">Dream Planner</h3>
             </div>
+            <p class="project-summary">A clearer picture of what your future could look like.</p>
             <ul class="project-stack tech-tags" aria-label="Technologies">
               <li>Java 21</li>
               <li>Spring Boot</li>
@@ -181,6 +259,7 @@
               <h3 id="travel-dashboard-title">Travel Dashboard</h3>
               <time datetime="2026-08">Aug. 2026</time>
             </div>
+            <p class="project-summary">Every leg of a journey, brought together.</p>
             <ul class="project-stack tech-tags" aria-label="Technologies">
               <li>Next.js</li>
               <li>TypeScript</li>
@@ -203,6 +282,7 @@
               <h3 id="gym-partner-title">Gym Partner</h3>
               <time datetime="2026-04">Apr. 2026</time>
             </div>
+            <p class="project-summary">Build a routine. Track the work. See your progress.</p>
             <ul class="project-stack tech-tags" aria-label="Technologies">
               <li>Next.js</li>
               <li>React</li>
@@ -223,6 +303,15 @@
           </div>
         </article>
       </div>
+      <dialog class="project-dialog" id="project-dialog" aria-label="Project details">
+        <div class="project-dialog-shell">
+          <div class="project-dialog-bar">
+            <span class="project-dialog-location">Inside the neighbourhood</span>
+            <button class="project-dialog-close" type="button" aria-label="Back to neighbourhood" autofocus><span class="close-label">Back to neighbourhood</span><span class="close-label-mobile" aria-hidden="true">Close</span><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18" /></svg></button>
+          </div>
+          <div class="project-dialog-content"></div>
+        </div>
+      </dialog>
     </section>
 
     <section id="education" class="card">
