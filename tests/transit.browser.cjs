@@ -10,6 +10,79 @@ fs.mkdirSync(screenshotDirectory, { recursive: true });
 const siteUrl = process.env.SITE_URL || 'http://127.0.0.1:4173';
 const waitUntil = async (page, condition) => page.waitForFunction(condition);
 
+async function checkTraffic(page, width) {
+  await page.setViewportSize({ width, height: 1000 });
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.locator('#projects').evaluate(el => el.scrollIntoView({ behavior: 'instant', block: 'start' }));
+  await page.waitForFunction(() => document.querySelector('.city-stage').classList.contains('city-is-visible'));
+  await page.waitForTimeout(150);
+  const result = await page.evaluate(async () => {
+    const nativeRequest = requestAnimationFrame.bind(window);
+    const nativeCancel = cancelAnimationFrame.bind(window);
+    const frames = new Map();
+    let nextId = 2000000;
+    let time = performance.now();
+    window.requestAnimationFrame = callback => { frames.set(++nextId, callback); return nextId; };
+    window.cancelAnimationFrame = id => { frames.delete(id); nativeCancel(id); };
+    document.dispatchEvent(new Event('visibilitychange'));
+    const sequence = [];
+    const directions = new Set();
+    const car = document.querySelector('.city-car');
+    const initial = car.getAttribute('transform');
+    let opened = false;
+    let laneOK = true;
+    for (let tick = 0; tick < 900; tick++) {
+      time += 100;
+      const pending = Array.from(frames.values());
+      frames.clear();
+      pending.forEach(callback => callback(time));
+      const active = Array.from(document.querySelectorAll('.project-building')).findIndex(el => el.classList.contains('is-passing'));
+      if (active !== -1 && sequence.at(-1) !== active) sequence.push(active);
+      directions.add(car.dataset.direction);
+      opened ||= document.querySelector('.project-dialog').open || location.hash.startsWith('#project-');
+      if (innerWidth <= 640 && active !== -1) {
+        const x = Number(car.getAttribute('transform').match(/translate\(([-\d.]+)/)[1]);
+        const center = active === 1 ? 34 : document.querySelector('.city-stage').clientWidth - 34;
+        laneOK &&= car.dataset.direction === 'outbound' ? x < center : x > center;
+      }
+    }
+    const moved = initial !== car.getAttribute('transform');
+    window.requestAnimationFrame = nativeRequest;
+    window.cancelAnimationFrame = nativeCancel;
+    frames.clear();
+    document.dispatchEvent(new Event('visibilitychange'));
+    return { sequence, directions: Array.from(directions), moved, opened, laneOK };
+  });
+  assert.ok(result.moved, `Car moves at ${width}px`);
+  assert.ok(result.sequence.join(',').includes('0,1,2,1,0'), `Car lights stops on both legs at ${width}px: ${result.sequence}`);
+  assert.deepEqual(result.directions.sort(), ['outbound', 'return']);
+  assert.ok(result.laneOK, 'Mobile car travels down the left lane and up the right lane');
+  assert.equal(result.opened, false, 'Traffic never opens projects or changes the URL');
+  const trafficCar = page.locator('.city-car');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.waitForTimeout(100);
+  const still = await trafficCar.getAttribute('transform');
+  await page.waitForTimeout(150);
+  assert.equal(await trafficCar.getAttribute('transform'), still, 'Reduced motion stops the car');
+  if (width <= 640) {
+    assert.ok(await page.locator('.city-road').evaluate(el => Math.abs(el.getBoundingClientRect().top - document.querySelector('#projects').getBoundingClientRect().top) < 1), 'Road starts at the section top');
+    assert.ok(await page.evaluate(() => {
+      const road = document.querySelector('.city-road');
+      const path = road.querySelector('.city-road-markings');
+      const origin = road.getBoundingClientRect();
+      const protectedBoxes = [...document.querySelectorAll('.building-model, .building-label, .building-action, .city-moon')].map(el => el.getBoundingClientRect());
+      const length = path.getTotalLength();
+      for (let offset = 0; offset < length; offset += 3) {
+        const point = path.getPointAtLength(offset);
+        const x = origin.x + point.x;
+        const y = origin.y + point.y;
+        if (protectedBoxes.some(box => x + 26 > box.left && x - 26 < box.right && y + 26 > box.top && y - 26 < box.bottom)) return false;
+      }
+      return true;
+    }), `Road clears every building, label, button, and moon at ${width}px`);
+  }
+}
+
 async function checkBrowser(engine) {
   const browser = engine === 'webkit' ? await webkit.launch({ headless: true }) : await chromium.launch({ headless: true, channel: 'msedge' });
   try {
@@ -21,11 +94,15 @@ async function checkBrowser(engine) {
     await page.locator('#background').evaluate(el => el.scrollIntoView({ behavior: 'instant', block: 'start' }));
     await page.waitForTimeout(200);
     assert.equal(await page.locator('.building-action').count(), 3);
-    assert.equal(await page.locator('.section-scroll-cue').first().innerText(), 'Projects');
-    assert.equal(await page.locator('.section-scroll-cue').last().getAttribute('href'), '#education');
+    assert.equal(await page.locator('.section-scroll-cue').count(), 1);
+    assert.equal(await page.locator('.section-scroll-cue').first().innerText(), '');
+    assert.equal(await page.locator('.section-scroll-cue').first().getAttribute('href'), '#projects');
     assert.equal(await page.locator('.navlink[href="#background"]').innerText(), 'Education/Experience');
     assert.equal(await page.locator('#background-title').innerText(), 'Education/Experience');
-    assert.equal(await page.locator('.section-scroll-cue').last().innerText(), 'Education/Experience');
+    assert.equal(await page.locator('.stop-logo img').count(), 4);
+    assert.deepEqual(await page.locator('.stop-label').allTextContents(), ['Wind Group', 'Honours Bachelor of Business Administration', 'RBC Royal Bank of Canada', 'Honours Bachelor of Science, Computer Science']);
+    assert.deepEqual(await page.locator('.stop-institution').allTextContents(), ['Brock University', 'Brock University']);
+    assert.ok(await page.evaluate(() => Math.abs(document.querySelector('#projects').getBoundingClientRect().bottom - document.querySelector('#background').getBoundingClientRect().top) < 1), 'Projects and Education/Experience are flush');
     assert.equal(await page.locator('#certifications').count(), 0);
     assert.equal(await page.locator('.transit-journey button, .transit-journey a, .transit-status, .journey-heading, .transit-caption, .transit-scene-bar').count(), 0);
     assert.deepEqual(await page.locator('.journey-entry').evaluateAll(entries => entries.map(entry => entry.id)), ['wind-stop', 'business-stop', 'rbc-stop', 'computer-science-stop']);
@@ -52,9 +129,8 @@ async function checkBrowser(engine) {
       window.restoreFrames = () => {
         window.requestAnimationFrame = nativeRequest;
         window.cancelAnimationFrame = nativeCancel;
-        const pending = Array.from(frames.values());
         frames.clear();
-        pending.forEach(callback => callback(performance.now()));
+        document.dispatchEvent(new Event('visibilitychange'));
       };
       // Reschedule through the controlled clock instead of waiting for a native
       // frame to arrive; headless WebKit may throttle that original frame.
@@ -99,6 +175,8 @@ async function checkBrowser(engine) {
     const reduced = await car.getAttribute('transform');
     await page.waitForTimeout(250);
     assert.equal(await car.getAttribute('transform'), reduced);
+    await checkTraffic(page, 1440);
+    await checkTraffic(page, 390);
     for (const width of [1920, 1440, 768, 640, 390, 320]) {
       await page.setViewportSize({ width, height: 1000 });
       await page.waitForTimeout(100);
@@ -135,8 +213,8 @@ async function checkBrowser(engine) {
     assert.equal(await page.locator('#project-dialog').isVisible(), true);
     await page.keyboard.press('Escape');
     assert.equal(await page.locator('#project-dialog').isVisible(), false);
-    await page.locator('.section-scroll-cue').last().click();
-    assert.equal(await page.evaluate(() => window.location.hash), '#education');
+    await page.locator('.navlink[href="#background"]').click();
+    assert.equal(await page.evaluate(() => window.location.hash), '#background');
     await page.locator('.back-to-top').click();
     assert.equal(await page.evaluate(() => window.location.hash), '#home');
     await page.locator('#home').screenshot({ path: path.join(screenshotDirectory, `${engine}-home.png`), style: '.nav { visibility: hidden; }' });
@@ -171,6 +249,13 @@ async function checkBrowser(engine) {
     const trainBefore = await animatedPhone.locator('[data-train-car="0"]').getAttribute('transform');
     await animatedPhone.waitForTimeout(250);
     assert.notEqual(await animatedPhone.locator('[data-train-car="0"]').getAttribute('transform'), trainBefore, 'Train moves in a mobile private context');
+    await animatedPhone.waitForFunction(() => document.querySelector('.transit-stops-viewport').scrollLeft > 100, null, { timeout: 15000 });
+    await animatedPhone.locator('.transit-stops-viewport').evaluate(el => {
+      el.dispatchEvent(new Event('pointerdown'));
+      el.scrollLeft = 0;
+    });
+    await animatedPhone.waitForTimeout(200);
+    assert.equal(await animatedPhone.locator('.transit-stops-viewport').evaluate(el => el.scrollLeft), 0, 'Manual exploration pauses the label strip following');
     await animatedPhone.emulateMedia({ reducedMotion: 'reduce' });
     await animatedPhone.waitForTimeout(100);
     const stillTrain = await animatedPhone.locator('[data-train-car="0"]').getAttribute('transform');
@@ -237,8 +322,8 @@ async function checkBrowser(engine) {
         await phone.locator('.project-dialog-close').tap();
         await waitUntil(phone, () => !document.querySelector('#project-dialog').open);
       }
-      await phone.locator('.section-scroll-cue').last().tap();
-      await waitUntil(phone, () => location.hash === '#education');
+      await phone.locator('.navlink[href="#background"]').tap();
+      await waitUntil(phone, () => location.hash === '#background');
       await phone.waitForTimeout(100);
       const heading = await phone.locator('#education').boundingBox();
       const nav = await phone.locator('.nav').boundingBox();

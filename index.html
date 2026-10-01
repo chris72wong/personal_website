@@ -47,7 +47,6 @@
         </svg>
       </div>
       <a class="scroll-cue section-scroll-cue" href="#projects" aria-label="Scroll to projects">
-        <span>Projects</span>
         <svg viewBox="0 0 24 28" width="24" height="28" aria-hidden="true" focusable="false"><path d="m4 6 8 8 8-8M4 14l8 8 8-8" /></svg>
       </a>
     </section>
@@ -67,12 +66,23 @@
           </div>
           <div class="city-pavement" aria-hidden="true"></div>
           <div class="city-street" aria-hidden="true"><span></span></div>
-          <div class="city-buildings">
-            <svg class="city-road" viewBox="0 0 360 960" preserveAspectRatio="none" fill="none" aria-hidden="true" focusable="false">
-              <path class="city-road-pavement" d="M300-40V270C300 330 70 330 70 390V610C70 670 300 670 300 730V1000" />
-              <path class="city-road-surface" d="M300-40V270C300 330 70 330 70 390V610C70 670 300 670 300 730V1000" />
-              <path class="city-road-markings" d="M300-40V270C300 330 70 330 70 390V610C70 670 300 670 300 730V1000" />
+          <svg class="city-road" fill="none" aria-hidden="true" focusable="false">
+              <path class="city-road-pavement" />
+              <path class="city-road-surface" />
+              <path class="city-road-markings" />
             </svg>
+            <svg class="city-traffic" fill="none" aria-hidden="true" focusable="false">
+              <path class="city-drive-path" />
+              <g class="city-car">
+                <path fill="#e8dba2" opacity=".12" d="M13-5L48-15V15L13 5Z"/>
+                <rect x="-12" y="-9" width="7" height="3" rx="1" fill="#080f15"/><rect x="-12" y="6" width="7" height="3" rx="1" fill="#080f15"/>
+                <rect x="5" y="-9" width="7" height="3" rx="1" fill="#080f15"/><rect x="5" y="6" width="7" height="3" rx="1" fill="#080f15"/>
+                <rect x="-16" y="-7" width="32" height="14" rx="5" fill="#a8c4bb" stroke="#d4e2d3"/>
+                <path fill="#233c48" d="M-7-5H6L9-3V3L6 5H-7L-10 3V-3Z"/><path stroke="#92ada9" d="M-5-5V5M5-5V5"/>
+                <path stroke="#fff1b3" stroke-width="2" d="M14-5V-2M14 2V5"/><path stroke="#e38979" stroke-width="2" d="M-15-5V-2M-15 2V5"/>
+              </g>
+            </svg>
+          <div class="city-buildings">
             <a class="project-building building-dream" href="#project-dream-planner" data-project-link="project-dream-planner" aria-label="View project: Dream Planner">
               <span class="building-model" aria-hidden="true">
                 <svg viewBox="0 0 320 330" fill="none" focusable="false">
@@ -297,7 +307,6 @@
           <div class="project-dialog-content"></div>
         </div>
       </dialog>
-      <a class="section-scroll-cue" href="#education"><span>Education/Experience</span><svg viewBox="0 0 24 28" width="24" height="28" aria-hidden="true" focusable="false"><path d="m4 6 8 8 8-8M4 14l8 8 8-8" /></svg></a>
     </section>
 
     <section id="background" class="card" aria-labelledby="background-title">
@@ -312,13 +321,31 @@
               <linearGradient id="transit-water" x2="0" y2="1"><stop stop-color="#244b51"/><stop offset="1" stop-color="#0e1d29"/></linearGradient>
               <linearGradient id="transit-bridge" x2="0" y2="1"><stop stop-color="#4d6766"/><stop offset="1" stop-color="#263b41"/></linearGradient>
               <linearGradient id="transit-window" x2="0" y2="1"><stop stop-color="#e4d8ab"/><stop offset="1" stop-color="#98b8a9"/></linearGradient>
+              <linearGradient id="transit-body" x2="0" y2="1"><stop stop-color="#dce6df"/><stop offset=".5" stop-color="#9fb7b1"/><stop offset="1" stop-color="#6f8c88"/></linearGradient>
               <g id="transit-pine"><path fill="#173d31" stroke="#395747" stroke-width=".7" d="M0 0L-14 33H-8L-20 50H-4V61H4V50H20L8 33H14Z"/></g>
               <g id="transit-car">
-                <rect x="-54" y="-27" width="51" height="21" rx="4" fill="#537b6c" stroke="#a3ba9c"/>
-                <path stroke="#c7b58b" stroke-width="2" d="M-52-10H-5"/>
-                <path fill="url(#transit-window)" d="M-48-23H-39V-15H-48Z M-35-23H-26V-15H-35Z M-22-23H-13V-15H-22Z"/>
-                <path stroke="#adbea6" d="M-10-23V-8M-57-8H-54"/>
-                <g fill="#0d1b22" stroke="#9aaea0"><circle cx="-44" cy="-4" r="4"/><circle cx="-13" cy="-4" r="4"/></g>
+                <path fill="#50666b" d="M-81-35H-18L-13-31H-84Z"/>
+                <rect x="-88" y="-32" width="87" height="25" rx="3" fill="url(#transit-body)" stroke="#c0d3c7"/>
+                <path fill="#1e3d48" d="M-84-28H-5V-17H-84Z"/>
+                <path fill="url(#transit-window)" d="M-81-26H-67V-19H-81Z M-63-26H-49V-19H-63Z M-45-26H-31V-19H-45Z"/>
+                <path stroke="#41676b" d="M-25-29V-9H-10V-29M-17-29V-9"/>
+                <path stroke="#48bba0" stroke-width="3" d="M-86-13H-3"/>
+                <path fill="#263e43" d="M-88-7H-1V-3H-88Z"/>
+                <path stroke="#182c32" stroke-width="5" d="M-94-24V-9M-91-24V-9"/>
+                <g fill="#10242d" stroke="#658380"><path d="M-75-4H-54V0H-75Z M-34-4H-13V0H-34Z"/><circle cx="-71" cy="-1" r="2.5"/><circle cx="-58" cy="-1" r="2.5"/><circle cx="-30" cy="-1" r="2.5"/><circle cx="-17" cy="-1" r="2.5"/></g>
+              </g>
+              <g id="transit-cab">
+                <path fill="#50666b" d="M-81-35H-29L-20-31H-84Z"/>
+                <path fill="url(#transit-body)" stroke="#d0ded3" d="M-88-32H-30Q-17-32-8-23L8-9Q11-4 3-4H-88Z"/>
+                <path fill="#1e3d48" d="M-84-28H-33V-17H-84Z M-29-28Q-20-28-13-21L-7-16H-25Z"/>
+                <path fill="url(#transit-window)" d="M-80-26H-66V-19H-80Z M-62-26H-48V-19H-62Z"/>
+                <path stroke="#41676b" d="M-43-29V-9H-30V-29M-37-29V-9"/>
+                <path stroke="#48bba0" stroke-width="3" d="M-86-13H-21L3-7"/>
+                <path fill="#263e43" d="M-88-7H-17L3-4H-88Z"/>
+                <path stroke="#182c32" stroke-width="5" d="M-94-24V-9M-91-24V-9"/>
+                <g fill="#10242d" stroke="#658380"><path d="M-75-4H-54V0H-75Z M-34-4H-13V0H-34Z"/><circle cx="-71" cy="-1" r="2.5"/><circle cx="-58" cy="-1" r="2.5"/><circle cx="-30" cy="-1" r="2.5"/><circle cx="-17" cy="-1" r="2.5"/></g>
+                <path stroke="#fff0bb" stroke-width="2" d="M0-12L4-9"/>
+                <path fill="#f9edb2" opacity=".1" d="M5-11L49-17V-1L7-6Z"/>
               </g>
               <g id="transit-station-sign"><path stroke="#9aab8e" d="M0 0V-40"/><rect x="-12" y="-54" width="24" height="18" rx="3" fill="#17312a" stroke="#819c7d"/><circle cy="1" r="4" fill="#bbcca1" stroke="#172b24"/></g>
             </defs>
@@ -345,18 +372,20 @@
             <g data-track-stop="2" transform="translate(705 236)"><use href="#transit-station-sign"/><text y="-41" text-anchor="middle" fill="#c7d4b5" font-family="monospace" font-size="10">03</text></g>
             <g data-track-stop="3" transform="translate(968 212)"><use href="#transit-station-sign"/><text y="-41" text-anchor="middle" fill="#c7d4b5" font-family="monospace" font-size="10">04</text></g>
             <g class="transit-train" data-train-car="2" transform="translate(78 216)"><use href="#transit-car"/></g>
-            <g class="transit-train" data-train-car="1" transform="translate(139 220)"><use href="#transit-car"/></g>
-            <g class="transit-train" data-train-car="0" transform="translate(200 224)"><use href="#transit-car"/><path fill="#b5c6a9" stroke="#d0d5b4" d="M-12-27H-4L3-17V-6H-12Z"/><path fill="#759e9b" d="M-9-23H-5L0-17H-9Z"/><path stroke="#f0d5a1" stroke-width="2" d="M1-12H4"/></g>
+            <g class="transit-train" data-train-car="1" transform="translate(108 220)"><use href="#transit-car"/><path stroke="#aabeb2" stroke-width="1.5" d="M-57-35L-48-45L-31-40L-38-35M-51-45H-29"/></g>
+            <g class="transit-train" data-train-car="0" transform="translate(200 224)"><use href="#transit-cab"/></g>
             <path fill="#0d211f" d="M0 331L77 310L175 344L258 320L347 380H0Z M802 380L905 324L1005 345L1100 311V380Z"/>
             <g opacity=".8"><use href="#transit-pine" x="34" y="287"/><use href="#transit-pine" x="177" y="320"/><use href="#transit-pine" x="1009" y="308"/><use href="#transit-pine" x="1070" y="275"/></g>
           </svg>
         </div>
-        <ol class="transit-stops" aria-label="Education/Experience stops">
-          <li class="transit-stop" data-transit-stop="0" data-entry="wind-stop" data-progress="0.18"><span class="stop-number">01</span><span class="stop-label">Wind Group</span><span class="stop-date">2019 – Present</span></li>
-          <li class="transit-stop" data-transit-stop="1" data-entry="business-stop" data-progress="0.4"><span class="stop-number">02</span><span class="stop-label">Business</span><span class="stop-date">2022</span></li>
-          <li class="transit-stop" data-transit-stop="2" data-entry="rbc-stop" data-progress="0.64"><span class="stop-number">03</span><span class="stop-label">RBC</span><span class="stop-date">2021 – 2024</span></li>
-          <li class="transit-stop" data-transit-stop="3" data-entry="computer-science-stop" data-progress="0.88"><span class="stop-number">04</span><span class="stop-label">Computer Science</span><span class="stop-date">2028</span></li>
-        </ol>
+        <div class="transit-stops-viewport" tabindex="0" role="region" aria-label="Education/Experience stops, scroll horizontally to explore">
+          <ol class="transit-stops">
+            <li class="transit-stop" data-transit-stop="0" data-entry="wind-stop" data-progress="0.18"><span class="stop-logo"><img src="images/Wind.webp" alt="" width="56" height="56"/></span><span class="stop-label">Wind Group</span><span class="stop-date">2019 – Present</span></li>
+            <li class="transit-stop" data-transit-stop="1" data-entry="business-stop" data-progress="0.4"><span class="stop-logo"><img src="images/Brock.jpg" alt="" width="56" height="56"/></span><span class="stop-institution">Brock University</span><span class="stop-label">Honours Bachelor of Business Administration</span><span class="stop-date">2022</span></li>
+            <li class="transit-stop" data-transit-stop="2" data-entry="rbc-stop" data-progress="0.64"><span class="stop-logo"><img src="images/RBC.jpeg" alt="" width="56" height="56"/></span><span class="stop-label">RBC Royal Bank of Canada</span><span class="stop-date">2021 – 2024</span></li>
+            <li class="transit-stop" data-transit-stop="3" data-entry="computer-science-stop" data-progress="0.88"><span class="stop-logo"><img src="images/Brock.jpg" alt="" width="56" height="56"/></span><span class="stop-institution">Brock University</span><span class="stop-label">Honours Bachelor of Science, Computer Science</span><span class="stop-date">2028</span></li>
+          </ol>
+        </div>
       </div>
       <div class="journey-timeline">
         <article id="wind-stop" class="journey-entry" aria-labelledby="wind-title">
@@ -550,5 +579,6 @@
   </script>
   <script src="projects.js"></script>
   <script src="transit.js"></script>
+  <script src="city-traffic.js"></script>
 </body>
 </html>

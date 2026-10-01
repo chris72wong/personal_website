@@ -6,6 +6,7 @@
   const stops = Array.from(journey.querySelectorAll('[data-transit-stop]'));
   const markers = Array.from(journey.querySelectorAll('[data-track-stop]'));
   const landscape = journey.querySelector('.transit-landscape');
+  const stopViewport = journey.querySelector('.transit-stops-viewport');
   const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
   const mobile = window.matchMedia('(max-width: 640px)');
   if (!track?.getPointAtLength || !cars.length || !stops.length) return;
@@ -14,12 +15,17 @@
   const positions = stops.map(stop => Number(stop.dataset.progress));
   const entries = stops.map(stop => document.getElementById(stop.dataset.entry));
   const start = -.02;
-  const end = 1 + 185 / length;
+  const end = 1 + 290 / length;
   let progress = preference.matches ? positions[0] : start;
   let visible = !('IntersectionObserver' in window);
   let frame = null;
   let previousTime = null;
   let currentStop = -1;
+  let manualScrollUntil = 0;
+  // Give touch, trackpad, and keyboard exploration time before following again.
+  ['pointerdown', 'wheel', 'keydown'].forEach(event => stopViewport.addEventListener(event, () => {
+    manualScrollUntil = performance.now() + 8000;
+  }, { passive: true }));
 
   // Extend the end tangents so all three cars enter and leave the scene fully.
   const pointAt = distance => {
@@ -41,10 +47,17 @@
       ? `${Math.max(0, Math.min(500, front.x - 350))} 0 600 380`
       : '0 0 1100 380');
     cars.forEach(car => {
-      const point = pointAt(progress * length - Number(car.dataset.trainCar) * 59);
+      const point = pointAt(progress * length - Number(car.dataset.trainCar) * 92);
       car.setAttribute('transform', `translate(${point.x} ${point.y}) rotate(${point.angle})`);
     });
     const active = positions.findIndex(position => progress >= position - .025 && progress <= position + .15);
+    if (mobile.matches && !preference.matches && performance.now() > manualScrollUntil) {
+      // Match the label strip's position to the moving landscape continuously.
+      const coordinate = Math.max(0, Math.min(1, (progress - positions[0]) / (positions.at(-1) - positions[0])));
+      const first = stops[0].offsetLeft + stops[0].offsetWidth / 2;
+      const last = stops.at(-1).offsetLeft + stops.at(-1).offsetWidth / 2;
+      stopViewport.scrollLeft = first + (last - first) * coordinate - stopViewport.clientWidth / 2;
+    }
     if (active === currentStop) return;
     currentStop = active;
     stops.forEach((stop, index) => {
