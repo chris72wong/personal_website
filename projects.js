@@ -9,6 +9,7 @@
   const panelContainer = projectSection.querySelector(".project-panels");
   const dialogContent = dialog.querySelector(".project-dialog-content");
   const closeButton = dialog.querySelector(".project-dialog-close");
+  const visitLink = dialog.querySelector(".project-dialog-visit");
   const stage = projectSection.querySelector(".city-stage");
   const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
   const panelsById = new Map(panels.map(panel => [panel.id, panel]));
@@ -138,6 +139,7 @@
     panels.forEach(candidate => { candidate.hidden = candidate !== panel; });
     updateSelectors(id);
     dialog.dataset.project = id;
+    visitLink.href = panel.dataset.projectUrl;
     dialog.setAttribute("aria-labelledby", panel.getAttribute("aria-labelledby"));
     if (!dialog.open) dialog.showModal();
     dialogContent.scrollTop = 0;

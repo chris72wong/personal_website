@@ -70,6 +70,7 @@ function setup({ hash = '#projects', reduced = false, observers = true, nativeDi
   const panelContainer = new Element();
   const dialogContent = new Element();
   const closeButton = new Element();
+  const visitLink = new Element();
   const body = new Element();
   const stage = new Element();
   const section = new Element('projects');
@@ -78,7 +79,7 @@ function setup({ hash = '#projects', reduced = false, observers = true, nativeDi
   dialog.showModal = nativeDialog ? () => { dialog.open = true; } : undefined;
   dialog.close = () => { dialog.open = false; dialog.dispatch('close'); };
   dialog.getBoundingClientRect = () => ({ left: 150, top: 140, right: 1050, bottom: 760, width: 900, height: 620 });
-  dialog.querySelector = selector => ({ '.project-dialog-content': dialogContent, '.project-dialog-close': closeButton })[selector];
+  dialog.querySelector = selector => ({ '.project-dialog-content': dialogContent, '.project-dialog-close': closeButton, '.project-dialog-visit': visitLink })[selector];
   section.querySelectorAll = selector => selector === '.project-panel' ? panels : selectors;
   section.querySelector = selector => ({ '.project-dialog': dialog, '.project-panels': panelContainer, '.city-stage': stage })[selector];
   const preference = new Element();
