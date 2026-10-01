@@ -4,43 +4,224 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Christopher Wong</title>
-  <meta name="description" content="Chris — Home, About, Experience, Education." />
+  <meta name="description" content="Christopher Wong — computer science student with a background in business, personal finance, and hospitality. Explore my education, experience, and projects." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
   <header class="nav">
     <div class="nav-inner">
-      <nav class="nav-links" id="navLinks">
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
         <a href="#home" class="navlink active">Home</a>
-        <a href="#about" class="navlink">About me</a>
+        <a href="#projects" class="navlink">Projects</a>
         <a href="#education" class="navlink">Education</a>
         <a href="#experience" class="navlink">Experience</a>
-        <a href="#projects" class="navlink">Projects</a>
         <a href="#certifications" class="navlink">Certificates</a>
       </nav>
     </div>
   </header>
 
-  <main class="wrap">
+  <main class="wrap" id="main" tabindex="-1">
     <section id="home" class="card hero">
       <div class="hero-inner">
-        <h1><span>Christopher Wong</span></h1>
+        <h1 aria-label="Christopher Wong">
+          <span class="name-line" aria-hidden="true"><span class="name-reserved">Christopher</span><span class="name-visual"><span class="name-text">Christopher</span></span></span>
+          <span class="name-line name-surname" aria-hidden="true"><span class="name-reserved">Wong</span><span class="name-visual"><span class="name-text">Wong</span><span class="name-cursor"></span></span></span>
+        </h1>
       </div>
+      <div class="hero-skyline" aria-hidden="true">
+        <svg viewBox="0 0 560 350" fill="none" focusable="false">
+          <g class="skyline-backdrop">
+            <path d="M12 306V246H42V215H69V285H84V183H117V289H140V220H164V199H186V303M295 303V195H322V177H346V272H367V210H401V292H420V235H450V204H477V279H499V248H530V307" />
+          </g>
+          <g class="skyline-outline">
+            <path class="skyline-draw" pathLength="100" d="M20 320V284H52V267H84V320H99V217H137V320H151V161H159V144H184V161H192V320H211" />
+            <path class="skyline-draw skyline-tower" pathLength="100" d="M225 320L238 145H232L224 137V129L234 126V117L241 112V76L245 22L249 76V112L256 117V126L266 129V137L258 145H252L265 320M238 145H252M234 126H256M224 132H266M241 112H249" />
+            <path class="skyline-draw" pathLength="100" d="M280 320V283C292 240 365 240 380 283V320M280 283H380M298 283C308 251 351 251 362 283M395 320V202H409V180H421V153H446V180H458V202H472V320H488V265H516V282H539V320" />
+          </g>
+          <g class="skyline-details">
+            <path d="M108 235H128M108 249H128M108 263H128M108 277H128M108 291H128M163 177H180M163 194H180M163 211H180M163 228H180M163 245H180M163 262H180M163 279H180M163 296H180M405 220H460M405 239H460M405 258H460M405 277H460M405 296H460M423 191V308M444 191V308M294 301H366M35 300H69M498 295H526" />
+            <path d="M9 329H551" />
+          </g>
+        </svg>
+      </div>
+      <a class="scroll-cue" href="#projects" aria-label="Scroll to projects">
+        <svg viewBox="0 0 24 28" width="24" height="28" aria-hidden="true" focusable="false"><path d="m4 6 8 8 8-8M4 14l8 8 8-8" /></svg>
+      </a>
     </section>
 
-    <section id="about" class="card">
+    <section id="projects" class="card">
       <div class="section-head">
-        <h2><span class="grad">About me</span></h2>
+        <h2><span class="grad">Projects</span></h2>
       </div>
-      <div class="section-body">
-        <p>
-          I am a computer science student with previous experience in personal finance and hospitality, where I developed strong communication, client-facing, and problem-solving skills. 
-          Working in fast-paced, team-oriented environments taught me to multitask effectively, adapt quickly, and collaborate in a team. 
-          I also hold a degree in business administration, which complements technical studies with a solid understanding of analytics, finance, operations, and decision-making. 
-        </p>
+      <p class="project-intro" id="project-city-help">Choose a building to explore a project.</p>
+      <div class="project-city" aria-describedby="project-city-help">
+        <div class="city-stage">
+          <div class="city-ground" aria-hidden="true"></div>
+          <div class="city-buildings">
+            <a class="project-building building-dream" href="#project-dream-planner" data-project-link="project-dream-planner" aria-label="View Dream Planner">
+              <span class="building-model" aria-hidden="true">
+                <svg viewBox="0 0 260 330" fill="none" focusable="false">
+                  <defs><pattern id="dream-windows" x="0" y="0" width="23" height="29" patternUnits="userSpaceOnUse"><rect class="building-window" x="6" y="7" width="9" height="15" rx="1" /></pattern></defs>
+                  <ellipse class="building-shadow" cx="137" cy="305" rx="101" ry="13" />
+                  <path class="building-side" d="M192 78L227 59V283L192 305Z" />
+                  <path class="building-roof" d="M67 78L102 59H227L192 78Z" />
+                  <path class="building-face building-outline" d="M67 78H192V305H67Z" />
+                  <path fill="url(#dream-windows)" d="M80 129H181V271H80Z" />
+                  <path class="building-edge" d="M67 121H192M67 279H192M205 91V275M215 86V269" />
+                  <path class="building-side" d="M99 46L123 33H194V59L171 72Z" />
+                  <path class="building-roof" d="M81 47L105 33H194L171 47Z" />
+                  <path class="building-face" d="M81 47H171V72H81Z" />
+                  <path class="building-edge" d="M90 57H161M90 66H161M105 33V24M117 33V26M183 33V23" />
+                  <path class="terrace-plant" d="M104 31V19M104 25L97 21M104 28L111 24M183 31V20M183 25L177 21M183 28L188 25" />
+                  <rect class="building-sign" x="111" y="88" width="36" height="26" rx="2" />
+                  <path class="building-icon" d="M119 108V103H124V98H129V93H139M119 109H139" />
+                  <path class="building-door" d="M116 305V283H142V305M129 284V304" />
+                  <path class="building-step" d="M62 305H196L203 312H55Z" />
+                </svg>
+              </span>
+              <span class="building-label">Dream Planner</span>
+              <span class="building-caption">Financial planning</span>
+            </a>
+            <a class="project-building building-travel" href="#project-travel-dashboard" data-project-link="project-travel-dashboard" aria-label="View Travel Dashboard">
+              <span class="building-model" aria-hidden="true">
+                <svg viewBox="0 0 260 330" fill="none" focusable="false">
+                  <ellipse class="building-shadow" cx="132" cy="305" rx="113" ry="13" />
+                  <path class="building-side" d="M213 176L246 155V284L213 305Z" />
+                  <path class="building-face building-outline" d="M29 176H213V305H29Z" />
+                  <path class="building-roof" d="M19 169L54 145H237L246 155L213 180H29Z" />
+                  <path class="building-edge" d="M36 159H220M29 187H213M222 189V280M236 178V273" />
+                  <path class="building-roof" d="M54 145L88 126H206L237 145Z" />
+                  <path class="building-face" d="M73 121H166V145H73Z" />
+                  <path class="building-side" d="M166 121L188 108V130L166 145Z" />
+                  <path class="building-roof" d="M73 121L95 108H188L166 121Z" />
+                  <rect class="building-sign" x="106" y="119" width="29" height="20" rx="2" />
+                  <path class="building-icon" d="M112 129L121 121L129 129M115 131H126M118 134H123" />
+                  <rect class="building-window" x="44" y="207" width="38" height="36" rx="2" />
+                  <rect class="building-window" x="91" y="207" width="38" height="36" rx="2" />
+                  <rect class="building-window" x="138" y="207" width="58" height="36" rx="2" />
+                  <path class="building-edge" d="M63 208V241M110 208V241M158 208V241M178 208V241M44 225H196M44 264H93" />
+                  <path class="building-door" d="M147 305V265H185V305M166 266V304" />
+                  <path class="building-step" d="M25 305H216L224 313H18Z" />
+                  <path class="transit-track" d="M23 321H226M25 325H229M52 318L59 328M84 318L91 328M116 318L123 328M148 318L155 328M180 318L187 328M212 318L219 328" />
+                  <path class="building-edge" d="M39 303V284H80M42 284V274H76V284M72 284V303" />
+                </svg>
+              </span>
+              <span class="building-label">Travel Dashboard</span>
+              <span class="building-caption">Trips &amp; itineraries</span>
+            </a>
+            <a class="project-building building-gym" href="#project-gym-partner" data-project-link="project-gym-partner" aria-label="View Gym Partner">
+              <span class="building-model" aria-hidden="true">
+                <svg viewBox="0 0 260 330" fill="none" focusable="false">
+                  <defs><pattern id="gym-windows" x="0" y="0" width="24" height="29" patternUnits="userSpaceOnUse"><rect class="building-window" x="5" y="5" width="14" height="17" rx="1" /></pattern></defs>
+                  <ellipse class="building-shadow" cx="138" cy="305" rx="107" ry="13" />
+                  <path class="building-side" d="M204 142L239 123V284L204 305Z" />
+                  <path class="building-face building-outline" d="M44 142H204V305H44Z" />
+                  <path class="building-roof" d="M44 142L79 123H239L204 142Z" />
+                  <path class="building-face" d="M63 97H183V135H63Z" />
+                  <path class="building-side" d="M183 97L216 79V119L183 135Z" />
+                  <path class="building-roof" d="M63 97L96 79H216L183 97Z" />
+                  <path class="court-line" d="M100 86H191L171 98H80Z M135 86L114 98" />
+                  <rect class="building-sign" x="106" y="105" width="35" height="25" rx="2" />
+                  <path class="building-icon" d="M114 112V123M119 110V125M119 117H129M129 110V125M134 112V123" />
+                  <path fill="url(#gym-windows)" d="M58 160H191V246H58Z" />
+                  <path class="building-edge" d="M44 254H204M44 151H204M215 152V277M228 145V270" />
+                  <path class="building-door" d="M109 305V263H144V305M126 264V304" />
+                  <path class="building-window" d="M59 263H93V290H59Z M160 263H190V290H160Z" />
+                  <path class="building-step" d="M40 305H207L215 313H33Z" />
+                  <path class="terrace-plant" d="M53 303V293M50 294C42 282 51 275 57 283C65 278 69 292 59 295M192 303V294M189 294C181 282 190 275 196 283C204 278 208 292 198 295" />
+                </svg>
+              </span>
+              <span class="building-label">Gym Partner</span>
+              <span class="building-caption">Training &amp; progress</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <nav class="mobile-project-picker" aria-label="Choose a project">
+        <a href="#project-dream-planner" data-project-link="project-dream-planner">Dream Planner</a>
+        <a href="#project-travel-dashboard" data-project-link="project-travel-dashboard">Travel Dashboard</a>
+        <a href="#project-gym-partner" data-project-link="project-gym-partner">Gym Partner</a>
+      </nav>
+      <p class="project-selection-status visually-hidden" role="status" aria-live="polite"></p>
+      <div class="section-body project-panels">
+        <article class="media-row project-row project-panel" id="project-dream-planner" aria-labelledby="dream-planner-title">
+          <div class="media-copy">
+            <div class="project-heading">
+              <h3 id="dream-planner-title">Dream Planner</h3>
+            </div>
+            <ul class="project-stack tech-tags" aria-label="Technologies">
+              <li>Java 21</li>
+              <li>Spring Boot</li>
+              <li>REST APIs</li>
+              <li>Spring JDBC</li>
+              <li>PostgreSQL</li>
+              <li>Docker</li>
+              <li>Maven</li>
+              <li>HTML</li>
+              <li>CSS</li>
+              <li>JavaScript</li>
+            </ul>
+            <ul class="project-details">
+              <li>Built a full-stack planning app with a Java calculation engine and Spring Boot REST APIs.</li>
+              <li>Implemented SQL-backed scenario storage with Spring JDBC and PostgreSQL support through Docker Compose for local deployments.</li>
+              <li>Delivered guided financial projections, input validation, browser saving, and JSON export.</li>
+            </ul>
+          </div>
+          <div class="media-images one project">
+            <img class="media-image project" src="./images/dream-planner.png" alt="Dream Planner welcome screen with illustrated Home, Retirement, and Education planning cards." width="2136" height="1222" loading="lazy" />
+          </div>
+        </article>
+        <article class="media-row project-row project-panel" id="project-travel-dashboard" aria-labelledby="travel-dashboard-title">
+          <div class="media-copy">
+            <div class="project-heading">
+              <h3 id="travel-dashboard-title">Travel Dashboard</h3>
+              <time datetime="2026-08">Aug. 2026</time>
+            </div>
+            <ul class="project-stack tech-tags" aria-label="Technologies">
+              <li>Next.js</li>
+              <li>TypeScript</li>
+              <li>Tailwind CSS</li>
+              <li>Vercel</li>
+            </ul>
+            <ul class="project-details">
+              <li>Built and deployed a Next.js itinerary dashboard with TypeScript and reusable UI components.</li>
+              <li>Implemented server-side access control, environment-based secrets, signed HttpOnly cookie sessions, and login-attempt rate limiting.</li>
+              <li>Used request interception and modular data, type, routing, and security layers for maintainability.</li>
+            </ul>
+          </div>
+          <div class="media-images one project">
+            <img class="media-image project" src="./images/travel-dashboard.png" alt="Travel Dashboard calendar organizing flights, accommodations, trains, buses, and cruise stops." width="3752" height="1750" loading="lazy" />
+          </div>
+        </article>
+        <article class="media-row project-row project-panel" id="project-gym-partner" aria-labelledby="gym-partner-title">
+          <div class="media-copy">
+            <div class="project-heading">
+              <h3 id="gym-partner-title">Gym Partner</h3>
+              <time datetime="2026-04">Apr. 2026</time>
+            </div>
+            <ul class="project-stack tech-tags" aria-label="Technologies">
+              <li>Next.js</li>
+              <li>React</li>
+              <li>TypeScript</li>
+              <li>Tailwind CSS</li>
+              <li>Supabase</li>
+              <li>PostgreSQL</li>
+              <li>Vercel</li>
+            </ul>
+            <ul class="project-details">
+              <li>Built a full-stack fitness app with calendar-based training logs, progress tracking, and interactive muscle-group exercise discovery.</li>
+              <li>Developed adaptive push/pull and full-body workout generation with muscle balancing, exercise swaps, and drag-and-drop customization.</li>
+              <li>Implemented real-time shared progress with Supabase, API routes, PostgreSQL storage, typed validation, and local-storage fallback.</li>
+            </ul>
+          </div>
+          <div class="media-images one project">
+            <img class="media-image project" src="./images/gym-partner.png" alt="Gym Partner showing two progress bars and interactive front and back muscle-group diagrams." width="2396" height="1912" loading="lazy" />
+          </div>
+        </article>
       </div>
     </section>
 
@@ -79,10 +260,9 @@
           </div>
           <div class="media-copy">
             <h3>RBC Royal Bank of Canada</h3>
-            <p>
-              Experienced in personal finance with a client-focused background that emphasizes clear communication, organization, and practical financial guidance. 
-              Developed strong analytical and interpersonal skills through working directly with clients and real-world financial scenarios.
-            </p>
+            <div class="role-block">
+              <p class="year"><time datetime="2021-10">Oct. 2021</time> – <time datetime="2024-01">Jan. 2024</time></p>
+            </div>
           </div>
         </div>
 
@@ -92,54 +272,11 @@
           </div>
           <div class="media-copy">
             <h3>Wind Group</h3>
-            <p>
-              Experienced in hospitality within fast-paced, team-oriented environments that required multitasking, adaptability, and strong customer service skills. 
-              Built effective communication and teamwork abilities while consistently delivering reliable service under pressure.
-            </p>
+            <div class="role-block">
+              <p class="year"><time datetime="2019-10">Oct. 2019</time> – Present</p>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-
-    <section id="projects" class="card">
-      <div class="section-head">
-        <h2><span class="grad">Projects</span></h2>
-      </div>
-      <div class="section-body">
-        <article class="media-row project-row">
-          <div class="media-copy">
-            <div class="project-heading">
-              <h3>Travel Dashboard</h3>
-              <time datetime="2026-08">Aug. 2026</time>
-            </div>
-            <p class="project-stack">Next.js, TypeScript, Tailwind CSS, Vercel</p>
-            <ul class="project-details">
-              <li>Built and deployed a private travel dashboard that centralizes itinerary information in a single web interface.</li>
-              <li>Implemented server-side access control with environment-based secrets, signed HttpOnly cookie sessions, request interception, and login-attempt rate limiting.</li>
-              <li>Structured the codebase into reusable UI components and isolated data, type, routing, and security modules for maintainability.</li>
-            </ul>
-          </div>
-          <div class="media-images one project">
-            <img class="media-image project" src="./images/travel-dashboard.png" alt="Travel Dashboard calendar organizing flights, accommodations, trains, buses, and cruise stops." width="3752" height="1750" loading="lazy" />
-          </div>
-        </article>
-        <article class="media-row project-row">
-          <div class="media-copy">
-            <div class="project-heading">
-              <h3>Gym Partner</h3>
-              <time datetime="2026-04">Apr. 2026</time>
-            </div>
-            <p class="project-stack">Next.js, React, TypeScript, Tailwind CSS, Supabase, PostgreSQL, Vercel</p>
-            <ul class="project-details">
-              <li>Built a full-stack fitness companion with workout planning, calendar-based training logs, progress tracking, stretch checklists, and interactive muscle-group exercise discovery.</li>
-              <li>Developed an adaptive workout-generation system that creates push/pull and full-body routines from structured exercise data, with muscle-group balancing, exercise swaps, and drag-and-drop customization.</li>
-              <li>Implemented real-time shared progress syncing with Supabase, API routes, PostgreSQL-backed state storage, typed validation, and local-storage fallback.</li>
-            </ul>
-          </div>
-          <div class="media-images one project">
-            <img class="media-image project" src="./images/gym-partner.png" alt="Gym Partner showing two progress bars and interactive front and back muscle-group diagrams." width="2396" height="1912" loading="lazy" />
-          </div>
-        </article>
       </div>
     </section>
 
@@ -161,11 +298,11 @@
 
         <div class="media-row">
           <div class="media-images one">
-            <img class="media-image" src="./images/PMI.png" alt="Project Management Institute" />
+            <img class="media-image" src="./images/PMI.png" alt="PMI" />
           </div>
           <div class="media-copy">
-            <h3>Certified Associate in Project Management (CAPM)®</h3>
-            <p>Project Management Institute</p>
+            <h3>Certified Associate in Project Management</h3>
+            <p>PMI</p>
             <p><span class="year">2023</span></p>
           </div>
         </div>
@@ -173,23 +310,86 @@
     </section>
 
     <footer class="footer">
-      © <span id="year"></span> Christopher Wong
+      © <span id="year">2026</span> Christopher Wong
     </footer>
   </main>
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    const navLinks = document.getElementById("navLinks");
+    const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const nameLines = Array.from(document.querySelectorAll(".name-text"));
+    const nameWords = nameLines.map(line => line.textContent);
+    const cursor = document.querySelector(".name-cursor");
+    let typingTimer;
+    const revealAnimations = new Map();
+    let revealObserver;
 
-    const ids = ["home","about","education","experience","projects","certifications"];
+    const finishTyping = () => {
+      clearTimeout(typingTimer);
+      nameLines.forEach((line, index) => { line.textContent = nameWords[index]; });
+      nameLines[1].parentElement.append(cursor);
+      document.documentElement.classList.remove("is-typing");
+    };
+
+    if (!motionPreference.matches) {
+      document.documentElement.classList.add("motion-ready", "is-typing");
+      nameLines.forEach(line => { line.textContent = ""; });
+      nameLines[0].parentElement.append(cursor);
+      const typeCharacter = (lineIndex, characterIndex) => {
+        if (motionPreference.matches) { finishTyping(); return; }
+        nameLines[lineIndex].textContent = nameWords[lineIndex].slice(0, characterIndex);
+        if (characterIndex < nameWords[lineIndex].length) {
+          typingTimer = setTimeout(() => typeCharacter(lineIndex, characterIndex + 1), 70);
+        } else if (lineIndex === 0) {
+          typingTimer = setTimeout(() => {
+            nameLines[1].parentElement.append(cursor);
+            typeCharacter(1, 0);
+          }, 180);
+        } else {
+          finishTyping();
+        }
+      };
+      typingTimer = setTimeout(() => typeCharacter(0, 1), 70);
+    }
+
+    if (!motionPreference.matches && "IntersectionObserver" in window && "animate" in Element.prototype) {
+      revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          revealObserver.unobserve(entry.target);
+          const animation = entry.target.animate([{ opacity: .4 }, { opacity: 1 }], {
+            duration: 250, easing: "ease-out"
+          });
+          revealAnimations.set(entry.target, animation);
+          animation.finished.then(() => revealAnimations.delete(entry.target), () => {});
+        });
+      }, { threshold: 0 });
+      document.querySelectorAll("main > section:not(.hero)").forEach(section => revealObserver.observe(section));
+    }
+
+    motionPreference.addEventListener("change", event => {
+      if (!event.matches) return;
+      finishTyping();
+      revealObserver?.disconnect();
+      revealAnimations.forEach(animation => animation.cancel());
+      revealAnimations.clear();
+      document.documentElement.classList.remove("motion-ready");
+    });
+
+    const ids = ["home","projects","education","experience","certifications"];
     const links = Array.from(document.querySelectorAll(".navlink"));
     const sections = ids
       .map(id => document.getElementById(id))
       .filter(Boolean);
 
     const setActive = (id) => {
-      links.forEach(l => l.classList.toggle("active", l.getAttribute("href") === `#${id}`));
+      links.forEach(l => {
+        const active = l.getAttribute("href") === `#${id}`;
+        l.classList.toggle("active", active);
+        if (active) l.setAttribute("aria-current", "location");
+        else l.removeAttribute("aria-current");
+      });
     };
 
     links.forEach(l => {
@@ -201,7 +401,7 @@
 
     let ticking = false;
     const getCurrentId = () => {
-      const offset = 120;
+      const offset = document.querySelector(".nav").offsetHeight + 32;
       let bestId = sections[0]?.id;
       let bestDist = Number.POSITIVE_INFINITY;
 
@@ -226,15 +426,6 @@
       if (ticking) return;
       ticking = true;
       requestAnimationFrame(() => {
-        const hero = document.getElementById("home");
-        if (hero) {
-          const heroHeight = Math.max(1, hero.offsetHeight);
-          const y = Math.min(window.scrollY || 0, heroHeight);
-          const t = Math.max(0, Math.min(1, y / heroHeight));
-          document.documentElement.style.setProperty("--curtainY", `${(1 - t) * 100}%`);
-          document.documentElement.style.setProperty("--heroShift", `${-y * 0.15}px`);
-        }
-
         const id = getCurrentId();
         if (id) setActive(id);
         ticking = false;
@@ -245,5 +436,6 @@
     window.addEventListener("resize", onScroll);
     onScroll();
   </script>
+  <script src="projects.js"></script>
 </body>
 </html>
