@@ -9,7 +9,6 @@
   const panelContainer = projectSection.querySelector(".project-panels");
   const dialogContent = dialog.querySelector(".project-dialog-content");
   const closeButton = dialog.querySelector(".project-dialog-close");
-  const locationLabel = dialog.querySelector(".project-dialog-location");
   const stage = projectSection.querySelector(".city-stage");
   const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
   const panelsById = new Map(panels.map(panel => [panel.id, panel]));
@@ -121,8 +120,6 @@
     updateSelectors(id);
     dialog.dataset.project = id;
     dialog.setAttribute("aria-labelledby", panel.getAttribute("aria-labelledby"));
-    locationLabel.textContent = selectors.find(selector =>
-      selector.dataset.projectLink === id && selector.dataset.projectPlace)?.dataset.projectPlace || "Inside the neighbourhood";
     if (!dialog.open) dialog.showModal();
     dialogContent.scrollTop = 0;
     closeButton.focus({ preventScroll: true });

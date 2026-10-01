@@ -17,9 +17,7 @@
       <nav class="nav-links" id="navLinks" aria-label="Main navigation">
         <a href="#home" class="navlink active">Home</a>
         <a href="#projects" class="navlink">Projects</a>
-        <a href="#education" class="navlink">Education</a>
-        <a href="#experience" class="navlink">Experience</a>
-        <a href="#certifications" class="navlink">Certificates</a>
+        <a href="#background" class="navlink">Education &amp; Experience</a>
       </nav>
     </div>
   </header>
@@ -48,7 +46,8 @@
           </g>
         </svg>
       </div>
-      <a class="scroll-cue" href="#projects" aria-label="Scroll to projects">
+      <a class="scroll-cue section-scroll-cue" href="#projects" aria-label="Scroll to projects">
+        <span>Projects</span>
         <svg viewBox="0 0 24 28" width="24" height="28" aria-hidden="true" focusable="false"><path d="m4 6 8 8 8-8M4 14l8 8 8-8" /></svg>
       </a>
     </section>
@@ -57,8 +56,7 @@
       <div class="section-head">
         <h2><span class="grad">Projects</span></h2>
       </div>
-      <p class="project-intro" id="project-city-help">A little neighbourhood of things I've built. Choose a place to step inside.</p>
-      <div class="project-city" aria-describedby="project-city-help">
+      <div class="project-city">
         <div class="city-stage">
           <div class="city-sky" aria-hidden="true">
             <span class="city-moon"></span>
@@ -67,11 +65,10 @@
               <path class="city-cn-tower" d="M657 220L665 108H661L656 102V96L663 92V86L668 81V49L672 15L676 49V81L681 86V92L688 96V102L683 108H679L687 220M665 108H679M663 92H681M656 99H688" />
             </svg>
           </div>
-          <div class="city-scene-caption" aria-hidden="true"><span class="city-live-dot"></span> A neighbourhood after dark <span class="city-scene-number">01 — 03</span></div>
           <div class="city-pavement" aria-hidden="true"></div>
           <div class="city-street" aria-hidden="true"><span></span></div>
           <div class="city-buildings">
-            <a class="project-building building-dream" href="#project-dream-planner" data-project-link="project-dream-planner" data-project-place="The dream home" aria-label="Explore Dream Planner, the dream home">
+            <a class="project-building building-dream" href="#project-dream-planner" data-project-link="project-dream-planner" aria-label="View project: Dream Planner">
               <span class="building-model" aria-hidden="true">
                 <svg viewBox="0 0 320 330" fill="none" focusable="false">
                   <defs>
@@ -116,12 +113,10 @@
                   <path stroke="#a2ae96" d="M284 256H292" />
                 </svg>
               </span>
-              <span class="building-number">01 / THE DREAM HOME</span>
               <span class="building-label">Dream Planner</span>
-              <span class="building-caption">Plan for what's next</span>
-              <span class="building-invitation">Step inside <span aria-hidden="true">↗</span></span>
+              <span class="building-action">View project <span aria-hidden="true">→</span></span>
             </a>
-            <a class="project-building building-travel" href="#project-travel-dashboard" data-project-link="project-travel-dashboard" data-project-place="The departure platform" aria-label="Explore Travel Dashboard, the departure platform">
+            <a class="project-building building-travel" href="#project-travel-dashboard" data-project-link="project-travel-dashboard" aria-label="View project: Travel Dashboard">
               <span class="building-model" aria-hidden="true">
                 <svg viewBox="0 0 320 330" fill="none" focusable="false">
                   <defs>
@@ -168,12 +163,10 @@
                   <ellipse class="station-lamp-glow" fill="#f4d899" opacity=".08" cx="287" cy="179" rx="26" ry="34" />
                 </svg>
               </span>
-              <span class="building-number">02 / THE DEPARTURE PLATFORM</span>
               <span class="building-label">Travel Dashboard</span>
-              <span class="building-caption">Every journey, in one place</span>
-              <span class="building-invitation">Step inside <span aria-hidden="true">↗</span></span>
+              <span class="building-action">View project <span aria-hidden="true">→</span></span>
             </a>
-            <a class="project-building building-gym" href="#project-gym-partner" data-project-link="project-gym-partner" data-project-place="The training studio" aria-label="Explore Gym Partner, the training studio">
+            <a class="project-building building-gym" href="#project-gym-partner" data-project-link="project-gym-partner" aria-label="View project: Gym Partner">
               <span class="building-model" aria-hidden="true">
                 <svg viewBox="0 0 320 330" fill="none" focusable="false">
                   <defs><linearGradient id="gym-glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#386b56" /><stop offset="1" stop-color="#1d3b33" /></linearGradient></defs>
@@ -209,28 +202,19 @@
                   <path stroke="#91b89a" stroke-width="2" d="M49 279H162" />
                 </svg>
               </span>
-              <span class="building-number">03 / THE TRAINING STUDIO</span>
               <span class="building-label">Gym Partner</span>
-              <span class="building-caption">Small steps. Stronger habits.</span>
-              <span class="building-invitation">Step inside <span aria-hidden="true">↗</span></span>
+              <span class="building-action">View project <span aria-hidden="true">→</span></span>
             </a>
           </div>
-          <div class="city-footer" aria-hidden="true"><span>Built with curiosity. Open for exploring.</span><span>TORONTO, ON <span class="city-footer-star">✦</span></span></div>
         </div>
       </div>
       <p class="city-swipe-hint"><span aria-hidden="true">↔</span> Swipe to explore the neighbourhood</p>
-      <nav class="mobile-project-picker" aria-label="Choose a project">
-        <a href="#project-dream-planner" data-project-link="project-dream-planner">Dream Planner</a>
-        <a href="#project-travel-dashboard" data-project-link="project-travel-dashboard">Travel Dashboard</a>
-        <a href="#project-gym-partner" data-project-link="project-gym-partner">Gym Partner</a>
-      </nav>
       <div class="section-body project-panels">
         <article class="media-row project-row project-panel" id="project-dream-planner" aria-labelledby="dream-planner-title">
           <div class="media-copy">
             <div class="project-heading">
               <h3 id="dream-planner-title">Dream Planner</h3>
             </div>
-            <p class="project-summary">A clearer picture of what your future could look like.</p>
             <ul class="project-stack tech-tags" aria-label="Technologies">
               <li>Java 21</li>
               <li>Spring Boot</li>
@@ -259,7 +243,6 @@
               <h3 id="travel-dashboard-title">Travel Dashboard</h3>
               <time datetime="2026-08">Aug. 2026</time>
             </div>
-            <p class="project-summary">Every leg of a journey, brought together.</p>
             <ul class="project-stack tech-tags" aria-label="Technologies">
               <li>Next.js</li>
               <li>TypeScript</li>
@@ -282,7 +265,6 @@
               <h3 id="gym-partner-title">Gym Partner</h3>
               <time datetime="2026-04">Apr. 2026</time>
             </div>
-            <p class="project-summary">Build a routine. Track the work. See your progress.</p>
             <ul class="project-stack tech-tags" aria-label="Technologies">
               <li>Next.js</li>
               <li>React</li>
@@ -306,97 +288,113 @@
       <dialog class="project-dialog" id="project-dialog" aria-label="Project details">
         <div class="project-dialog-shell">
           <div class="project-dialog-bar">
-            <span class="project-dialog-location">Inside the neighbourhood</span>
             <button class="project-dialog-close" type="button" aria-label="Back to neighbourhood" autofocus><span class="close-label">Back to neighbourhood</span><span class="close-label-mobile" aria-hidden="true">Close</span><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18" /></svg></button>
           </div>
           <div class="project-dialog-content"></div>
         </div>
       </dialog>
+      <a class="section-scroll-cue" href="#education"><span>Education &amp; experience</span><svg viewBox="0 0 24 28" width="24" height="28" aria-hidden="true" focusable="false"><path d="m4 6 8 8 8-8M4 14l8 8 8-8" /></svg></a>
     </section>
 
-    <section id="education" class="card">
-      <div class="section-head">
-        <h2><span class="grad">Education</span></h2>
+    <section id="background" class="card" aria-labelledby="background-title">
+      <div id="education" class="section-head">
+        <h2 id="background-title"><span class="grad">Education &amp; Experience</span></h2>
       </div>
-      <div class="section-body">
-        <div class="media-row">
-          <div class="media-images one">
-            <img class="media-image" src="./images/Brock.jpg" alt="Brock University" />
-          </div>
-          <div class="media-copy">
-            <h3>Brock University</h3>
-            <div class="degree-block">
-              <p>Honours Bachelor of Science, Computer Science</p>
-              <p><span class="year">2028</span></p>
-            </div>
-            <div class="degree-block">
-              <p>Honours Bachelor of Business Administration</p>
-              <p><span class="year">2022</span></p>
-            </div>
-          </div>
+      <div class="transit-journey">
+        <div class="transit-scene">
+          <svg class="transit-landscape" viewBox="0 0 1100 380" fill="none" aria-hidden="true" focusable="false">
+            <defs>
+              <linearGradient id="transit-sky" x2="0" y2="1"><stop stop-color="#101d2b"/><stop offset="1" stop-color="#182d2c"/></linearGradient>
+              <linearGradient id="transit-water" x2="0" y2="1"><stop stop-color="#244b51"/><stop offset="1" stop-color="#0e1d29"/></linearGradient>
+              <linearGradient id="transit-bridge" x2="0" y2="1"><stop stop-color="#4d6766"/><stop offset="1" stop-color="#263b41"/></linearGradient>
+              <linearGradient id="transit-window" x2="0" y2="1"><stop stop-color="#e4d8ab"/><stop offset="1" stop-color="#98b8a9"/></linearGradient>
+              <g id="transit-pine"><path fill="#173d31" stroke="#395747" stroke-width=".7" d="M0 0L-14 33H-8L-20 50H-4V61H4V50H20L8 33H14Z"/></g>
+              <g id="transit-car">
+                <rect x="-54" y="-27" width="51" height="21" rx="4" fill="#537b6c" stroke="#a3ba9c"/>
+                <path stroke="#c7b58b" stroke-width="2" d="M-52-10H-5"/>
+                <path fill="url(#transit-window)" d="M-48-23H-39V-15H-48Z M-35-23H-26V-15H-35Z M-22-23H-13V-15H-22Z"/>
+                <path stroke="#adbea6" d="M-10-23V-8M-57-8H-54"/>
+                <g fill="#0d1b22" stroke="#9aaea0"><circle cx="-44" cy="-4" r="4"/><circle cx="-13" cy="-4" r="4"/></g>
+              </g>
+              <g id="transit-station-sign"><path stroke="#9aab8e" d="M0 0V-40"/><rect x="-12" y="-54" width="24" height="18" rx="3" fill="#17312a" stroke="#819c7d"/><circle cy="1" r="4" fill="#bbcca1" stroke="#172b24"/></g>
+            </defs>
+            <path fill="url(#transit-sky)" d="M0 0H1100V380H0Z"/>
+            <g fill="#a8bfc2" opacity=".55"><circle cx="77" cy="42" r="1"/><circle cx="223" cy="63" r="1.2"/><circle cx="377" cy="30" r="1"/><circle cx="550" cy="60" r="1"/><circle cx="699" cy="26" r="1.3"/><circle cx="828" cy="79" r="1"/><circle cx="1013" cy="43" r="1"/></g>
+            <circle cx="944" cy="71" r="36" fill="#bfcbb0" opacity=".05"/>
+            <path fill="#c6ceb2" opacity=".8" d="M954 49A23 23 0 1 0 965 84A23 23 0 0 1 954 49Z"/>
+            <path fill="#1b343c" d="M0 223L106 133L153 164L287 52L435 209L548 135L669 224L798 122L925 228L1036 149L1100 193V380H0Z"/>
+            <path fill="#28444a" d="M153 164L287 52L339 108L309 97L293 112L275 92L251 115L234 111Z"/>
+            <path fill="#152d32" d="M0 224L65 182L157 225L256 163L358 250L532 216L697 272L867 183L994 244L1100 197V380H0Z"/>
+            <path fill="url(#transit-water)" d="M401 248H758L831 380H285Z"/>
+            <g stroke="#72999a" opacity=".2" stroke-linecap="round"><path d="M489 290H582M634 308H696M458 334H556M575 355H682M733 347H765M405 371H482"/></g>
+            <path fill="#253f34" d="M0 220C150 213 217 231 306 249L404 279L365 380H0Z"/>
+            <path fill="#203c31" d="M721 283C809 247 888 223 978 221L1100 217V380H767Z"/>
+            <path fill="url(#transit-bridge)" fill-rule="evenodd" d="M370 232H775V380H370Z M395 380V294A34 34 0 0 1 463 294V380Z M489 380V294A34 34 0 0 1 557 294V380Z M583 380V294A34 34 0 0 1 651 294V380Z M677 380V294A34 34 0 0 1 745 294V380Z"/>
+            <path stroke="#758b7d" stroke-width="3" d="M371 240H774"/>
+            <g stroke="#8ca090" opacity=".27"><path d="M378 254H401M447 253H475M521 251H541M572 266H587M617 253H643M709 253H733M468 321H486M560 347H581M652 319H676"/></g>
+            <g><use href="#transit-pine" x="45" y="210"/><use href="#transit-pine" x="90" y="237"/><use href="#transit-pine" x="123" y="240"/><use href="#transit-pine" x="288" y="268"/><use href="#transit-pine" x="855" y="254"/><use href="#transit-pine" x="900" y="272"/><use href="#transit-pine" x="1050" y="220"/></g>
+            <path stroke="#142326" stroke-width="9" d="M0 218C160 218 245 240 370 240H775C894 240 956 204 1100 204"/>
+            <path id="transit-track" stroke="#7a9181" stroke-width="2" d="M0 214C160 214 245 236 370 236H775C894 236 956 200 1100 200"/>
+            <path stroke="#c2b98d" stroke-opacity=".45" stroke-dasharray="2 10" stroke-width="5" d="M0 218C160 218 245 240 370 240H775C894 240 956 204 1100 204"/>
+            <g data-track-stop="0" transform="translate(200 224)"><use href="#transit-station-sign"/><text y="-41" text-anchor="middle" fill="#c7d4b5" font-family="monospace" font-size="10">01</text></g>
+            <g data-track-stop="1" transform="translate(440 236)"><use href="#transit-station-sign"/><text y="-41" text-anchor="middle" fill="#c7d4b5" font-family="monospace" font-size="10">02</text></g>
+            <g data-track-stop="2" transform="translate(705 236)"><use href="#transit-station-sign"/><text y="-41" text-anchor="middle" fill="#c7d4b5" font-family="monospace" font-size="10">03</text></g>
+            <g data-track-stop="3" transform="translate(968 212)"><use href="#transit-station-sign"/><text y="-41" text-anchor="middle" fill="#c7d4b5" font-family="monospace" font-size="10">04</text></g>
+            <g class="transit-train" data-train-car="2" transform="translate(78 216)"><use href="#transit-car"/></g>
+            <g class="transit-train" data-train-car="1" transform="translate(139 220)"><use href="#transit-car"/></g>
+            <g class="transit-train" data-train-car="0" transform="translate(200 224)"><use href="#transit-car"/><path fill="#b5c6a9" stroke="#d0d5b4" d="M-12-27H-4L3-17V-6H-12Z"/><path fill="#759e9b" d="M-9-23H-5L0-17H-9Z"/><path stroke="#f0d5a1" stroke-width="2" d="M1-12H4"/></g>
+            <path fill="#0d211f" d="M0 331L77 310L175 344L258 320L347 380H0Z M802 380L905 324L1005 345L1100 311V380Z"/>
+            <g opacity=".8"><use href="#transit-pine" x="34" y="287"/><use href="#transit-pine" x="177" y="320"/><use href="#transit-pine" x="1009" y="308"/><use href="#transit-pine" x="1070" y="275"/></g>
+          </svg>
         </div>
+        <ol class="transit-stops" aria-label="Education and experience stops">
+          <li class="transit-stop" data-transit-stop="0" data-entry="wind-stop" data-progress="0.18"><span class="stop-number">01</span><span class="stop-label">Wind Group</span><span class="stop-date">2019 – Present</span></li>
+          <li class="transit-stop" data-transit-stop="1" data-entry="business-stop" data-progress="0.4"><span class="stop-number">02</span><span class="stop-label">Business</span><span class="stop-date">2022</span></li>
+          <li class="transit-stop" data-transit-stop="2" data-entry="rbc-stop" data-progress="0.64"><span class="stop-number">03</span><span class="stop-label">RBC</span><span class="stop-date">2021 – 2024</span></li>
+          <li class="transit-stop" data-transit-stop="3" data-entry="computer-science-stop" data-progress="0.88"><span class="stop-number">04</span><span class="stop-label">Computer Science</span><span class="stop-date">2028</span></li>
+        </ol>
+      </div>
+      <div class="journey-timeline">
+        <article id="wind-stop" class="journey-entry" aria-labelledby="wind-title">
+          <span class="journey-marker" aria-hidden="true">01</span>
+          <div class="journey-entry-copy" id="experience">
+            <p class="journey-kind">Experience</p>
+            <h3 id="wind-title">Wind Group</h3>
+            <p class="journey-date"><time datetime="2019-10">Oct. 2019</time> – Present</p>
+          </div>
+          <img class="journey-logo" src="images/Wind.webp" alt="" width="64" height="64" loading="lazy"/>
+        </article>
+        <article id="business-stop" class="journey-entry" aria-labelledby="business-title">
+          <span class="journey-marker" aria-hidden="true">02</span>
+          <div class="journey-entry-copy">
+            <p class="journey-kind">Education · Brock University</p>
+            <h3 id="business-title">Honours Bachelor of Business Administration</h3>
+            <p class="journey-date"><time datetime="2022">2022</time></p>
+          </div>
+          <img class="journey-logo" src="images/Brock.jpg" alt="" width="64" height="64" loading="lazy"/>
+        </article>
+        <article id="rbc-stop" class="journey-entry" aria-labelledby="rbc-title">
+          <span class="journey-marker" aria-hidden="true">03</span>
+          <div class="journey-entry-copy">
+            <p class="journey-kind">Experience</p>
+            <h3 id="rbc-title">RBC Royal Bank of Canada</h3>
+            <p class="journey-date"><time datetime="2021-10">Oct. 2021</time> – <time datetime="2024-01">Jan. 2024</time></p>
+          </div>
+          <img class="journey-logo" src="images/RBC.jpeg" alt="" width="64" height="64" loading="lazy"/>
+        </article>
+        <article id="computer-science-stop" class="journey-entry" aria-labelledby="computer-science-title">
+          <span class="journey-marker" aria-hidden="true">04</span>
+          <div class="journey-entry-copy">
+            <p class="journey-kind">Education · Brock University</p>
+            <h3 id="computer-science-title">Honours Bachelor of Science, Computer Science</h3>
+            <p class="journey-date"><time datetime="2028">2028</time></p>
+          </div>
+          <img class="journey-logo" src="images/Brock.jpg" alt="" width="64" height="64" loading="lazy"/>
+        </article>
       </div>
     </section>
 
-    <section id="experience" class="card">
-      <div class="section-head">
-        <h2><span class="grad">Experience</span></h2>
-      </div>
-      <div class="section-body">
-        <div class="media-row">
-          <div class="media-images one">
-            <img class="media-image" src="./images/RBC.jpeg" alt="RBC" />
-          </div>
-          <div class="media-copy">
-            <h3>RBC Royal Bank of Canada</h3>
-            <div class="role-block">
-              <p class="year"><time datetime="2021-10">Oct. 2021</time> – <time datetime="2024-01">Jan. 2024</time></p>
-            </div>
-          </div>
-        </div>
-
-        <div class="media-row">
-          <div class="media-images one">
-            <img class="media-image left" src="./images/Wind.webp" alt="Wind" />
-          </div>
-          <div class="media-copy">
-            <h3>Wind Group</h3>
-            <div class="role-block">
-              <p class="year"><time datetime="2019-10">Oct. 2019</time> – Present</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="certifications" class="card">
-      <div class="section-head">
-        <h2><span class="grad">Certificates</span></h2>
-      </div>
-      <div class="section-body">
-        <div class="media-row">
-          <div class="media-images one">
-            <img class="media-image" src="./images/meta.avif" alt="Meta" />
-          </div>
-          <div class="media-copy">
-            <h3>Data Analyst Certificate</h3>
-            <p>Meta</p>
-            <p><span class="year">2024</span></p>
-          </div>
-        </div>
-
-        <div class="media-row">
-          <div class="media-images one">
-            <img class="media-image" src="./images/PMI.png" alt="PMI" />
-          </div>
-          <div class="media-copy">
-            <h3>Certified Associate in Project Management</h3>
-            <p>PMI</p>
-            <p><span class="year">2023</span></p>
-          </div>
-        </div>
-      </div>
-    </section>
+<div class="back-to-top-wrap"><a class="back-to-top" href="#home"><span aria-hidden="true">↑</span> Back to top</a></div>
 
     <footer class="footer">
       © <span id="year">2026</span> Christopher Wong
@@ -466,7 +464,7 @@
       document.documentElement.classList.remove("motion-ready");
     });
 
-    const ids = ["home","projects","education","experience","certifications"];
+    const ids = ["home","projects","background"];
     const links = Array.from(document.querySelectorAll(".navlink"));
     const sections = ids
       .map(id => document.getElementById(id))
@@ -526,5 +524,6 @@
     onScroll();
   </script>
   <script src="projects.js"></script>
+  <script src="transit.js"></script>
 </body>
 </html>

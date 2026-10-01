@@ -7,7 +7,6 @@ const vm = require('node:vm');
 const source = fs.readFileSync(path.join(__dirname, '../projects.js'), 'utf8');
 const ids = ['project-dream-planner', 'project-travel-dashboard', 'project-gym-partner'];
 const titles = ['dream-planner-title', 'travel-dashboard-title', 'gym-partner-title'];
-const places = ['The dream home', 'The departure platform', 'The training studio'];
 const tick = () => new Promise(resolve => setImmediate(resolve));
 
 function setup({ hash = '#projects', reduced = false, observers = true, nativeDialog = true, animationsEnabled = true } = {}) {
@@ -63,16 +62,14 @@ function setup({ hash = '#projects', reduced = false, observers = true, nativeDi
     panel.setAttribute('aria-labelledby', titles[index]);
     return panel;
   });
-  const selectors = [...ids, ...ids].map((id, index) => {
+  const selectors = ids.map(id => {
     const selector = new Element();
     selector.dataset.projectLink = id;
-    if (index < 3) selector.dataset.projectPlace = places[index];
     return selector;
   });
   const panelContainer = new Element();
   const dialogContent = new Element();
   const closeButton = new Element();
-  const locationLabel = new Element();
   const body = new Element();
   const stage = new Element();
   const section = new Element('projects');
@@ -81,7 +78,7 @@ function setup({ hash = '#projects', reduced = false, observers = true, nativeDi
   dialog.showModal = nativeDialog ? () => { dialog.open = true; } : undefined;
   dialog.close = () => { dialog.open = false; dialog.dispatch('close'); };
   dialog.getBoundingClientRect = () => ({ left: 150, top: 140, right: 1050, bottom: 760, width: 900, height: 620 });
-  dialog.querySelector = selector => ({ '.project-dialog-content': dialogContent, '.project-dialog-close': closeButton, '.project-dialog-location': locationLabel })[selector];
+  dialog.querySelector = selector => ({ '.project-dialog-content': dialogContent, '.project-dialog-close': closeButton })[selector];
   section.querySelectorAll = selector => selector === '.project-panel' ? panels : selectors;
   section.querySelector = selector => ({ '.project-dialog': dialog, '.project-panels': panelContainer, '.city-stage': stage })[selector];
   const preference = new Element();
@@ -149,7 +146,7 @@ function setup({ hash = '#projects', reduced = false, observers = true, nativeDi
   const selected = () => panels.filter(panel => !panel.hidden).map(panel => panel.id);
   const lastModalAnimation = () => animations.filter(animation => animation.element === dialog).at(-1);
   const completeClose = async () => { lastModalAnimation()?.complete(); await tick(); flushFrames(); };
-  return { panels, selectors, panelContainer, dialogContent, dialog, closeButton, locationLabel, body, stage, section, preference, window, animations, observersCreated, selected, click, lastModalAnimation, completeClose, active: () => activeElement };
+  return { panels, selectors, panelContainer, dialogContent, dialog, closeButton, body, stage, section, preference, window, animations, observersCreated, selected, click, lastModalAnimation, completeClose, active: () => activeElement };
 }
 
 test('the neighbourhood starts with no popup and keeps the articles inside the closed dialog', () => {
@@ -167,16 +164,15 @@ test('entering a place opens the matching modal, moves focus, and preserves exis
   assert.equal(app.dialog.open, true);
   assert.deepEqual(app.selected(), [ids[1]]);
   assert.equal(app.dialog.attributes['aria-labelledby'], titles[1]);
-  assert.equal(app.locationLabel.textContent, places[1]);
   assert.equal(app.active(), app.closeButton);
   assert.equal(app.closeButton.focusOptions.preventScroll, true);
   assert.equal(app.body.properties['--project-scroll-top'], '-740px');
   assert.equal(app.window.history.state.external, 'kept');
   assert.deepEqual(app.window.history.pushes, [`#${ids[1]}`]);
   assert.deepEqual(app.window.history.savedScrolls, [740]);
-  assert.equal(app.selectors.filter(link => link.attributes['aria-expanded'] === 'true').length, 2);
+  assert.equal(app.selectors.filter(link => link.attributes['aria-expanded'] === 'true').length, 1);
   assert.equal(app.lastModalAnimation().options.duration, 460);
-  app.click(4);
+  app.click(1);
   assert.equal(app.window.history.pushes.length, 1);
 });
 
@@ -237,7 +233,6 @@ test('Back closes the modal and Forward reopens the correct project', async () =
   app.window.history.forward();
   assert.equal(app.dialog.open, true);
   assert.deepEqual(app.selected(), [ids[1]]);
-  assert.equal(app.locationLabel.textContent, places[1]);
 });
 
 test('a direct project link opens without animation and closes to the neighbourhood', () => {
@@ -341,7 +336,6 @@ test('static HTML retains complete articles, distinct places, and unique fragmen
     assert.match(article, /<img /);
     assert.match(html, new RegExp(`href="#${id}"`));
   }
-  for (const place of places) assert.match(html, new RegExp(`data-project-place="${place}"`));
   const allIds = [...html.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]);
   assert.equal(new Set(allIds).size, allIds.length);
   assert.match(html, /<dialog class="project-dialog"/);
