@@ -24,19 +24,21 @@
 
   <main class="wrap" id="main" tabindex="-1">
     <section id="home" class="card hero" data-living-scene>
-      <div class="hero-inner">
-        <h1 aria-label="Christopher Wong">
-          <span class="name-line" aria-hidden="true"><span class="name-reserved">Christopher</span><span class="name-visual"><span class="name-text">Christopher</span></span></span>
-          <span class="name-line name-surname" aria-hidden="true"><span class="name-reserved">Wong</span><span class="name-visual"><span class="name-text">Wong</span><span class="name-cursor"></span></span></span>
-        </h1>
+      <div class="hero-stage">
+        <div class="hero-inner">
+          <h1 aria-label="Christopher Wong">
+            <span class="name-line" aria-hidden="true"><span class="name-reserved">Christopher</span><span class="name-visual"><span class="name-text">Christopher</span></span></span>
+            <span class="name-line name-surname" aria-hidden="true"><span class="name-reserved">Wong</span><span class="name-visual"><span class="name-text">Wong</span><span class="name-cursor"></span></span></span>
+          </h1>
+        </div>
+        <svg class="hero-landscape" viewBox="0 0 1754 896" preserveAspectRatio="xMidYMid slice" fill="none" aria-hidden="true" focusable="false">
+          <image href="images/welcome-toronto.webp" width="1754" height="896"/>
+          <g class="hero-vessel"><g class="hero-vessel-hull"><g class="hero-vessel-art"><path class="hero-wake" d="M438 732C355 731 298 742 214 740M449 739C382 742 326 749 267 748" stroke="#c3decc" stroke-width="1.2" opacity=".3"/><image href="images/welcome-yacht.webp" x="442" y="608" width="280" height="124"/><image class="hero-vessel-reflection" href="images/welcome-yacht.webp" x="442" y="-855" width="280" height="124" transform="translate(0 439) scale(1 -.4)" opacity=".12"/></g></g></g>
+        </svg>
+        <a class="scroll-cue section-scroll-cue" href="#projects" aria-label="Scroll to projects">
+          <svg viewBox="0 0 24 28" width="24" height="28" aria-hidden="true" focusable="false"><path d="m4 6 8 8 8-8M4 14l8 8 8-8" /></svg>
+        </a>
       </div>
-      <svg class="hero-landscape" viewBox="0 0 1754 896" preserveAspectRatio="xMidYMid slice" fill="none" aria-hidden="true" focusable="false">
-        <image href="images/welcome-toronto.webp" width="1754" height="896"/>
-        <g class="hero-vessel"><g class="hero-vessel-hull"><g class="hero-vessel-art"><path class="hero-wake" d="M438 732C355 731 298 742 214 740M449 739C382 742 326 749 267 748" stroke="#c3decc" stroke-width="1.2" opacity=".3"/><image href="images/welcome-yacht.webp" x="442" y="608" width="280" height="124"/><image class="hero-vessel-reflection" href="images/welcome-yacht.webp" x="442" y="-855" width="280" height="124" transform="translate(0 439) scale(1 -.4)" opacity=".12"/></g></g></g>
-      </svg>
-      <a class="scroll-cue section-scroll-cue" href="#projects" aria-label="Scroll to projects">
-        <svg viewBox="0 0 24 28" width="24" height="28" aria-hidden="true" focusable="false"><path d="m4 6 8 8 8-8M4 14l8 8 8-8" /></svg>
-      </a>
     </section>
 
     <section id="projects" class="card" aria-labelledby="projects-title">
@@ -48,9 +50,6 @@
           </svg>
           <div class="scene-heading">
             <h2 id="projects-title">Projects</h2>
-            <span class="resort-heading-rule" aria-hidden="true">✧</span>
-            <p class="resort-kicker">Three destinations. A brighter tomorrow.</p>
-            <p class="resort-intro">Choose a project below to take a closer look.</p>
           </div>
           <a class="scroll-cue section-scroll-cue" href="#background" aria-label="Scroll to education and experience">
             <svg viewBox="0 0 24 28" width="24" height="28" aria-hidden="true" focusable="false"><path d="m4 6 8 8 8-8M4 14l8 8 8-8" /></svg>
@@ -282,7 +281,7 @@
       .filter(Boolean);
     const navigation = document.querySelector(".nav");
     const updateNavigationOffset = () => {
-      document.documentElement.style.setProperty("--nav-offset", `${navigation.offsetHeight + 12}px`);
+      document.documentElement.style.setProperty("--nav-offset", `${navigation.offsetHeight}px`);
     };
     updateNavigationOffset();
     if ("ResizeObserver" in window) new ResizeObserver(updateNavigationOffset).observe(navigation);
@@ -335,7 +334,16 @@
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    window.addEventListener("resize", () => {
+      // Keep the current desktop page framed when the browser window changes size.
+      if (window.matchMedia("(hover: hover) and (pointer: fine)").matches &&
+          !document.body.classList.contains("project-open")) {
+        const activeLink = links.find(link => link.classList.contains("active"));
+        const current = sections.find(section => activeLink?.getAttribute("href") === `#${section.id}`);
+        current?.scrollIntoView({ block: "start", behavior: "instant" });
+      }
+      onScroll();
+    });
     onScroll();
   </script>
   <script src="projects.js"></script>

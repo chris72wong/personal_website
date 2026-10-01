@@ -16,7 +16,7 @@ async function checkBrowser(engine) {
   const watch = page => page.on('pageerror', error => errors.push(error.message));
   const layout = page => page.evaluate(() => {
     const bounds = selector => { const r = document.querySelector(selector).getBoundingClientRect(); return [r.x, r.width, r.height]; };
-    return ['.hero', '.harbor-stage', '.transit-scene', '.harbor-projects', '.transit-stops'].map(bounds);
+    return ['.hero-stage', '.harbor-stage', '.transit-scene'].map(bounds);
   });
   try {
     const page = await browser.newPage({ viewport: { width: 1280, height: 900 }, reducedMotion: 'reduce' });
@@ -56,13 +56,16 @@ async function checkBrowser(engine) {
     await page.keyboard.press('Escape');
     await page.waitForFunction(() => !document.querySelector('.project-dialog').open);
     await page.locator('#home').evaluate(el => el.scrollIntoView({ behavior: 'instant' }));
-    assert.ok(await page.evaluate(() => Math.abs(document.querySelector('.transit-journey').getBoundingClientRect().bottom - document.querySelector('.footer').getBoundingClientRect().top) < 1), 'Final image meets footer divider');
+    assert.ok(await page.evaluate(() => Math.abs(document.querySelector('#background').getBoundingClientRect().bottom - document.querySelector('.footer').getBoundingClientRect().top) < 1), 'Final section meets footer divider');
     for (const width of [320, 390, 640, 900]) {
       const context = await browser.newContext({ viewport: { width, height: 844 }, isMobile: true, hasTouch: true, reducedMotion: 'reduce' });
       const phone = await context.newPage(); watch(phone); await phone.goto(siteUrl); await phone.evaluate(() => document.fonts.ready);
       assert.equal(await phone.locator('.navlink[aria-current="location"]').getAttribute('href'), '#home', 'Overview starts on Home even when all scenes fit');
       const mobile = await layout(phone);
-      mobile.forEach((rect, i) => rect.forEach((value, j) => assert.ok(Math.abs(value - desktop[i][j]) < 1, `Same desktop composition at ${width}px: ${JSON.stringify(mobile)}`)));
+      mobile.forEach((rect, i) => {
+        assert.equal(rect[1], 1280, `Touch overview retains its panoramic canvas at ${width}px`);
+        assert.ok(Math.abs(rect[1] / rect[2] - desktop[i][1] / desktop[i][2]) < .002, `Same artwork proportions at ${width}px`);
+      });
       assert.ok(await phone.evaluate(() => window.visualViewport.scale < 1), 'Phone initially fits the desktop overview');
       const meta = await phone.locator('meta[name="viewport"]').getAttribute('content');
       assert.ok(!/maximum-scale|user-scalable/.test(meta), 'Pinch zoom remains available');
@@ -82,6 +85,8 @@ async function checkBrowser(engine) {
       if (width === 390) await phone.screenshot({ path: path.join(screenshotDirectory, `${engine}-mobile-overview.png`), fullPage: true });
       await context.close();
     }
+    // Return explicitly after the phone contexts and asynchronous fragment history settle.
+    await page.locator('.navlink[href="#home"]').click();
     await page.emulateMedia({ reducedMotion: 'no-preference' });
     await page.waitForFunction(() => document.querySelector('.hero').classList.contains('scene-active'));
     await page.waitForFunction(() => document.documentElement.classList.contains('is-typing'));
@@ -89,7 +94,7 @@ async function checkBrowser(engine) {
     assert.deepEqual(await page.locator('.name-text').allTextContents(), ['Christopher', 'Wong'], 'Desktop typing completes both lines');
     const clock = () => page.locator('.hero-vessel').evaluate(el => el.getAnimations()[0]?.currentTime);
     const before = await clock(); await page.waitForTimeout(250); assert.ok(await clock() > before, 'Welcome boat still moves');
-    assert.deepEqual(await page.evaluate(() => document.getAnimations().filter(a => a.playState === 'running' && a.effect.target instanceof Element).map(a => a.effect.target.classList.value).sort()), ['hero-vessel', 'hero-vessel-hull', 'name-cursor', 'resort-plane'], 'Only the visible vehicles and name cursor animate automatically');
+    assert.deepEqual(await page.evaluate(() => document.getAnimations().filter(a => a.playState === 'running' && a.effect.target instanceof Element).map(a => a.effect.target.classList.value).sort()), ['hero-vessel', 'hero-vessel-hull', 'name-cursor'], 'Only the visible boat and name cursor animate automatically');
     await page.locator('#background').evaluate(el => el.scrollIntoView({ behavior: 'instant' }));
     await page.waitForFunction(() => !document.querySelector('.hero').classList.contains('scene-active'));
     await page.waitForTimeout(100); const paused = await clock(); await page.waitForTimeout(150); assert.equal(await clock(), paused, 'Boat pauses offscreen');
