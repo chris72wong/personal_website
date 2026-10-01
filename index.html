@@ -208,7 +208,6 @@
           </div>
         </div>
       </div>
-      <p class="city-swipe-hint"><span aria-hidden="true">↔</span> Swipe to explore the neighbourhood</p>
       <div class="section-body project-panels">
         <article class="media-row project-row project-panel" id="project-dream-planner" aria-labelledby="dream-planner-title">
           <div class="media-copy">
@@ -455,20 +454,29 @@
       document.querySelectorAll("main > section:not(.hero)").forEach(section => revealObserver.observe(section));
     }
 
-    motionPreference.addEventListener("change", event => {
+    const onMotionChange = event => {
       if (!event.matches) return;
       finishTyping();
       revealObserver?.disconnect();
       revealAnimations.forEach(animation => animation.cancel());
       revealAnimations.clear();
       document.documentElement.classList.remove("motion-ready");
-    });
+    };
+    if (motionPreference.addEventListener) motionPreference.addEventListener("change", onMotionChange);
+    else motionPreference.addListener(onMotionChange);
 
     const ids = ["home","projects","background"];
     const links = Array.from(document.querySelectorAll(".navlink"));
     const sections = ids
       .map(id => document.getElementById(id))
       .filter(Boolean);
+    const navigation = document.querySelector(".nav");
+    const updateNavigationOffset = () => {
+      document.documentElement.style.setProperty("--nav-offset", `${navigation.offsetHeight + 12}px`);
+    };
+    updateNavigationOffset();
+    if ("ResizeObserver" in window) new ResizeObserver(updateNavigationOffset).observe(navigation);
+    window.addEventListener("resize", updateNavigationOffset);
 
     const setActive = (id) => {
       links.forEach(l => {
@@ -488,9 +496,10 @@
 
     let ticking = false;
     const getCurrentId = () => {
-      const offset = document.querySelector(".nav").offsetHeight + 32;
+      // Fixing the body for a modal must not change the current navigation item.
+      if (document.body.classList.contains("project-open")) return "projects";
+      const offset = navigation.offsetHeight + 32;
       let bestId = sections[0]?.id;
-      let bestDist = Number.POSITIVE_INFINITY;
 
       // Check if we're at the bottom of the page
       const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 10;
@@ -500,11 +509,7 @@
 
       for (const s of sections) {
         const r = s.getBoundingClientRect();
-        const dist = Math.abs(r.top - offset);
-        if (r.bottom > offset && dist < bestDist) {
-          bestDist = dist;
-          bestId = s.id;
-        }
+        if (r.top <= offset) bestId = s.id;
       }
 
       return bestId;

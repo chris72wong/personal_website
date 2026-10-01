@@ -70,15 +70,18 @@
     previousTime = null;
     if (running()) frame = requestAnimationFrame(animate);
   };
-  preference.addEventListener('change', () => {
+  const onPreferenceChange = () => {
     if (preference.matches) {
       progress = positions[0];
       draw();
     }
     sync();
-  });
+  };
+  if (preference.addEventListener) preference.addEventListener('change', onPreferenceChange);
+  else preference.addListener(onPreferenceChange);
   document.addEventListener('visibilitychange', sync);
-  mobile.addEventListener('change', draw);
+  if (mobile.addEventListener) mobile.addEventListener('change', draw);
+  else mobile.addListener(draw);
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver(entries => {
       visible = entries[0].isIntersecting;

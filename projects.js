@@ -24,6 +24,13 @@
   let sceneVisible = false;
   let sceneEntered = false;
   let pendingReturnPosition;
+  const historyState = () => {
+    try { return window.history.state; } catch { return null; }
+  };
+  const writeHistory = (method, state, hash) => {
+    // A restricted browser must still be able to open and close project details.
+    try { window.history[method](state, "", hash); return true; } catch { return false; }
+  };
 
   const updateSelectors = id => {
     selectors.forEach(selector => {
@@ -77,12 +84,15 @@
     opener = undefined;
 
     if (updateLocation && window.location.hash === `#${closedId}`) {
-      const entry = window.history.state?.neighbourhoodProject;
+      const entry = historyState()?.neighbourhoodProject;
       if (entry?.session === session && entry.id === closedId) {
         pendingReturnPosition = { ...returnPosition, hash: entry.returnHash, version: transitionVersion };
-        window.history.back();
+        try { window.history.back(); } catch {
+          pendingReturnPosition = undefined;
+          writeHistory("replaceState", historyState(), "#projects");
+        }
       } else {
-        window.history.replaceState(window.history.state, "", "#projects");
+        writeHistory("replaceState", historyState(), "#projects");
       }
     }
   };
@@ -95,7 +105,16 @@
     dialog.classList.add("is-closing");
     modalAnimation = animate ? animateDialog(false) : undefined;
     // Cancellation (including switching to reduced motion) also finishes the close.
-    if (modalAnimation) await modalAnimation.finished.catch(() => {});
+    if (modalAnimation) {
+      // Mobile browsers can suspend animation completion while switching tabs.
+      let timeout;
+      try {
+        await Promise.race([
+          modalAnimation.finished.catch(() => {}),
+          new Promise(resolve => { timeout = setTimeout(resolve, 500); })
+        ]);
+      } finally { clearTimeout(timeout); }
+    }
     if (version === transitionVersion) finishClose({ updateLocation, restoreFocus });
   };
 
@@ -145,7 +164,7 @@
       const id = selector.dataset.projectLink;
       // Save the current history scroll position before fixing the page in place.
       if (window.location.hash !== `#${id}`) {
-        window.history.pushState({ ...window.history.state, neighbourhoodProject: { id, session, returnHash: window.location.hash } }, "", `#${id}`);
+        writeHistory("pushState", { ...historyState(), neighbourhoodProject: { id, session, returnHash: window.location.hash } }, `#${id}`);
       }
       openProject(id, { trigger: selector });
     });
@@ -209,10 +228,12 @@
     observer.observe(stage);
   }
 
-  preference.addEventListener("change", event => {
+  const onPreferenceChange = event => {
     stage.classList.toggle("city-is-visible", sceneVisible && !event.matches);
     if (!event.matches) return;
     modalAnimation?.cancel();
     entranceAnimation?.cancel();
-  });
+  };
+  if (preference.addEventListener) preference.addEventListener("change", onPreferenceChange);
+  else preference.addListener(onPreferenceChange);
 })();

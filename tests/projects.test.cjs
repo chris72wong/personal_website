@@ -9,7 +9,7 @@ const ids = ['project-dream-planner', 'project-travel-dashboard', 'project-gym-p
 const titles = ['dream-planner-title', 'travel-dashboard-title', 'gym-partner-title'];
 const tick = () => new Promise(resolve => setImmediate(resolve));
 
-function setup({ hash = '#projects', reduced = false, observers = true, nativeDialog = true, animationsEnabled = true } = {}) {
+function setup({ hash = '#projects', reduced = false, observers = true, nativeDialog = true, animationsEnabled = true, restrictedHistory = false, legacyMedia = false } = {}) {
   const animations = [];
   const observersCreated = [];
   const frames = [];
@@ -83,6 +83,10 @@ function setup({ hash = '#projects', reduced = false, observers = true, nativeDi
   section.querySelector = selector => ({ '.project-dialog': dialog, '.project-panels': panelContainer, '.city-stage': stage })[selector];
   const preference = new Element();
   preference.matches = reduced;
+  if (legacyMedia) {
+    preference.addListener = callback => Element.prototype.addEventListener.call(preference, 'change', callback);
+    preference.addEventListener = undefined;
+  }
   const window = new Element();
   window.location = { hash };
   window.scrollX = 0;
@@ -136,8 +140,12 @@ function setup({ hash = '#projects', reduced = false, observers = true, nativeDi
     observe() {}
     visibility(isIntersecting) { this.callback([{ isIntersecting }]); }
   }
+  if (restrictedHistory) {
+    for (const method of ['pushState', 'replaceState']) window.history[method] = () => { throw new Error('History unavailable'); };
+    Object.defineProperty(window.history, 'state', { get() { throw new Error('History unavailable'); } });
+  }
   if (observers) window.IntersectionObserver = Observer;
-  vm.runInNewContext(source, { document: { getElementById: () => section, body }, window, IntersectionObserver: Observer, requestAnimationFrame: callback => frames.push(callback) });
+  vm.runInNewContext(source, { document: { getElementById: () => section, body }, window, IntersectionObserver: Observer, requestAnimationFrame: callback => frames.push(callback), setTimeout, clearTimeout });
   const click = (index, extras = {}) => {
     const event = { button: 0, preventDefault() { this.prevented = true; }, ...extras };
     selectors[index].dispatch('click', event);
@@ -325,6 +333,28 @@ test('an unexpected native close also releases the page and restores focus', () 
   app.dialog.close();
   assert.equal(app.body.classes.has('project-open'), false);
   assert.equal(app.active(), app.selectors[0]);
+});
+
+test('restricted history and legacy media listeners still allow opening and closing every project', () => {
+  const app = setup({ restrictedHistory: true, legacyMedia: true, reduced: true });
+  for (let index = 0; index < ids.length; index++) {
+    app.click(index);
+    assert.equal(app.dialog.open, true);
+    assert.deepEqual(app.selected(), [ids[index]]);
+    app.closeButton.dispatch('click');
+    assert.equal(app.dialog.open, false);
+    assert.equal(app.body.classes.has('project-open'), false);
+  }
+});
+
+test('a suspended closing animation cannot leave the page locked', async () => {
+  const app = setup();
+  app.click(0);
+  app.closeButton.dispatch('click');
+  await new Promise(resolve => setTimeout(resolve, 550));
+  assert.equal(app.dialog.open, false);
+  assert.equal(app.body.classes.has('project-open'), false);
+  assert.equal(app.window.scrollY, 740);
 });
 
 test('static HTML retains complete articles, distinct places, and unique fragment IDs', () => {
