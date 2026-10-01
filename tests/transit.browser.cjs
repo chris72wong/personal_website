@@ -23,7 +23,6 @@ async function checkBrowser(engine) {
     watch(page);
     await page.goto(siteUrl);
     await page.evaluate(() => document.fonts.ready);
-    const desktop = await layout(page);
     const reducedTrainPosition = await page.locator('[data-train-car="0"]').getAttribute('transform');
     assert.deepEqual(await page.locator('.building-label').allTextContents(), ['Gym Partner', 'Dream Planner', 'Travel Dashboard']);
     assert.deepEqual(await page.locator('.section-scroll-cue').evaluateAll(links => links.map(link => link.getAttribute('href'))), ['#projects', '#background', '#home']);
@@ -36,7 +35,7 @@ async function checkBrowser(engine) {
     assert.ok(await page.locator('.resort-plane image').evaluate(async el => {
       const image = new Image(); image.src = el.getAttribute('href'); await image.decode(); return image.naturalWidth > 0;
     }), 'The transparent plane sprite loads');
-    assert.equal(await page.getByRole('button', { name: /View .* project details/ }).count(), 3, 'Each project has a real button');
+    assert.equal(await page.getByRole('button', { name: /Learn more about/ }).count(), 3, 'Each project has a real Learn more button');
     assert.ok(await page.locator('.project-trigger').evaluateAll(buttons => buttons.every(button => {
       const stage = button.closest('.harbor-stage').getBoundingClientRect();
       const bounds = button.getBoundingClientRect();
@@ -56,7 +55,12 @@ async function checkBrowser(engine) {
     await page.keyboard.press('Escape');
     await page.waitForFunction(() => !document.querySelector('.project-dialog').open);
     await page.locator('#home').evaluate(el => el.scrollIntoView({ behavior: 'instant' }));
-    assert.ok(await page.evaluate(() => Math.abs(document.querySelector('#background').getBoundingClientRect().bottom - document.querySelector('.footer').getBoundingClientRect().top) < 1), 'Final section meets footer divider');
+    assert.ok(await page.evaluate(() => {
+      const scene = document.querySelector('#background').getBoundingClientRect();
+      const copyright = document.querySelector('.footer').getBoundingClientRect();
+      return copyright.top >= scene.top && copyright.bottom <= scene.bottom &&
+        Math.abs(scene.bottom - document.querySelector('main').getBoundingClientRect().bottom) < 1;
+    }), 'Copyright sits inside the final scene and no footer strip follows it');
     for (const width of [320, 390, 640, 900]) {
       const context = await browser.newContext({ viewport: { width, height: 844 }, isMobile: true, hasTouch: true, reducedMotion: 'reduce' });
       const phone = await context.newPage(); watch(phone); await phone.goto(siteUrl); await phone.evaluate(() => document.fonts.ready);
@@ -64,7 +68,7 @@ async function checkBrowser(engine) {
       const mobile = await layout(phone);
       mobile.forEach((rect, i) => {
         assert.equal(rect[1], 1280, `Touch overview retains its panoramic canvas at ${width}px`);
-        assert.ok(Math.abs(rect[1] / rect[2] - desktop[i][1] / desktop[i][2]) < .002, `Same artwork proportions at ${width}px`);
+        assert.ok(Math.abs(rect[1] / rect[2] - [1754 / 896, 1672 / 941, 1672 / 941][i]) < .002, `Touch artwork keeps its original proportions at ${width}px`);
       });
       assert.ok(await phone.evaluate(() => window.visualViewport.scale < 1), 'Phone initially fits the desktop overview');
       const meta = await phone.locator('meta[name="viewport"]').getAttribute('content');
@@ -105,7 +109,7 @@ async function checkBrowser(engine) {
     const flight = await page.locator('.resort-plane').evaluate(el => {
       const animation = el.getAnimations()[0];
       const originalTime = animation.currentTime;
-      const samples = [0, 9000, 14500, 16500, 22000].map(time => {
+      const samples = [0, 9000, 14500, 19500, 19750, 23000].map(time => {
         animation.currentTime = time;
         const style = getComputedStyle(el); const matrix = new DOMMatrix(style.transform);
         return { x: matrix.e, y: matrix.f, opacity: Number(style.opacity) };
@@ -117,6 +121,7 @@ async function checkBrowser(engine) {
     assert.ok(flight[0].y > flight[1].y && flight[1].y > flight[2].y, 'The plane climbs gently');
     assert.equal(flight[3].opacity, 0, 'The plane is hidden after exiting');
     assert.equal(flight[4].opacity, 0, 'The loop includes a quiet gap');
+    assert.equal(flight[5].opacity, 1, 'The plane returns within 23 seconds');
     await page.locator('.building-travel .project-trigger').click();
     await page.waitForFunction(() => !document.querySelector('.harbor-stage').classList.contains('scene-active'));
     await page.locator('.resort-plane').evaluate(el => el.getAnimations()[0].ready);
