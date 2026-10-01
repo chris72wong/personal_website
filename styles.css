@@ -117,21 +117,14 @@ h3 { font-size: 22px; font-weight: 500; letter-spacing: -.3px; line-height: 1.35
 .resort-heading-rule::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, #ffe4a0aa, transparent); }
 .resort-kicker { margin: 3px 0 2px; color: #fff6ed; font: 400 clamp(9px, .68vw, 12px)/1.7 'Roboto Mono', monospace; text-transform: uppercase; letter-spacing: .22em; }
 .resort-intro { margin: 0; color: #fff6ed; font-size: clamp(11px, .85vw, 15px); letter-spacing: .06em; }
-.harbor-projects { position: absolute; inset: 26% 4% auto; z-index: 4; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5%; align-items: start; }
-.project-building { position: relative; display: flex; min-width: 0; gap: 14px; align-items: flex-start; text-align: left; text-decoration: none; border-radius: 10px; color: #fff7e7; -webkit-tap-highlight-color: transparent; padding: 10px; background: radial-gradient(ellipse at 35% 40%, #1c172444, transparent 70%); }
-.building-dream { transform: translateY(-36%); }
-.building-model { display: none; }
-.building-copy { display: flex; min-width: 0; flex-direction: column; align-items: flex-start; }
-.building-label { color: #fffaf1; font: 700 clamp(18px, 1.7vw, 31px)/1.2 Georgia, 'Times New Roman', serif; text-shadow: 0 2px 8px #18182f; }
-.building-description { display: block; margin-top: 5px; color: #fff5eb; font-size: clamp(10px, .87vw, 16px); line-height: 1.4; text-shadow: 0 1px 5px #171827; }
-.project-building .building-action { display: inline-flex; align-items: center; gap: 10px; margin: 11px 0 0; padding: 0 0 5px; min-height: 30px; border: 0; border-bottom: 1px solid #ffe5a6aa; border-radius: 0; background: none; color: #ffe5a6; font: 500 clamp(12px, .95vw, 17px)/1.3 'Roboto Mono', monospace; letter-spacing: .1em; transition: color 200ms, border-color 200ms; }
-.destination-marker { position: relative; flex: 0 0 clamp(40px, 3.4vw, 62px); width: clamp(40px, 3.4vw, 62px); aspect-ratio: 1; display: grid; place-items: center; border: 2px solid #ffe7a5; border-radius: 50%; color: #ffe7a5; background: #4b393047; box-shadow: 0 0 20px #ffd07122; }
-.destination-marker svg { width: 78%; height: 78%; }
-.destination-marker::after { content: ''; position: absolute; top: 100%; left: 50%; width: 1px; height: clamp(38px, 4.5vw, 83px); background: linear-gradient(#ffe7a5aa, #ffe7a566); }
-.destination-marker::before { content: ''; position: absolute; top: calc(100% + clamp(38px, 4.5vw, 83px)); left: calc(50% - 3px); width: 7px; height: 7px; border-radius: 50%; background: #fff0ba; box-shadow: 0 0 12px 4px #ffdc8a88; }
-.project-building:focus-visible { outline: 2px solid #fff1da; outline-offset: 5px; }
-.project-building:hover .building-action, .project-building:focus-visible .building-action { color: #fff; border-color: #fff; }
-.project-building:hover .destination-marker, .project-building:focus-visible .destination-marker { box-shadow: 0 0 25px #ffd07166; }
+.harbor-projects { position: absolute; inset: 70% 3% auto; z-index: 4; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9%; align-items: start; }
+.project-building { position: relative; display: flex; min-width: 0; flex-direction: column; align-items: center; text-align: center; border: 1px solid #e3cda12e; border-radius: 12px; color: #fff7e7; padding: clamp(14px, 1.2vw, 22px); background: #102733d9; box-shadow: 0 8px 28px #06192333; backdrop-filter: blur(8px); }
+.project-building::before { content: ''; position: absolute; bottom: 100%; left: calc(50% - .5px); width: 1px; height: clamp(18px, 2vw, 36px); background: linear-gradient(#ffe7a500, #ffe7a577); }
+.building-label { margin: 0; color: #fffaf1; font: 700 clamp(20px, 1.7vw, 31px)/1.2 Georgia, 'Times New Roman', serif; }
+.building-description { margin: 8px 0 0; min-height: 2.8em; max-width: 28ch; color: #e2e5df; font-size: clamp(13px, .95vw, 17px); line-height: 1.4; }
+.project-building .project-trigger { display: none; }
+.projects-enhanced .project-trigger { display: inline-flex; }
+.projects-enhanced .building-fallback { display: none; }
 .project-panels { width: min(var(--max), 100%); margin: 26px auto 0; padding-inline: 28px; }
 .project-panel, .project-panel:first-child, .project-panel:last-child { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 38px; padding: 32px; align-items: center; border: 1px solid #29342d; background: rgba(13, 19, 16, .65); margin: 0 0 20px; scroll-margin-top: 12px; }
 .project-panel[hidden] { display: none !important; }
@@ -171,8 +164,10 @@ body.project-open { position: fixed; top: var(--project-scroll-top); inset-inlin
   .project-dialog::backdrop, .project-dialog.is-closing::backdrop { animation: none; }
 }
 
-.building-action { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; gap: 12px; margin-top: 14px; padding: 11px 25px; border: 1px solid #fff1dabf; border-radius: 8px; color: #fff1da; background: #06384c66; font: clamp(12px, 1.1vw, 18px)/1.5 'Roboto Mono', monospace; transition: color 200ms, border-color 200ms, background 200ms; }
-.project-building:hover .building-action, .project-building:focus-visible .building-action { color: var(--place-accent); border-color: var(--place-accent); background: var(--place-glow); }
+.building-action { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; gap: 14px; margin-top: 12px; padding: 11px 22px; border: 1px solid #f4d7a6; border-radius: 7px; color: #172b35; background: #f4d7a6; font: 500 clamp(13px, 1vw, 18px)/1.4 'Roboto Mono', monospace; text-decoration: none; cursor: pointer; -webkit-tap-highlight-color: transparent; box-shadow: 0 3px 12px #07172133; transition: background 180ms, border-color 180ms, transform 180ms; }
+.building-action:hover { background: #ffe9c6; border-color: #ffe9c6; transform: translateY(-2px); }
+.building-action:active { transform: translateY(0); }
+.building-action:focus-visible { outline: 3px solid #fffaf1; outline-offset: 5px; }
 .section-scroll-cue { display: flex; flex-direction: column; align-items: center; gap: 12px; width: fit-content; margin: 38px auto 0; padding: 10px 16px; text-decoration: none; color: #b6c8b9; font: 12px/1.5 'Roboto Mono', monospace; }
 .hero .section-scroll-cue { margin: 0; width: max-content; height: auto; }
 .section-scroll-cue svg { color: #fff; fill: none; stroke: #fff; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
@@ -207,14 +202,23 @@ body.project-open { position: fixed; top: var(--project-scroll-top); inset-inlin
   .section-scroll-cue svg { animation: none; }
 }
 
-/* Only the welcome boat and train move; backgrounds are single painted layers. */
+/* Vehicles move over single painted backgrounds. The plane crosses in 18s, then waits 10s. */
+.resort-plane { opacity: 0; transform: translate(1800px, 310px); animation: resort-flight 28s linear -3s infinite; animation-play-state: paused; }
+@keyframes resort-flight {
+  0% { opacity: 0; transform: translate(1800px, 310px); }
+  .5% { opacity: 1; }
+  63.8% { opacity: 1; }
+  64.286%, 100% { opacity: 0; transform: translate(-130px, 238px); }
+}
+.scene-active .resort-plane { animation-play-state: running; }
 .scene-active .hero-vessel, .scene-active .hero-vessel-hull { animation-play-state: running; }
-.project-open .hero-vessel, .project-open .hero-vessel-hull { animation-play-state: paused; }
+.project-open .hero-vessel, .project-open .hero-vessel-hull, .project-open .resort-plane { animation-play-state: paused; }
 @media (prefers-reduced-motion: reduce) {
-  .hero-vessel, .hero-vessel-hull { animation: none !important; }
+  .hero-vessel, .hero-vessel-hull, .resort-plane { animation: none !important; }
 }
 /* The footer divider meets the final landscape without an intervening gap. */
 #background.card { padding-bottom: 0; }
 .footer { width: 100%; margin: 0; padding: 26px max(28px, calc((100% - var(--max)) / 2 + 28px)) 0; }
 .harbor-stage .section-scroll-cue, .transit-journey .section-scroll-cue { margin: 0; z-index: 5; }
+.harbor-stage .section-scroll-cue { bottom: 8px; width: 48px; height: 36px; padding: 0; }
 .transit-stops-viewport { bottom: 10%; }

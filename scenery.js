@@ -1,5 +1,5 @@
 (() => {
-  const scenes = Array.from(document.querySelectorAll('.hero[data-living-scene]'));
+  const scenes = Array.from(document.querySelectorAll('[data-living-scene]'));
   if (!scenes.length) return;
   const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
   const visibility = new Map(scenes.map(scene => [scene, false]));

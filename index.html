@@ -44,29 +44,36 @@
         <div class="harbor-stage" data-living-scene>
           <svg class="harbor-backdrop" viewBox="0 0 1672 941" preserveAspectRatio="xMidYMid slice" fill="none" aria-hidden="true" focusable="false">
             <image href="images/projects-resort-subtle.webp" width="1672" height="941"/>
+            <g class="resort-plane"><image href="images/resort-plane.webp" x="-55" y="-22" width="110" height="44" preserveAspectRatio="xMidYMid meet"/></g>
           </svg>
           <div class="scene-heading">
             <h2 id="projects-title">Projects</h2>
             <span class="resort-heading-rule" aria-hidden="true">✧</span>
             <p class="resort-kicker">Three destinations. A brighter tomorrow.</p>
-            <p class="resort-intro">Real projects. A shared journey.</p>
+            <p class="resort-intro">Choose a project below to take a closer look.</p>
           </div>
           <a class="scroll-cue section-scroll-cue" href="#background" aria-label="Scroll to education and experience">
             <svg viewBox="0 0 24 28" width="24" height="28" aria-hidden="true" focusable="false"><path d="m4 6 8 8 8-8M4 14l8 8 8-8" /></svg>
           </a>
           <div class="harbor-projects">
-            <a class="project-building building-gym" href="#project-gym-partner" data-project-link="project-gym-partner" aria-label="View Gym Partner project details">
-              <span class="destination-marker" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15V25M11 12V28M29 12V28M33 15V25M11 20H29"/></svg></span>
-              <span class="building-copy"><span class="building-label">Gym Partner</span><span class="building-description">Build strength. Track your progress.</span><span class="building-action">Explore <span aria-hidden="true">→</span></span></span>
-            </a>
-            <a class="project-building building-dream" href="#project-dream-planner" data-project-link="project-dream-planner" aria-label="View Dream Planner project details">
-              <span class="destination-marker" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 30V16M20 18C15 10 10 13 9 18C14 15 17 16 20 18ZM20 18C25 10 30 13 31 18C26 15 23 16 20 18ZM20 17C18 10 22 8 25 9M14 31H26"/></svg></span>
-              <span class="building-copy"><span class="building-label">Dream Planner</span><span class="building-description">Plan your home, education, and retirement.</span><span class="building-action">Explore <span aria-hidden="true">→</span></span></span>
-            </a>
-            <a class="project-building building-travel" href="#project-travel-dashboard" data-project-link="project-travel-dashboard" aria-label="View Travel Dashboard project details">
-              <span class="destination-marker" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m10 21 8-3 4-9 3 1-1 8 7 4-1 3-8-2-4 7-3-1 2-8-7 2Z"/></svg></span>
-              <span class="building-copy"><span class="building-label">Travel Dashboard</span><span class="building-description">Keep every leg of your journey together.</span><span class="building-action">Explore <span aria-hidden="true">→</span></span></span>
-            </a>
+            <div class="project-building building-gym">
+              <h3 class="building-label" id="gym-destination">Gym Partner</h3>
+              <p class="building-description">Build strength. Track your progress.</p>
+              <button class="building-action project-trigger" type="button" data-project-link="project-gym-partner" aria-label="View Gym Partner project details">View project <span aria-hidden="true">→</span></button>
+              <a class="building-action building-fallback" href="#project-gym-partner" aria-label="View Gym Partner project details">View project <span aria-hidden="true">→</span></a>
+            </div>
+            <div class="project-building building-dream">
+              <h3 class="building-label" id="dream-destination">Dream Planner</h3>
+              <p class="building-description">Plan your home, education, and retirement.</p>
+              <button class="building-action project-trigger" type="button" data-project-link="project-dream-planner" aria-label="View Dream Planner project details">View project <span aria-hidden="true">→</span></button>
+              <a class="building-action building-fallback" href="#project-dream-planner" aria-label="View Dream Planner project details">View project <span aria-hidden="true">→</span></a>
+            </div>
+            <div class="project-building building-travel">
+              <h3 class="building-label" id="travel-destination">Travel Dashboard</h3>
+              <p class="building-description">Keep every leg of your journey together.</p>
+              <button class="building-action project-trigger" type="button" data-project-link="project-travel-dashboard" aria-label="View Travel Dashboard project details">View project <span aria-hidden="true">→</span></button>
+              <a class="building-action building-fallback" href="#project-travel-dashboard" aria-label="View Travel Dashboard project details">View project <span aria-hidden="true">→</span></a>
+            </div>
           </div>
         </div>
       </div>

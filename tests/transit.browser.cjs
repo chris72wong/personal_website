@@ -24,14 +24,38 @@ async function checkBrowser(engine) {
     await page.goto(siteUrl);
     await page.evaluate(() => document.fonts.ready);
     const desktop = await layout(page);
+    const reducedTrainPosition = await page.locator('[data-train-car="0"]').getAttribute('transform');
     assert.deepEqual(await page.locator('.building-label').allTextContents(), ['Gym Partner', 'Dream Planner', 'Travel Dashboard']);
     assert.deepEqual(await page.locator('.section-scroll-cue').evaluateAll(links => links.map(link => link.getAttribute('href'))), ['#projects', '#background', '#home']);
     assert.equal(await page.locator('.back-to-top').count(), 0);
     assert.equal(await page.locator('.scene-water, .scene-cloud, .scene-lights, .harbor-boats, filter').count(), 0, 'No filtered scenery or redundant animated overlays');
-    assert.equal(await page.locator('.harbor-backdrop image').count(), 1, 'One image paints the project background');
-    assert.ok(await page.locator('.harbor-backdrop image').evaluate(async el => {
+    assert.equal(await page.locator('.harbor-backdrop > image').count(), 1, 'One image paints the project background');
+    assert.ok(await page.locator('.harbor-backdrop > image').evaluate(async el => {
       const image = new Image(); image.src = el.getAttribute('href'); await image.decode(); return image.naturalWidth > 0;
     }), 'The new backdrop loads');
+    assert.ok(await page.locator('.resort-plane image').evaluate(async el => {
+      const image = new Image(); image.src = el.getAttribute('href'); await image.decode(); return image.naturalWidth > 0;
+    }), 'The transparent plane sprite loads');
+    assert.equal(await page.getByRole('button', { name: /View .* project details/ }).count(), 3, 'Each project has a real button');
+    assert.ok(await page.locator('.project-trigger').evaluateAll(buttons => buttons.every(button => {
+      const stage = button.closest('.harbor-stage').getBoundingClientRect();
+      const bounds = button.getBoundingClientRect();
+      return bounds.height >= 44 && bounds.top > stage.top + stage.height * .73 && bounds.bottom < stage.bottom;
+    })), 'Buttons sit beneath the buildings, inside the landscape, with at least 44px height');
+    for (const [building, title] of [['gym', 'gym-partner'], ['dream', 'dream-planner'], ['travel', 'travel-dashboard']]) {
+      const button = page.locator(`.building-${building} .project-trigger`);
+      await button.click();
+      assert.equal(await page.locator('.project-dialog').getAttribute('aria-labelledby'), `${title}-title`);
+      await page.keyboard.press('Escape');
+      await page.waitForFunction(() => !document.querySelector('.project-dialog').open);
+      assert.equal(await button.evaluate(el => el === document.activeElement), true, 'Closing restores focus to the button');
+    }
+    const keyboardButton = page.locator('.building-dream .project-trigger');
+    await keyboardButton.focus(); await page.keyboard.press('Space');
+    await page.waitForFunction(() => document.querySelector('.project-dialog').open);
+    await page.keyboard.press('Escape');
+    await page.waitForFunction(() => !document.querySelector('.project-dialog').open);
+    await page.locator('#home').evaluate(el => el.scrollIntoView({ behavior: 'instant' }));
     assert.ok(await page.evaluate(() => Math.abs(document.querySelector('.transit-journey').getBoundingClientRect().bottom - document.querySelector('.footer').getBoundingClientRect().top) < 1), 'Final image meets footer divider');
     for (const width of [320, 390, 640, 900]) {
       const context = await browser.newContext({ viewport: { width, height: 844 }, isMobile: true, hasTouch: true, reducedMotion: 'reduce' });
@@ -42,7 +66,7 @@ async function checkBrowser(engine) {
       assert.ok(await phone.evaluate(() => window.visualViewport.scale < 1), 'Phone initially fits the desktop overview');
       const meta = await phone.locator('meta[name="viewport"]').getAttribute('content');
       assert.ok(!/maximum-scale|user-scalable/.test(meta), 'Pinch zoom remains available');
-      await phone.locator('.building-gym').tap(); await phone.waitForFunction(() => document.querySelector('.project-dialog').open);
+      await phone.locator('.building-gym .project-trigger').tap(); await phone.waitForFunction(() => document.querySelector('.project-dialog').open);
       assert.equal(await phone.locator('.project-dialog').getAttribute('aria-labelledby'), 'gym-partner-title');
       await phone.locator('.project-dialog-close').tap(); await phone.waitForFunction(() => !document.querySelector('.project-dialog').open);
       if (width === 390) {
@@ -52,6 +76,7 @@ async function checkBrowser(engine) {
         assert.deepEqual(await phone.locator('.name-text').allTextContents(), ['Christopher', 'Wong'], 'Phone typing completes both lines');
         assert.equal(await phone.locator('.name-cursor').evaluate(el => el.getAnimations()[0]?.playState), 'running', 'Phone cursor blinks');
         await phone.emulateMedia({ reducedMotion: 'reduce' });
+        await phone.waitForFunction(() => document.querySelector('.name-cursor').getAnimations().length === 0);
         assert.equal(await phone.locator('.name-cursor').evaluate(el => el.getAnimations().length), 0, 'Reduced motion disables cursor blinking');
       }
       if (width === 390) await phone.screenshot({ path: path.join(screenshotDirectory, `${engine}-mobile-overview.png`), fullPage: true });
@@ -64,10 +89,60 @@ async function checkBrowser(engine) {
     assert.deepEqual(await page.locator('.name-text').allTextContents(), ['Christopher', 'Wong'], 'Desktop typing completes both lines');
     const clock = () => page.locator('.hero-vessel').evaluate(el => el.getAnimations()[0]?.currentTime);
     const before = await clock(); await page.waitForTimeout(250); assert.ok(await clock() > before, 'Welcome boat still moves');
-    assert.deepEqual(await page.evaluate(() => document.getAnimations().filter(a => a.playState === 'running' && a.effect.target instanceof Element).map(a => a.effect.target.classList.value).sort()), ['hero-vessel', 'hero-vessel-hull', 'name-cursor'], 'Only boat and name cursor animations run automatically');
+    assert.deepEqual(await page.evaluate(() => document.getAnimations().filter(a => a.playState === 'running' && a.effect.target instanceof Element).map(a => a.effect.target.classList.value).sort()), ['hero-vessel', 'hero-vessel-hull', 'name-cursor', 'resort-plane'], 'Only the visible vehicles and name cursor animate automatically');
     await page.locator('#background').evaluate(el => el.scrollIntoView({ behavior: 'instant' }));
     await page.waitForFunction(() => !document.querySelector('.hero').classList.contains('scene-active'));
     await page.waitForTimeout(100); const paused = await clock(); await page.waitForTimeout(150); assert.equal(await clock(), paused, 'Boat pauses offscreen');
+    await page.locator('#projects').evaluate(el => el.scrollIntoView({ behavior: 'instant' }));
+    await page.waitForFunction(() => document.querySelector('.harbor-stage').classList.contains('scene-active'));
+    const planeClock = () => page.locator('.resort-plane').evaluate(el => el.getAnimations()[0]?.currentTime);
+    const flightStart = await planeClock(); await page.waitForTimeout(150); assert.ok(await planeClock() > flightStart, 'The plane moves when Projects is visible');
+    const flight = await page.locator('.resort-plane').evaluate(el => {
+      const animation = el.getAnimations()[0];
+      const originalTime = animation.currentTime;
+      const samples = [0, 9000, 14500, 16500, 22000].map(time => {
+        animation.currentTime = time;
+        const style = getComputedStyle(el); const matrix = new DOMMatrix(style.transform);
+        return { x: matrix.e, y: matrix.f, opacity: Number(style.opacity) };
+      });
+      animation.currentTime = originalTime;
+      return samples;
+    });
+    assert.ok(flight[0].x > flight[1].x && flight[1].x > flight[2].x, 'The plane flies from right to left');
+    assert.ok(flight[0].y > flight[1].y && flight[1].y > flight[2].y, 'The plane climbs gently');
+    assert.equal(flight[3].opacity, 0, 'The plane is hidden after exiting');
+    assert.equal(flight[4].opacity, 0, 'The loop includes a quiet gap');
+    await page.locator('.building-travel .project-trigger').click();
+    await page.waitForFunction(() => !document.querySelector('.harbor-stage').classList.contains('scene-active'));
+    await page.locator('.resort-plane').evaluate(el => el.getAnimations()[0].ready);
+    const modalPause = await planeClock(); await page.waitForTimeout(150); assert.equal(await planeClock(), modalPause, 'The plane pauses during project dialogs');
+    await page.keyboard.press('Escape');
+    await page.waitForFunction(() => !document.querySelector('.project-dialog').open);
+    await page.waitForFunction(() => document.querySelector('.harbor-stage').classList.contains('scene-active'));
+    await page.evaluate(() => {
+      Object.defineProperty(document, 'hidden', { configurable: true, value: true });
+      document.dispatchEvent(new Event('visibilitychange'));
+    });
+    await page.locator('.resort-plane').evaluate(el => el.getAnimations()[0].ready);
+    const hiddenPause = await planeClock(); await page.waitForTimeout(150); assert.equal(await planeClock(), hiddenPause, 'The plane pauses in hidden tabs');
+    await page.evaluate(() => { delete document.hidden; document.dispatchEvent(new Event('visibilitychange')); });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.waitForFunction(() => document.querySelector('.resort-plane').getAnimations().length === 0);
+    assert.equal(await page.locator('.resort-plane').evaluate(el => el.getAnimations().length), 0, 'Reduced motion disables the flyby');
+    assert.equal(await page.locator('.resort-plane').evaluate(el => Number(getComputedStyle(el).opacity)), 0, 'Reduced motion keeps the plane hidden');
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await page.waitForFunction(() => document.querySelector('.harbor-stage').classList.contains('scene-active'));
+    await page.waitForFunction(() => document.querySelector('.resort-plane').getAnimations().length === 1);
+    await page.locator('.resort-plane').evaluate(el => { el.getAnimations()[0].currentTime = 1000; });
+    await page.locator('.harbor-stage').screenshot({ path: path.join(screenshotDirectory, `${engine}-projects.png`) });
+    // A shorter viewport lets the final scene fully cover Projects instead of
+    // leaving its lower edge visible at the document's maximum scroll position.
+    await page.setViewportSize({ width: 1280, height: 600 });
+    await page.locator('#background').evaluate(el => window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY, behavior: 'instant' }));
+    await page.waitForFunction(() => !document.querySelector('.harbor-stage').classList.contains('scene-active'));
+    await page.locator('.resort-plane').evaluate(el => el.getAnimations()[0].ready);
+    const flightPause = await planeClock(); await page.waitForTimeout(150); assert.equal(await planeClock(), flightPause, 'The plane pauses offscreen');
+    await page.setViewportSize({ width: 1280, height: 900 });
     const car = page.locator('[data-train-car="0"]');
     await page.waitForFunction(() => Number(document.querySelector('[data-train-car="0"]').getAttribute('transform').match(/translate\(([-\d.]+)/)[1]) > -10);
     // Drive animation frames deterministically to check a complete loop quickly.
@@ -150,6 +225,7 @@ async function checkBrowser(engine) {
     await page.evaluate(() => window.restoreFrames());
 
     await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.waitForFunction(position => document.querySelector('[data-train-car="0"]').getAttribute('transform') === position, reducedTrainPosition);
     const still = await car.getAttribute('transform'); await page.waitForTimeout(200); assert.equal(await car.getAttribute('transform'), still, 'Reduced motion stops the train');
     await page.emulateMedia({ reducedMotion: 'no-preference' });
     await page.waitForTimeout(100); const moving = await car.getAttribute('transform'); await page.waitForTimeout(200); assert.notEqual(await car.getAttribute('transform'), moving, 'Train resumes');
@@ -159,11 +235,15 @@ async function checkBrowser(engine) {
     await page.locator('#projects .section-scroll-cue').click(); await page.waitForFunction(() => location.hash === '#background');
     await page.locator('#background .section-scroll-cue').click(); await page.waitForFunction(() => location.hash === '#home');
     await page.screenshot({ path: path.join(screenshotDirectory, `${engine}-desktop-overview.png`), fullPage: true });
-    const fallback = await browser.newPage({ javaScriptEnabled: false, viewport: { width: 390, height: 844 }, isMobile: true }); watch(fallback); await fallback.goto(siteUrl);
+    const fallback = await browser.newPage({ javaScriptEnabled: false, viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }); watch(fallback); await fallback.goto(siteUrl);
     assert.equal(await fallback.locator('.project-panel:visible').count(), 3, 'Project articles work without JavaScript');
+    assert.equal(await fallback.locator('.project-trigger:visible').count(), 0, 'No inactive buttons without JavaScript');
+    assert.equal(await fallback.locator('.building-fallback:visible').count(), 3, 'Usable article links replace buttons without JavaScript');
+    await fallback.locator('.building-gym .building-fallback').tap();
+    assert.equal(new URL(fallback.url()).hash, '#project-gym-partner', 'Fallback link reaches the matching article');
     assert.equal(await fallback.locator('.stop-logo:visible').count(), 4, 'All milestones remain visible');
     assert.deepEqual(errors, []);
-    console.log(`${engine}: desktop/mobile composition, zoom overview, static scenery, boat motion, full train loop and bogie alignment, pausing, reduced motion, touch dialogs, arrows, footer and no-JavaScript checks passed. Screenshots: ${screenshotDirectory}`);
+    console.log(`${engine}: desktop/mobile composition, project buttons and keyboard access, plane flyby and pausing, boat motion, full train loop and bogie alignment, reduced motion, touch dialogs, arrows, footer and no-JavaScript checks passed. Screenshots: ${screenshotDirectory}`);
   } finally { await browser.close(); }
 }
 (async () => {
