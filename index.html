@@ -23,202 +23,110 @@
   </header>
 
   <main class="wrap" id="main" tabindex="-1">
-    <section id="home" class="card hero">
+    <section id="home" class="card hero" data-living-scene>
       <div class="hero-inner">
         <h1 aria-label="Christopher Wong">
           <span class="name-line" aria-hidden="true"><span class="name-reserved">Christopher</span><span class="name-visual"><span class="name-text">Christopher</span></span></span>
           <span class="name-line name-surname" aria-hidden="true"><span class="name-reserved">Wong</span><span class="name-visual"><span class="name-text">Wong</span><span class="name-cursor"></span></span></span>
         </h1>
       </div>
-      <div class="hero-skyline" aria-hidden="true">
-        <svg viewBox="0 0 560 350" fill="none" focusable="false">
-          <g class="skyline-backdrop">
-            <path d="M12 306V246H42V215H69V285H84V183H117V289H140V220H164V199H186V303M295 303V195H322V177H346V272H367V210H401V292H420V235H450V204H477V279H499V248H530V307" />
-          </g>
-          <g class="skyline-outline">
-            <path class="skyline-draw" pathLength="100" d="M20 320V284H52V267H84V320H99V217H137V320H151V161H159V144H184V161H192V320H211" />
-            <path class="skyline-draw skyline-tower" pathLength="100" d="M225 320L238 145H232L224 137V129L234 126V117L241 112V76L245 22L249 76V112L256 117V126L266 129V137L258 145H252L265 320M238 145H252M234 126H256M224 132H266M241 112H249" />
-            <path class="skyline-draw" pathLength="100" d="M280 320V283C292 240 365 240 380 283V320M280 283H380M298 283C308 251 351 251 362 283M395 320V202H409V180H421V153H446V180H458V202H472V320H488V265H516V282H539V320" />
-          </g>
-          <g class="skyline-details">
-            <path d="M108 235H128M108 249H128M108 263H128M108 277H128M108 291H128M163 177H180M163 194H180M163 211H180M163 228H180M163 245H180M163 262H180M163 279H180M163 296H180M405 220H460M405 239H460M405 258H460M405 277H460M405 296H460M423 191V308M444 191V308M294 301H366M35 300H69M498 295H526" />
-            <path d="M9 329H551" />
-          </g>
-        </svg>
-      </div>
+      <svg class="hero-landscape" viewBox="0 0 1754 896" preserveAspectRatio="xMidYMid slice" fill="none" aria-hidden="true" focusable="false">
+        <defs>
+          <clipPath id="welcome-water"><rect y="675" width="1754" height="221"/></clipPath>
+          <filter id="welcome-ripple" x="-1%" y="-2%" width="102%" height="104%"><feTurbulence type="fractalNoise" baseFrequency=".015 .14" numOctaves="1" seed="8" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/></filter>
+        </defs>
+        <image href="images/welcome-toronto.webp" width="1754" height="896"/>
+        <g clip-path="url(#welcome-water)"><image class="scene-water" filter="url(#welcome-ripple)" href="images/welcome-toronto.webp" width="1754" height="896"/></g>
+        <g class="scene-cloud cloud-one"><image href="images/night-cloud.webp" x="-70" y="225" width="430" height="63"/></g>
+        <g class="scene-cloud cloud-two"><image href="images/night-cloud.webp" x="1260" y="310" width="300" height="44"/></g>
+        <g class="scene-cloud cloud-three"><image href="images/night-cloud.webp" x="735" y="397" width="360" height="53"/></g>
+        <g class="scene-lights" fill="#ffe8a8"><circle cx="826" cy="659" r="3"/><circle cx="985" cy="658" r="3"/><circle cx="1288" cy="662" r="3"/><circle cx="1508" cy="659" r="3"/><path d="M779 536H782V541H779Z M1078 500H1081V506H1078Z M1315 572H1318V579H1315Z M1607 460H1610V466H1607Z"/></g>
+        <g class="scene-beacons" fill="#8aeed0"><circle cx="1171" cy="86" r="2.5"/><circle cx="1583" cy="330" r="2"/></g>
+        <g class="scene-stars" fill="#d4eddf"><circle cx="434" cy="257" r="1.1"/><circle cx="810" cy="47" r="1"/><circle cx="1498" cy="76" r="1.2"/></g>
+        <g class="hero-vessel"><g class="hero-vessel-hull"><g class="hero-vessel-art"><path class="hero-wake" d="M438 732C355 731 298 742 214 740M449 739C382 742 326 749 267 748" stroke="#c3decc" stroke-width="1.2" opacity=".3"/><image href="images/welcome-yacht.webp" x="442" y="608" width="280" height="124"/><image class="hero-vessel-reflection" href="images/welcome-yacht.webp" x="442" y="-855" width="280" height="124" transform="translate(0 439) scale(1 -.4)" opacity=".12"/></g></g></g>
+      </svg>
       <a class="scroll-cue section-scroll-cue" href="#projects" aria-label="Scroll to projects">
         <svg viewBox="0 0 24 28" width="24" height="28" aria-hidden="true" focusable="false"><path d="m4 6 8 8 8-8M4 14l8 8 8-8" /></svg>
       </a>
     </section>
 
     <section id="projects" class="card" aria-labelledby="projects-title">
-      <div class="project-city">
-        <div class="city-stage">
+      <div class="project-harbor">
+        <div class="harbor-stage" data-living-scene>
+          <svg class="harbor-backdrop" viewBox="0 0 1672 941" preserveAspectRatio="xMidYMid slice" fill="none" aria-hidden="true" focusable="false">
+              <defs>
+                <clipPath id="resort-wide-water"><path d="M1120 390H1235V456H1137Z M226 632L616 617L644 683L568 806L425 835L212 765L105 710Z M1165 572L1537 575L1541 706L1433 819L1280 889L1060 818L1020 748L1090 645Z M626 501H967V519H626Z"/></clipPath>
+                <clipPath id="resort-wide-falls"><path d="M621 520L687 525L673 551L662 570L676 600L636 609L604 603L619 559Z M943 522L970 526L990 558L1012 582L1039 605L1008 617L981 601L963 570Z"/></clipPath>
+                <filter id="resort-wide-ripple" x="-1%" y="-1%" width="102%" height="102%"><feTurbulence type="fractalNoise" baseFrequency=".017 .12" numOctaves="1" seed="6" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/></filter>
+              </defs>
+              <image href="images/projects-resort.webp" width="1672" height="941"/>
+              <g clip-path="url(#resort-wide-water)"><image class="scene-water" filter="url(#resort-wide-ripple)" href="images/projects-resort.webp" width="1672" height="941"/></g>
+              <g clip-path="url(#resort-wide-falls)"><image class="resort-cascade" filter="url(#resort-wide-ripple)" href="images/projects-resort.webp" width="1672" height="941"/></g>
+              <g class="scene-cloud resort-cloud"><image href="images/sunset-cloud.webp" x="145" y="70" width="540" height="120"/></g>
+              <g class="scene-cloud resort-cloud cloud-two"><image href="images/sunset-cloud.webp" x="845" y="30" width="650" height="144"/></g>
+              <g class="scene-lights resort-lights" fill="#ffefbe"><circle cx="655" cy="648" r="5"/><circle cx="700" cy="608" r="4"/><circle cx="641" cy="732" r="7"/><circle cx="941" cy="688" r="6"/><circle cx="414" cy="897" r="10"/><circle cx="1196" cy="909" r="9"/><circle cx="1334" cy="525" r="3"/><circle cx="251" cy="551" r="3"/><circle cx="779" cy="514" r="3"/></g>
+            </svg>
           <div class="scene-heading">
             <h2 id="projects-title">Projects</h2>
+            <span class="resort-heading-rule" aria-hidden="true">✧</span>
+            <p class="resort-kicker">Three destinations. A brighter tomorrow.</p>
+            <p class="resort-intro">Real projects. A shared journey.</p>
           </div>
-          <div class="city-sky" aria-hidden="true">
-            <span class="city-moon"></span>
-            <svg class="city-skyline" viewBox="0 0 1100 220" fill="none" focusable="false">
-              <path class="city-distant-buildings" d="M0 220V166H36V130H64V220H86V113H118V151H150V220H175V145H204V96H240V220H267V158H305V220H344V117H374V81H407V220H432V148H469V220H519V126H550V220H579V144H612V97H642V220H698V128H727V165H764V220H792V87H830V120H858V220H885V151H921V105H956V220H983V133H1018V175H1060V145H1100V220Z" />
-              <path class="city-cn-tower" d="M657 220L665 108H661L656 102V96L663 92V86L668 81V49L672 15L676 49V81L681 86V92L688 96V102L683 108H679L687 220M665 108H679M663 92H681M656 99H688" />
-            </svg>
+          <div class="harbor-boats" aria-hidden="true">
+            <span class="harbor-boat boat-ferry"><span class="boat-hull"><img src="images/resort-yacht.webp" alt="" width="700" height="262" loading="lazy"/><img class="boat-reflection" src="images/resort-yacht.webp" alt="" width="700" height="262" loading="lazy"/></span></span>
+            <span class="harbor-boat boat-motor"><span class="boat-hull"><img src="images/resort-yacht.webp" alt="" width="700" height="262" loading="lazy"/><img class="boat-reflection" src="images/resort-yacht.webp" alt="" width="700" height="262" loading="lazy"/></span></span>
           </div>
-          <div class="city-pavement" aria-hidden="true"></div>
-          <div class="city-street" aria-hidden="true"><span></span></div>
-          <svg class="city-road" fill="none" aria-hidden="true" focusable="false">
-              <path class="city-road-pavement" />
-              <path class="city-road-surface" />
-              <path class="city-road-markings" />
-            </svg>
-            <svg class="city-traffic" fill="none" aria-hidden="true" focusable="false">
-              <path class="city-drive-path" />
-              <g class="city-car">
-                <path fill="#e8dba2" opacity=".12" d="M13-5L48-15V15L13 5Z"/>
-                <rect x="-12" y="-9" width="7" height="3" rx="1" fill="#080f15"/><rect x="-12" y="6" width="7" height="3" rx="1" fill="#080f15"/>
-                <rect x="5" y="-9" width="7" height="3" rx="1" fill="#080f15"/><rect x="5" y="6" width="7" height="3" rx="1" fill="#080f15"/>
-                <rect x="-16" y="-7" width="32" height="14" rx="5" fill="#a8c4bb" stroke="#d4e2d3"/>
-                <path fill="#233c48" d="M-7-5H6L9-3V3L6 5H-7L-10 3V-3Z"/><path stroke="#92ada9" d="M-5-5V5M5-5V5"/>
-                <path stroke="#fff1b3" stroke-width="2" d="M14-5V-2M14 2V5"/><path stroke="#e38979" stroke-width="2" d="M-15-5V-2M-15 2V5"/>
-              </g>
-            </svg>
-          <div class="city-buildings">
-            <a class="project-building building-dream" href="#project-dream-planner" data-project-link="project-dream-planner" aria-label="Learn more about Dream Planner">
-              <span class="building-model" aria-hidden="true">
-                <svg viewBox="0 0 320 330" fill="none" focusable="false">
-                  <defs>
-                    <linearGradient id="home-glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f4cf88" /><stop offset="1" stop-color="#bc7d46" /></linearGradient>
-                    <radialGradient id="home-lamp"><stop stop-color="#ffdc9a" stop-opacity=".3" /><stop offset="1" stop-color="#ffdc9a" stop-opacity="0" /></radialGradient>
-                  </defs>
-                  <ellipse class="building-shadow" cx="161" cy="299" rx="142" ry="18" />
-                  <path fill="#23392e" stroke="#3c5946" d="M23 285L76 255H260L303 280L252 311H63Z" />
-                  <path fill="#1c2b25" stroke="#3a4d40" d="M237 144L274 121V269L237 291Z" />
-                  <path fill="#344b43" d="M80 147L148 96L230 147Z" />
-                  <path class="building-face building-outline" fill="#344b43" d="M80 147H237V291H80Z" />
-                  <path fill="#2e4140" stroke="#586d64" d="M65 153L147 79L245 153H230L148 96L82 153Z" />
-                  <path fill="#192c2b" stroke="#53665c" d="M147 79L183 59L281 121L245 153Z" />
-                  <path stroke="#405853" d="M174 72L262 134M163 83L250 145M191 84L163 100M218 101L191 119M246 119L216 136" />
-                  <circle class="building-window" fill="url(#home-glass)" stroke="#d4bc86" cx="148" cy="131" r="9" />
-                  <path stroke="#5b604a" d="M148 122V140M139 131H157" />
-                  <path fill="#466052" stroke="#688071" d="M220 95V58L238 49V107M208 65L220 58V95L208 86Z" />
-                  <path fill="#647565" stroke="#839483" d="M205 63L222 53L241 48L224 60Z" />
-                  <path fill="#2d4036" stroke="#5d7262" d="M114 292V204H210V292Z" />
-                  <path class="building-door" fill="#213830" stroke="#94ab88" d="M148 290V220H177V290Z" />
-                  <path class="building-window" fill="url(#home-glass)" d="M154 229H171V262H154Z" />
-                  <circle fill="#f1d298" cx="172" cy="275" r="1.6" />
-                  <rect class="building-window" fill="url(#home-glass)" stroke="#d4bc86" x="94" y="170" width="31" height="42" rx="2" />
-                  <rect class="building-window" fill="url(#home-glass)" stroke="#d4bc86" x="192" y="170" width="31" height="42" rx="2" />
-                  <path stroke="#5b604a" stroke-width="2" d="M109 171V211M95 191H124M207 171V211M193 191H222" />
-                  <path fill="#39534b" stroke="#6b8371" d="M104 214H217L226 225H97Z" />
-                  <path stroke="#78917b" stroke-width="4" d="M107 225V288M217 225V288" />
-                  <path fill="#567065" stroke="#78917b" d="M103 288H220L230 299H96Z M112 299H210L219 307H104Z" />
-                  <path fill="#8c9a84" d="M124 310L150 308L144 314L117 316Z M103 320L132 317L125 323L95 325Z" />
-                  <circle fill="url(#home-lamp)" cx="185" cy="239" r="30" />
-                  <path fill="#ffe0a0" stroke="#c5a778" d="M183 231H188V242H183Z" />
-                  <path stroke="#9aa786" stroke-width="1.5" d="M184 230V227H189" />
-                  <g class="home-tree">
-                    <path stroke="#8b7960" stroke-width="5" d="M54 289V215M54 246L38 231M54 235L69 218" />
-                    <path fill="#2e5942" stroke="#54836a" d="M27 236C12 228 20 208 31 207C20 190 34 179 46 183C50 161 75 164 79 184C100 183 105 205 89 213C103 230 82 249 68 239C54 254 36 251 27 236Z" />
-                    <path stroke="#6c9471" opacity=".55" d="M36 215C46 207 52 194 53 184M62 224L80 198M27 228L47 222" />
-                  </g>
-                  <g fill="#3c6747" stroke="#64815a"><ellipse cx="246" cy="289" rx="18" ry="10" /><ellipse cx="271" cy="285" rx="17" ry="11" /></g>
-                  <g fill="#e6bb77"><circle cx="242" cy="285" r="2" /><circle cx="249" cy="290" r="2" /><circle cx="272" cy="282" r="2" /></g>
-                  <path stroke="#83967c" stroke-width="2" d="M287 280V260M282 263H294" />
-                  <path fill="#567267" stroke="#92a18a" d="M281 252H295V263H281Z" />
-                  <path stroke="#a2ae96" d="M284 256H292" />
-                </svg>
-              </span>
-              <span class="building-label">Dream Planner</span>
-              <span class="building-action">Learn more <span aria-hidden="true">→</span></span>
+          <div class="harbor-projects">
+            <a class="project-building building-gym" href="#project-gym-partner" data-project-link="project-gym-partner" aria-label="View Gym Partner project details">
+              <span class="building-model" aria-hidden="true"><svg class="resort-model-landscape" viewBox="0 230 620 560" preserveAspectRatio="xMidYMid slice" fill="none" aria-hidden="true" focusable="false">
+              <defs>
+                <clipPath id="resort-gym-water"><path d="M1120 390H1235V456H1137Z M226 632L616 617L644 683L568 806L425 835L212 765L105 710Z M1165 572L1537 575L1541 706L1433 819L1280 889L1060 818L1020 748L1090 645Z M626 501H967V519H626Z"/></clipPath>
+                <clipPath id="resort-gym-falls"><path d="M621 520L687 525L673 551L662 570L676 600L636 609L604 603L619 559Z M943 522L970 526L990 558L1012 582L1039 605L1008 617L981 601L963 570Z"/></clipPath>
+                <filter id="resort-gym-ripple" x="-1%" y="-1%" width="102%" height="102%"><feTurbulence type="fractalNoise" baseFrequency=".017 .12" numOctaves="1" seed="6" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/></filter>
+              </defs>
+              <image href="images/projects-resort.webp" width="1672" height="941"/>
+              <g clip-path="url(#resort-gym-water)"><image class="scene-water" filter="url(#resort-gym-ripple)" href="images/projects-resort.webp" width="1672" height="941"/></g>
+              <g clip-path="url(#resort-gym-falls)"><image class="resort-cascade" filter="url(#resort-gym-ripple)" href="images/projects-resort.webp" width="1672" height="941"/></g>
+              <g class="scene-cloud resort-cloud"><image href="images/sunset-cloud.webp" x="145" y="70" width="540" height="120"/></g>
+              <g class="scene-cloud resort-cloud cloud-two"><image href="images/sunset-cloud.webp" x="845" y="30" width="650" height="144"/></g>
+              <g class="scene-lights resort-lights" fill="#ffefbe"><circle cx="655" cy="648" r="5"/><circle cx="700" cy="608" r="4"/><circle cx="641" cy="732" r="7"/><circle cx="941" cy="688" r="6"/><circle cx="414" cy="897" r="10"/><circle cx="1196" cy="909" r="9"/><circle cx="1334" cy="525" r="3"/><circle cx="251" cy="551" r="3"/><circle cx="779" cy="514" r="3"/></g>
+            </svg></span>
+              <span class="destination-marker" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15V25M11 12V28M29 12V28M33 15V25M11 20H29"/></svg></span>
+              <span class="building-copy"><span class="building-label">Gym Partner</span><span class="building-description">Build strength. Track your progress.</span><span class="building-action">Explore <span aria-hidden="true">→</span></span></span>
             </a>
-            <a class="project-building building-travel" href="#project-travel-dashboard" data-project-link="project-travel-dashboard" aria-label="Learn more about Travel Dashboard">
-              <span class="building-model" aria-hidden="true">
-                <svg viewBox="0 0 320 330" fill="none" focusable="false">
-                  <defs>
-                    <linearGradient id="station-glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#80b8c5" /><stop offset="1" stop-color="#365a68" /></linearGradient>
-                    <clipPath id="station-platform"><path d="M22 277H296V315H22Z" /></clipPath>
-                  </defs>
-                  <ellipse class="building-shadow" cx="167" cy="299" rx="139" ry="17" />
-                  <path fill="#334348" stroke="#5d7274" d="M21 277L58 251H286L307 273L273 295H21Z" />
-                  <path class="building-face building-outline" fill="#34434b" d="M40 162H238V272H40Z" />
-                  <path fill="#202f37" stroke="#536971" d="M238 162L275 140V250L238 272Z" />
-                  <path fill="#5b7474" stroke="#859992" d="M28 155L65 132H266L286 145L244 170H37Z" />
-                  <path stroke="#9cac9f" d="M45 152H253M62 143H268" />
-                  <path fill="#46575b" stroke="#7b8e88" d="M85 132V94H194V132Z" />
-                  <path fill="#2e4048" stroke="#677c7b" d="M194 94L218 80V119L194 132Z" />
-                  <path fill="#6a807b" stroke="#91a098" d="M76 94L101 78H211L222 83L198 98H80Z" />
-                  <circle fill="#e4dcc0" stroke="#aeb6a0" cx="139" cy="114" r="13" />
-                  <path stroke="#3a514f" stroke-width="2" d="M139 105V114L146 118" />
-                  <rect class="building-window" fill="url(#station-glass)" stroke="#85a3a0" x="54" y="185" width="50" height="57" rx="2" />
-                  <rect class="building-window" fill="url(#station-glass)" stroke="#85a3a0" x="115" y="185" width="48" height="57" rx="2" />
-                  <path stroke="#344d54" stroke-width="2" d="M79 185V242M139 185V242M54 215H163" />
-                  <path class="building-door" fill="#28414b" stroke="#89a6a0" d="M184 273V191H224V273Z" />
-                  <path class="building-window" fill="url(#station-glass)" d="M190 198H218V247H190Z" />
-                  <path stroke="#819e9d" d="M204 198V272M213 255H218" />
-                  <rect fill="#142b31" stroke="#75908a" x="59" y="153" width="96" height="20" rx="2" />
-                  <text class="station-sign" x="107" y="167" text-anchor="middle" fill="#d0ddd0">DEPARTURES</text>
-                  <path fill="#162b30" stroke="#6e8885" d="M244 199L267 185V220L244 234Z" />
-                  <path stroke="#d8c39b" stroke-width="2" d="M249 201L262 194M249 209L258 204M249 216L262 209" />
-                  <path stroke="#779496" stroke-width="3" d="M55 261H99M59 263V272M94 263V272" />
-                  <path fill="#c39967" stroke="#d4b281" d="M119 263H132V276H119Z" />
-                  <path stroke="#d4b281" d="M122 263V258H128V263" />
-                  <path stroke="#849690" d="M23 295H298M23 311H298M36 294L45 315M67 294L76 315M98 294L107 315M129 294L138 315M160 294L169 315M191 294L200 315M222 294L231 315M253 294L262 315M284 294L293 315" />
-                  <g clip-path="url(#station-platform)">
-                    <g class="station-train">
-                      <path fill="#9fb4aa" stroke="#c2cec1" d="M47 280H199C210 280 219 288 221 301H43V286Z" />
-                      <path fill="#466b72" d="M55 285H79V296H55Z M87 285H111V296H87Z M119 285H143V296H119Z M151 285H174V296H151Z M184 285H200L211 296H184Z" />
-                      <path stroke="#b3be9e" d="M82 281V301M146 281V301M180 281V301" />
-                      <path stroke="#63b68f" stroke-width="3" d="M45 299H218" />
-                      <g fill="#101f25" stroke="#7c928b"><circle cx="66" cy="304" r="4" /><circle cx="108" cy="304" r="4" /><circle cx="159" cy="304" r="4" /><circle cx="201" cy="304" r="4" /></g>
-                      <path stroke="#f5d49a" stroke-width="3" d="M215 293L218 296" />
-                    </g>
-                  </g>
-                  <path stroke="#8a9b85" stroke-width="2" d="M288 274V171" />
-                  <path fill="#e8d4a7" stroke="#b3b397" d="M279 173H295V181H279Z" />
-                  <ellipse class="station-lamp-glow" fill="#f4d899" opacity=".08" cx="287" cy="179" rx="26" ry="34" />
-                </svg>
-              </span>
-              <span class="building-label">Travel Dashboard</span>
-              <span class="building-action">Learn more <span aria-hidden="true">→</span></span>
+            <a class="project-building building-dream" href="#project-dream-planner" data-project-link="project-dream-planner" aria-label="View Dream Planner project details">
+              <span class="building-model" aria-hidden="true"><svg class="resort-model-landscape" viewBox="530 210 620 560" preserveAspectRatio="xMidYMid slice" fill="none" aria-hidden="true" focusable="false">
+              <defs>
+                <clipPath id="resort-dream-water"><path d="M1120 390H1235V456H1137Z M226 632L616 617L644 683L568 806L425 835L212 765L105 710Z M1165 572L1537 575L1541 706L1433 819L1280 889L1060 818L1020 748L1090 645Z M626 501H967V519H626Z"/></clipPath>
+                <clipPath id="resort-dream-falls"><path d="M621 520L687 525L673 551L662 570L676 600L636 609L604 603L619 559Z M943 522L970 526L990 558L1012 582L1039 605L1008 617L981 601L963 570Z"/></clipPath>
+                <filter id="resort-dream-ripple" x="-1%" y="-1%" width="102%" height="102%"><feTurbulence type="fractalNoise" baseFrequency=".017 .12" numOctaves="1" seed="6" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/></filter>
+              </defs>
+              <image href="images/projects-resort.webp" width="1672" height="941"/>
+              <g clip-path="url(#resort-dream-water)"><image class="scene-water" filter="url(#resort-dream-ripple)" href="images/projects-resort.webp" width="1672" height="941"/></g>
+              <g clip-path="url(#resort-dream-falls)"><image class="resort-cascade" filter="url(#resort-dream-ripple)" href="images/projects-resort.webp" width="1672" height="941"/></g>
+              <g class="scene-cloud resort-cloud"><image href="images/sunset-cloud.webp" x="145" y="70" width="540" height="120"/></g>
+              <g class="scene-cloud resort-cloud cloud-two"><image href="images/sunset-cloud.webp" x="845" y="30" width="650" height="144"/></g>
+              <g class="scene-lights resort-lights" fill="#ffefbe"><circle cx="655" cy="648" r="5"/><circle cx="700" cy="608" r="4"/><circle cx="641" cy="732" r="7"/><circle cx="941" cy="688" r="6"/><circle cx="414" cy="897" r="10"/><circle cx="1196" cy="909" r="9"/><circle cx="1334" cy="525" r="3"/><circle cx="251" cy="551" r="3"/><circle cx="779" cy="514" r="3"/></g>
+            </svg></span>
+              <span class="destination-marker" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 30V16M20 18C15 10 10 13 9 18C14 15 17 16 20 18ZM20 18C25 10 30 13 31 18C26 15 23 16 20 18ZM20 17C18 10 22 8 25 9M14 31H26"/></svg></span>
+              <span class="building-copy"><span class="building-label">Dream Planner</span><span class="building-description">Plan your home, education, and retirement.</span><span class="building-action">Explore <span aria-hidden="true">→</span></span></span>
             </a>
-            <a class="project-building building-gym" href="#project-gym-partner" data-project-link="project-gym-partner" aria-label="Learn more about Gym Partner">
-              <span class="building-model" aria-hidden="true">
-                <svg viewBox="0 0 320 330" fill="none" focusable="false">
-                  <defs><linearGradient id="gym-glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#386b56" /><stop offset="1" stop-color="#1d3b33" /></linearGradient></defs>
-                  <ellipse class="building-shadow" cx="159" cy="299" rx="139" ry="17" />
-                  <path fill="#263c34" stroke="#4c6555" d="M25 285L62 263H260L296 282L259 307H54Z" />
-                  <path class="building-face building-outline" fill="#304b41" d="M43 149H239V292H43Z" />
-                  <path fill="#1c302a" stroke="#4e6757" d="M239 149L277 126V269L239 292Z" />
-                  <path fill="#486559" stroke="#7c9780" d="M33 144L74 119H272L286 127L243 155H43Z" />
-                  <path fill="#3c4d46" stroke="#8a9b81" d="M65 135L88 120H250L227 135Z" />
-                  <path class="rooftop-track" stroke="#bf9273" stroke-width="3" d="M98 125H230C243 125 235 132 217 132H88C76 132 83 125 98 125Z" />
-                  <path stroke="#dbc0a0" stroke-width=".7" d="M100 128H221" />
-                  <path stroke="#8aab90" d="M43 134V117L84 92H272V116M84 92V114M116 92V115M148 92V115M180 92V115M212 92V115M244 92V115M272 101H84L43 126" />
-                  <rect fill="#132c24" stroke="#80a286" x="115" y="148" width="54" height="24" rx="3" />
-                  <text class="gym-sign" x="142" y="165" text-anchor="middle" fill="#a6d2a3">GYM</text>
-                  <rect class="building-window gym-front-glass" fill="url(#gym-glass)" stroke="#89ad94" x="58" y="189" width="111" height="76" rx="2" />
-                  <path fill="#40594a" d="M60 247H167V263H60Z" />
-                  <g class="gym-equipment" stroke="#b8c6ac" stroke-width="2">
-                    <path d="M73 246V204H102V246M76 216H100M76 230H100" />
-                    <path stroke-width="4" d="M81 211V221M88 211V221M95 211V221M81 225V235M88 225V235M95 225V235" />
-                    <path d="M118 247V218H153V247M121 225H150M136 216V234" />
-                    <path stroke-width="4" d="M126 220V230M147 220V230" />
-                    <path d="M112 248H148M118 248L114 257M142 248L147 257" />
-                  </g>
-                  <path stroke="#567968" stroke-width="3" d="M112 190V264" />
-                  <path stroke="#8bab96" opacity=".24" stroke-width="5" d="M61 238L92 191M140 263L166 220" />
-                  <path class="building-door" fill="#1d382f" stroke="#8dab91" d="M183 292V190H223V292Z" />
-                  <path class="building-window" fill="url(#gym-glass)" d="M190 199H216V266H190Z" />
-                  <path stroke="#9ab79e" d="M203 199V291M211 272H216" />
-                  <path fill="#597064" stroke="#7c9380" d="M177 292H230L239 300H171Z" />
-                  <path fill="#578064" d="M252 285V268L264 261L272 272L267 285Z M26 286V271L35 265L43 275L39 286Z" />
-                  <path stroke="#80a07e" d="M260 288V272M33 288V276" />
-                  <path stroke="#719180" d="M249 167L270 154M249 184L270 171M249 201L270 188M249 218L270 205M249 235L270 222M249 252L270 239" />
-                  <path stroke="#91b89a" stroke-width="2" d="M49 279H162" />
-                </svg>
-              </span>
-              <span class="building-label">Gym Partner</span>
-              <span class="building-action">Learn more <span aria-hidden="true">→</span></span>
+            <a class="project-building building-travel" href="#project-travel-dashboard" data-project-link="project-travel-dashboard" aria-label="View Travel Dashboard project details">
+              <span class="building-model" aria-hidden="true"><svg class="resort-model-landscape" viewBox="1052 240 620 560" preserveAspectRatio="xMidYMid slice" fill="none" aria-hidden="true" focusable="false">
+              <defs>
+                <clipPath id="resort-travel-water"><path d="M1120 390H1235V456H1137Z M226 632L616 617L644 683L568 806L425 835L212 765L105 710Z M1165 572L1537 575L1541 706L1433 819L1280 889L1060 818L1020 748L1090 645Z M626 501H967V519H626Z"/></clipPath>
+                <clipPath id="resort-travel-falls"><path d="M621 520L687 525L673 551L662 570L676 600L636 609L604 603L619 559Z M943 522L970 526L990 558L1012 582L1039 605L1008 617L981 601L963 570Z"/></clipPath>
+                <filter id="resort-travel-ripple" x="-1%" y="-1%" width="102%" height="102%"><feTurbulence type="fractalNoise" baseFrequency=".017 .12" numOctaves="1" seed="6" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/></filter>
+              </defs>
+              <image href="images/projects-resort.webp" width="1672" height="941"/>
+              <g clip-path="url(#resort-travel-water)"><image class="scene-water" filter="url(#resort-travel-ripple)" href="images/projects-resort.webp" width="1672" height="941"/></g>
+              <g clip-path="url(#resort-travel-falls)"><image class="resort-cascade" filter="url(#resort-travel-ripple)" href="images/projects-resort.webp" width="1672" height="941"/></g>
+              <g class="scene-cloud resort-cloud"><image href="images/sunset-cloud.webp" x="145" y="70" width="540" height="120"/></g>
+              <g class="scene-cloud resort-cloud cloud-two"><image href="images/sunset-cloud.webp" x="845" y="30" width="650" height="144"/></g>
+              <g class="scene-lights resort-lights" fill="#ffefbe"><circle cx="655" cy="648" r="5"/><circle cx="700" cy="608" r="4"/><circle cx="641" cy="732" r="7"/><circle cx="941" cy="688" r="6"/><circle cx="414" cy="897" r="10"/><circle cx="1196" cy="909" r="9"/><circle cx="1334" cy="525" r="3"/><circle cx="251" cy="551" r="3"/><circle cx="779" cy="514" r="3"/></g>
+            </svg></span>
+              <span class="destination-marker" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m10 21 8-3 4-9 3 1-1 8 7 4-1 3-8-2-4 7-3-1 2-8-7 2Z"/></svg></span>
+              <span class="building-copy"><span class="building-label">Travel Dashboard</span><span class="building-description">Keep every leg of your journey together.</span><span class="building-action">Explore <span aria-hidden="true">→</span></span></span>
             </a>
           </div>
         </div>
@@ -300,85 +208,34 @@
 
     <section id="background" class="card" aria-labelledby="background-title">
       <div class="transit-journey">
-        <div id="education" class="transit-scene">
+        <div id="education" class="transit-scene" data-living-scene>
           <div class="scene-heading">
             <h2 id="background-title">Education/Experience</h2>
           </div>
-          <svg class="transit-landscape" viewBox="0 0 1100 380" fill="none" aria-hidden="true" focusable="false">
+          <svg class="transit-landscape" viewBox="0 0 1672 941" preserveAspectRatio="xMidYMid slice" fill="none" aria-hidden="true" focusable="false">
             <defs>
-              <linearGradient id="transit-sky" x2="0" y2="1"><stop stop-color="#101d2b"/><stop offset="1" stop-color="#182d2c"/></linearGradient>
-              <linearGradient id="transit-water" x2="0" y2="1"><stop stop-color="#244b51"/><stop offset="1" stop-color="#0e1d29"/></linearGradient>
-              <linearGradient id="transit-bridge" x2="0" y2="1"><stop stop-color="#4d6766"/><stop offset="1" stop-color="#263b41"/></linearGradient>
-              <linearGradient id="transit-window" x2="0" y2="1"><stop stop-color="#e4d8ab"/><stop offset="1" stop-color="#98b8a9"/></linearGradient>
-              <linearGradient id="transit-body" x2="0" y2="1"><stop stop-color="#dce6df"/><stop offset=".5" stop-color="#9fb7b1"/><stop offset="1" stop-color="#6f8c88"/></linearGradient>
-              <g id="transit-pine"><path fill="#173d31" stroke="#395747" stroke-width=".7" d="M0 0L-14 33H-8L-20 50H-4V61H4V50H20L8 33H14Z"/></g>
-              <g id="transit-car">
-                <path fill="#50666b" d="M-81-35H-18L-13-31H-84Z"/>
-                <rect x="-88" y="-32" width="87" height="25" rx="3" fill="url(#transit-body)" stroke="#c0d3c7"/>
-                <path fill="#1e3d48" d="M-84-28H-5V-17H-84Z"/>
-                <path fill="url(#transit-window)" d="M-81-26H-67V-19H-81Z M-63-26H-49V-19H-63Z M-45-26H-31V-19H-45Z"/>
-                <path stroke="#41676b" d="M-25-29V-9H-10V-29M-17-29V-9"/>
-                <path stroke="#48bba0" stroke-width="3" d="M-86-13H-3"/>
-                <path fill="#263e43" d="M-88-7H-1V-3H-88Z"/>
-                <path stroke="#182c32" stroke-width="5" d="M-94-24V-9M-91-24V-9"/>
-                <g fill="#10242d" stroke="#658380"><path d="M-75-4H-54V0H-75Z M-34-4H-13V0H-34Z"/><circle cx="-71" cy="-1" r="2.5"/><circle cx="-58" cy="-1" r="2.5"/><circle cx="-30" cy="-1" r="2.5"/><circle cx="-17" cy="-1" r="2.5"/></g>
-              </g>
-              <g id="transit-cab">
-                <path fill="#50666b" d="M-81-35H-29L-20-31H-84Z"/>
-                <path fill="url(#transit-body)" stroke="#d0ded3" d="M-88-32H-23C-5-32 8-23 8-11Q8-4 1-4H-88Z"/>
-                <path fill="#1e3d48" d="M-84-28H-33V-17H-84Z M-25-28C-12-28-2-23 1-16H-21Z"/>
-                <path fill="url(#transit-window)" d="M-80-26H-66V-19H-80Z M-62-26H-48V-19H-62Z"/>
-                <path stroke="#41676b" d="M-43-29V-9H-30V-29M-37-29V-9"/>
-                <path stroke="#48bba0" stroke-width="3" d="M-86-13H-17Q-4-13 6-9"/>
-                <path fill="#263e43" d="M-88-7H-15Q-4-7 1-4H-88Z"/>
-                <path stroke="#182c32" stroke-width="5" d="M-94-24V-9M-91-24V-9"/>
-                <g fill="#10242d" stroke="#658380"><path d="M-75-4H-54V0H-75Z M-34-4H-13V0H-34Z"/><circle cx="-71" cy="-1" r="2.5"/><circle cx="-58" cy="-1" r="2.5"/><circle cx="-30" cy="-1" r="2.5"/><circle cx="-17" cy="-1" r="2.5"/></g>
-                <path stroke="#fff0bb" stroke-width="2" d="M6-14L7-11"/>
-                <path fill="#f9edb2" opacity=".1" d="M5-11L49-17V-1L7-6Z"/>
-              </g>
-              <g id="transit-tail">
-                <path fill="#50666b" d="M-65-35H-18L-13-31H-73Z"/>
-                <path fill="url(#transit-body)" stroke="#d0ded3" d="M-1-32H-65C-80-32-88-23-88-12Q-88-7-82-7H-1Z"/>
-                <path fill="#1e3d48" d="M-5-28H-62C-71-28-79-24-82-17H-5Z"/>
-                <path fill="url(#transit-window)" d="M-75-26H-67V-19H-79Z M-63-26H-49V-19H-63Z M-45-26H-31V-19H-45Z"/>
-                <path stroke="#41676b" d="M-25-29V-9H-10V-29M-17-29V-9"/>
-                <path stroke="#48bba0" stroke-width="3" d="M-85-13H-3"/>
-                <path fill="#263e43" d="M-84-7H-1V-3H-79Q-83-3-84-7Z"/>
-                <g fill="#10242d" stroke="#658380"><path d="M-75-4H-54V0H-75Z M-34-4H-13V0H-34Z"/><circle cx="-71" cy="-1" r="2.5"/><circle cx="-58" cy="-1" r="2.5"/><circle cx="-30" cy="-1" r="2.5"/><circle cx="-17" cy="-1" r="2.5"/></g>
-                <path stroke="#e38979" stroke-width="2" d="M-86-18V-15"/>
-              </g>
-              <g id="transit-station-sign"><path stroke="#9aab8e" d="M0 0V-30"/><circle cy="-43" r="11" fill="#17312a" stroke="currentColor" stroke-width="3"/><path stroke="currentColor" stroke-width="4" d="M-16-43H16"/><circle cy="1" r="4" fill="#bbcca1" stroke="#172b24"/></g>
+              <linearGradient id="train-headlight"><stop stop-color="#ffe8aa" stop-opacity=".24"/><stop offset="1" stop-color="#ffe8aa" stop-opacity="0"/></linearGradient>
+              <clipPath id="train-front-clip"><rect x="675" width="425" height="163"/></clipPath>
+              <clipPath id="train-middle-clip"><rect x="360" width="315" height="163"/></clipPath>
+              <clipPath id="train-rear-clip"><rect width="360" height="163"/></clipPath>
+              <clipPath id="bridge-foreground"><path d="M0 355C430 402 1170 408 1672 367V941H0Z"/></clipPath>
+              <clipPath id="alpine-water"><path d="M785 549H890V601H815Z M939 540H1045V605H957Z M1100 541H1160V580H1100Z M893 609C933 605 979 603 1000 610L969 642L986 657L1067 667L1085 708L1030 746L1009 704L980 677L862 659L824 639Z"/></clipPath>
+              <filter id="alpine-ripple" x="-1%" y="-1%" width="102%" height="102%"><feTurbulence type="fractalNoise" baseFrequency=".02 .15" numOctaves="1" seed="4" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="2" xChannelSelector="R" yChannelSelector="G"/></filter>
             </defs>
-            <path fill="url(#transit-sky)" d="M0 0H1100V380H0Z"/>
-            <g fill="#a8bfc2" opacity=".55"><circle cx="77" cy="42" r="1"/><circle cx="223" cy="63" r="1.2"/><circle cx="377" cy="30" r="1"/><circle cx="550" cy="60" r="1"/><circle cx="699" cy="26" r="1.3"/><circle cx="828" cy="79" r="1"/><circle cx="1013" cy="43" r="1"/></g>
-            <circle cx="944" cy="71" r="36" fill="#bfcbb0" opacity=".05"/>
-            <path fill="#c6ceb2" opacity=".8" d="M954 49A23 23 0 1 0 965 84A23 23 0 0 1 954 49Z"/>
-            <path fill="#1b343c" d="M0 223L106 133L153 164L287 52L435 209L548 135L669 224L798 122L925 228L1036 149L1100 193V380H0Z"/>
-            <path fill="#28444a" d="M153 164L287 52L339 108L309 97L293 112L275 92L251 115L234 111Z"/>
-            <path fill="#152d32" d="M0 224L65 182L157 225L256 163L358 250L532 216L697 272L867 183L994 244L1100 197V380H0Z"/>
-            <path fill="url(#transit-water)" d="M401 248H758L831 380H285Z"/>
-            <g stroke="#72999a" opacity=".2" stroke-linecap="round"><path d="M489 290H582M634 308H696M458 334H556M575 355H682M733 347H765M405 371H482"/></g>
-            <path fill="#253f34" d="M0 220C150 213 217 231 306 249L404 279L365 380H0Z"/>
-            <path fill="#203c31" d="M721 283C809 247 888 223 978 221L1100 217V380H767Z"/>
-            <path fill="url(#transit-bridge)" fill-rule="evenodd" d="M370 232H775V380H370Z M395 380V294A34 34 0 0 1 463 294V380Z M489 380V294A34 34 0 0 1 557 294V380Z M583 380V294A34 34 0 0 1 651 294V380Z M677 380V294A34 34 0 0 1 745 294V380Z"/>
-            <path stroke="#758b7d" stroke-width="3" d="M371 240H774"/>
-            <g stroke="#8ca090" opacity=".27"><path d="M378 254H401M447 253H475M521 251H541M572 266H587M617 253H643M709 253H733M468 321H486M560 347H581M652 319H676"/></g>
-            <g><use href="#transit-pine" x="45" y="210"/><use href="#transit-pine" x="90" y="237"/><use href="#transit-pine" x="123" y="240"/><use href="#transit-pine" x="288" y="268"/><use href="#transit-pine" x="855" y="254"/><use href="#transit-pine" x="900" y="272"/><use href="#transit-pine" x="1050" y="220"/></g>
-            <path stroke="#142326" stroke-width="9" d="M0 218C160 218 245 240 370 240H775C894 240 956 204 1100 204"/>
-            <path id="transit-track" stroke="#7a9181" stroke-width="2" d="M0 214C160 214 245 236 370 236H775C894 236 956 200 1100 200"/>
-            <path stroke="#c2b98d" stroke-opacity=".45" stroke-dasharray="2 10" stroke-width="5" d="M0 218C160 218 245 240 370 240H775C894 240 956 204 1100 204"/>
-            <g data-track-stop="0" transform="translate(200 224)"><use href="#transit-station-sign"/></g>
-            <g data-track-stop="1" transform="translate(440 236)"><use href="#transit-station-sign"/></g>
-            <g data-track-stop="2" transform="translate(705 236)"><use href="#transit-station-sign"/></g>
-            <g data-track-stop="3" transform="translate(968 212)"><use href="#transit-station-sign"/></g>
-            <g class="transit-train" data-train-car="2" transform="translate(78 216)"><use href="#transit-tail"/></g>
-            <g class="transit-train" data-train-car="1" transform="translate(108 220)"><use href="#transit-car"/><path stroke="#aabeb2" stroke-width="1.5" d="M-57-35L-48-45L-31-40L-38-35M-51-45H-29"/></g>
-            <g class="transit-train" data-train-car="0" transform="translate(200 224)"><use href="#transit-cab"/></g>
-            <path fill="#0d211f" d="M0 331L77 310L175 344L258 320L347 380H0Z M802 380L905 324L1005 345L1100 311V380Z"/>
-            <g opacity=".8"><use href="#transit-pine" x="34" y="287"/><use href="#transit-pine" x="177" y="320"/><use href="#transit-pine" x="1009" y="308"/><use href="#transit-pine" x="1070" y="275"/></g>
+            <image class="transit-backdrop" href="images/education-alpine-v2.webp" width="1672" height="941"/>
+            <g class="scene-cloud cloud-one"><image href="images/night-cloud.webp" x="-40" y="63" width="370" height="54"/></g>
+            <g class="scene-cloud cloud-two"><image href="images/night-cloud.webp" x="1150" y="176" width="270" height="39"/></g>
+            <path id="transit-track" d="M0 350C430 397 1170 403 1672 362"/>
+            <g class="transit-train" data-train-car="2" transform="translate(1017 386)"><g class="train-car-art" data-bogie-rear="52,148" data-bogie-front="290,151" clip-path="url(#train-rear-clip)" transform="matrix(.436 0 0 .436 -157 -66)"><image href="images/alpine-train.webp" width="1100" height="163"/></g></g>
+            <g class="transit-train" data-train-car="1" transform="translate(1154 389)"><g class="train-car-art" data-bogie-rear="420,153" data-bogie-front="620,155" clip-path="url(#train-middle-clip)" transform="matrix(.436 0 0 .436 -294 -68)"><image href="images/alpine-train.webp" width="1100" height="163"/></g></g>
+            <g class="transit-train" data-train-car="0" transform="translate(1340 383)"><g class="train-car-art" data-bogie-rear="740,157" data-bogie-front="997,160" clip-path="url(#train-front-clip)" transform="matrix(.436 0 0 .436 -480 -70)"><image href="images/alpine-train.webp" width="1100" height="163"/></g><path class="train-headlight" fill="url(#train-headlight)" d="M-10-21L92-35V3L-10-13Z"/></g>
+            <image href="images/education-alpine-v2.webp" width="1672" height="941" clip-path="url(#bridge-foreground)"/>
+            <g clip-path="url(#alpine-water)"><image class="scene-water" filter="url(#alpine-ripple)" href="images/education-alpine-v2.webp" width="1672" height="941"/></g>
+            <g class="scene-lights" fill="#ffe8a8"><circle cx="76" cy="340" r="3.2"/><circle cx="356" cy="363" r="3"/><circle cx="682" cy="379" r="3"/><circle cx="942" cy="383" r="3"/><circle cx="1289" cy="375" r="3"/><circle cx="1554" cy="360" r="3"/></g>
+            <g class="scene-stars" fill="#eaf4df"><circle cx="235" cy="29" r="1.4"/><circle cx="695" cy="42" r="1.2"/><circle cx="1220" cy="41" r="1.5"/></g>
           </svg>
         </div>
-        <div class="transit-stops-viewport" tabindex="0" role="region" aria-label="Education/Experience stops, scroll horizontally to explore">
+        <div class="transit-stops-viewport" tabindex="0" role="region" aria-label="Education and experience milestones, scroll horizontally on phones to explore">
           <ol class="transit-stops">
             <li class="transit-stop" data-transit-stop="0" data-progress="0.18"><span class="stop-logo"><img src="images/Wind.webp" alt="" width="56" height="56"/></span><span class="stop-label">Wind Group</span><span class="stop-date">2019 – Present</span></li>
             <li class="transit-stop" data-transit-stop="1" data-progress="0.4"><span class="stop-logo"><img src="images/Brock.jpg" alt="" width="56" height="56"/></span><span class="stop-institution">Brock University</span><span class="stop-label">Honours Bachelor of Business Administration</span><span class="stop-date">2022</span></li>
@@ -406,22 +263,6 @@
     let typingTimer;
     const revealAnimations = new Map();
     let revealObserver;
-    const skyline = document.querySelector(".hero-skyline");
-    const syncSkyline = () => {
-      const bounds = skyline.getBoundingClientRect();
-      skyline.classList.toggle("skyline-is-visible", bounds.bottom > 0 && bounds.top < window.innerHeight);
-    };
-    if ("IntersectionObserver" in window) {
-      const skylineObserver = new IntersectionObserver(entries => {
-        skyline.classList.toggle("skyline-is-visible", entries.some(entry => entry.isIntersecting));
-      }, { threshold: 0 });
-      skylineObserver.observe(skyline);
-    } else {
-      window.addEventListener("scroll", syncSkyline, { passive: true });
-      window.addEventListener("resize", syncSkyline);
-    }
-    syncSkyline();
-
     const finishTyping = () => {
       clearTimeout(typingTimer);
       nameLines.forEach((line, index) => { line.textContent = nameWords[index]; });
@@ -569,6 +410,6 @@
   </script>
   <script src="projects.js"></script>
   <script src="transit.js"></script>
-  <script src="city-traffic.js"></script>
+  <script src="scenery.js"></script>
 </body>
 </html>

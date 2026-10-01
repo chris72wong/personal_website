@@ -10,7 +10,7 @@
   const dialogContent = dialog.querySelector(".project-dialog-content");
   const closeButton = dialog.querySelector(".project-dialog-close");
   const visitLink = dialog.querySelector(".project-dialog-visit");
-  const stage = projectSection.querySelector(".city-stage");
+  const stage = projectSection.querySelector(".harbor-stage");
   const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
   const panelsById = new Map(panels.map(panel => [panel.id, panel]));
   const session = `${Date.now()}-${Math.random()}`;
@@ -44,7 +44,8 @@
   const animateDialog = opening => {
     if (preference.matches || typeof dialog.animate !== "function") return;
     const bounds = dialog.getBoundingClientRect();
-    const source = (opener?.querySelector(".building-model") || opener)?.getBoundingClientRect();
+    const model = opener?.querySelector(".building-model")?.getBoundingClientRect();
+    const source = model?.width && model.height ? model : opener?.getBoundingClientRect();
     const visible = source && source.bottom > 0 && source.top < window.innerHeight &&
       source.right > 0 && source.left < window.innerWidth;
     const x = visible ? source.left + source.width / 2 - bounds.left - bounds.width / 2 : 0;
@@ -216,11 +217,15 @@
     openProject(window.location.hash.slice(1), { animate: false });
   }
 
-  stage.classList.toggle("city-is-visible", sceneVisible && !preference.matches);
+  const syncMotion = () => {
+    stage.classList.toggle("harbor-is-visible", sceneVisible && !document.hidden && !preference.matches);
+  };
+  syncMotion();
+  document.addEventListener("visibilitychange", syncMotion);
   if ("IntersectionObserver" in window) {
     const observer = new IntersectionObserver(entries => {
       sceneVisible = entries.some(entry => entry.isIntersecting);
-      stage.classList.toggle("city-is-visible", sceneVisible && !preference.matches);
+      syncMotion();
       if (!sceneVisible || sceneEntered || preference.matches || typeof stage.animate !== "function") return;
       sceneEntered = true;
       entranceAnimation = stage.animate([
@@ -232,7 +237,7 @@
   }
 
   const onPreferenceChange = event => {
-    stage.classList.toggle("city-is-visible", sceneVisible && !event.matches);
+    syncMotion();
     if (!event.matches) return;
     modalAnimation?.cancel();
     entranceAnimation?.cancel();

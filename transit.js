@@ -2,9 +2,8 @@
   const journey = document.querySelector('.transit-journey');
   if (!journey) return;
   const track = journey.querySelector('#transit-track');
-  const cars = Array.from(journey.querySelectorAll('[data-train-car]'));
+  const cars = Array.from(journey.querySelectorAll('.transit-train'));
   const stops = Array.from(journey.querySelectorAll('[data-transit-stop]'));
-  const markers = Array.from(journey.querySelectorAll('[data-track-stop]'));
   const landscape = journey.querySelector('.transit-landscape');
   const stopViewport = journey.querySelector('.transit-stops-viewport');
   const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -14,8 +13,11 @@
   const length = track.getTotalLength();
   const positions = stops.map(stop => Number(stop.dataset.progress));
   const start = -.02;
-  const end = 1 + 290 / length;
-  let progress = preference.matches ? positions[0] : start;
+  const end = 1 + 480 / length;
+  const initialProgress = () => mobile.matches ? .32 : .8;
+  const scale = 480 / 1100;
+  const carEnds = [1100, 675, 360];
+  let progress = initialProgress();
   let visible = !('IntersectionObserver' in window);
   let frame = null;
   let previousTime = null;
@@ -26,7 +28,7 @@
     manualScrollUntil = performance.now() + 8000;
   }, { passive: true }));
 
-  // Extend the end tangents so all three cars enter and leave the scene fully.
+  // Extend the tangents so the complete three-car train enters and leaves fully.
   const pointAt = distance => {
     const clamped = Math.max(0, Math.min(length, distance));
     const point = track.getPointAtLength(clamped);
@@ -36,18 +38,32 @@
     const extension = distance - clamped;
     return { x: point.x + Math.cos(angle) * extension, y: point.y + Math.sin(angle) * extension, angle: angle * 180 / Math.PI };
   };
-  markers.forEach(marker => {
-    const point = pointAt(positions[Number(marker.dataset.trackStop)] * length);
-    marker.setAttribute('transform', `translate(${point.x} ${point.y})`);
-  });
   const draw = () => {
     const front = pointAt(progress * length);
     landscape.setAttribute('viewBox', mobile.matches
-      ? `${Math.max(0, Math.min(500, front.x - 350))} 0 600 380`
-      : '0 0 1100 380');
+      ? `${Math.max(0, Math.min(732, front.x - 640))} 70 940 840`
+      : '0 0 1672 941');
     cars.forEach(car => {
-      const point = pointAt(progress * length - Number(car.dataset.trainCar) * 92);
-      car.setAttribute('transform', `translate(${point.x} ${point.y}) rotate(${point.angle})`);
+      const index = Number(car.dataset.trainCar);
+      const art = car.querySelector('.train-car-art');
+      const [ax, ay] = art.dataset.bogieRear.split(',').map(Number);
+      const [bx, by] = art.dataset.bogieFront.split(',').map(Number);
+      const rear = pointAt(progress * length - (1100 - ax) * scale);
+      const ahead = pointAt(progress * length - (1100 - bx) * scale);
+      const origin = pointAt(progress * length - (1100 - carEnds[index]) * scale);
+      // Map the two bogie contact points onto the track. Each carriage follows
+      // its own chord instead of swinging the entire train from its front tip.
+      const ux = bx - ax, uy = by - ay;
+      const vx = ahead.x - rear.x, vy = ahead.y - rear.y;
+      const denominator = ux * ux + uy * uy;
+      const a = (vx * ux + vy * uy) / denominator;
+      const b = (vy * ux - vx * uy) / denominator;
+      const e = rear.x - origin.x - a * ax + b * ay;
+      const f = rear.y - origin.y - b * ax - a * ay;
+      car.setAttribute('transform', `translate(${origin.x} ${origin.y})`);
+      art.setAttribute('transform', `matrix(${a} ${b} ${-b} ${a} ${e} ${f})`);
+      const beam = car.querySelector('.train-headlight');
+      beam?.setAttribute('transform', `rotate(${Math.atan2(vy, vx) * 180 / Math.PI})`);
     });
     const active = positions.findIndex(position => progress >= position - .025 && progress <= position + .15);
     if (mobile.matches && !preference.matches && performance.now() > manualScrollUntil) {
@@ -61,10 +77,9 @@
     currentStop = active;
     stops.forEach((stop, index) => {
       stop.classList.toggle('is-current', index === active);
-      markers[index]?.classList.toggle('is-current', index === active);
     });
   };
-  const running = () => visible && !document.hidden && !preference.matches;
+  const running = () => visible && !document.hidden && !preference.matches && !document.body.classList.contains('project-open');
   const animate = time => {
     frame = null;
     if (!running()) { previousTime = null; return; }
@@ -83,7 +98,7 @@
   };
   const onPreferenceChange = () => {
     if (preference.matches) {
-      progress = positions[0];
+      progress = initialProgress();
       draw();
     }
     sync();
@@ -91,6 +106,7 @@
   if (preference.addEventListener) preference.addEventListener('change', onPreferenceChange);
   else preference.addListener(onPreferenceChange);
   document.addEventListener('visibilitychange', sync);
+  if ('MutationObserver' in window) new MutationObserver(sync).observe(document.body, { attributes: true, attributeFilter: ['class'] });
   if (mobile.addEventListener) mobile.addEventListener('change', draw);
   else mobile.addListener(draw);
   if ('IntersectionObserver' in window) {
@@ -98,7 +114,7 @@
       visible = entries[0].isIntersecting;
       sync();
     }, { threshold: 0 });
-    observer.observe(journey);
+    observer.observe(landscape);
   }
   draw();
   sync();

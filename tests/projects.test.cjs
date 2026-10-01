@@ -81,7 +81,7 @@ function setup({ hash = '#projects', reduced = false, observers = true, nativeDi
   dialog.getBoundingClientRect = () => ({ left: 150, top: 140, right: 1050, bottom: 760, width: 900, height: 620 });
   dialog.querySelector = selector => ({ '.project-dialog-content': dialogContent, '.project-dialog-close': closeButton, '.project-dialog-visit': visitLink })[selector];
   section.querySelectorAll = selector => selector === '.project-panel' ? panels : selectors;
-  section.querySelector = selector => ({ '.project-dialog': dialog, '.project-panels': panelContainer, '.city-stage': stage })[selector];
+  section.querySelector = selector => ({ '.project-dialog': dialog, '.project-panels': panelContainer, '.harbor-stage': stage })[selector];
   const preference = new Element();
   preference.matches = reduced;
   if (legacyMedia) {
@@ -146,7 +146,11 @@ function setup({ hash = '#projects', reduced = false, observers = true, nativeDi
     Object.defineProperty(window.history, 'state', { get() { throw new Error('History unavailable'); } });
   }
   if (observers) window.IntersectionObserver = Observer;
-  vm.runInNewContext(source, { document: { getElementById: () => section, body }, window, IntersectionObserver: Observer, requestAnimationFrame: callback => frames.push(callback), setTimeout, clearTimeout });
+  const document = new Element();
+  document.getElementById = () => section;
+  document.body = body;
+  document.hidden = false;
+  vm.runInNewContext(source, { document, window, IntersectionObserver: Observer, requestAnimationFrame: callback => frames.push(callback), setTimeout, clearTimeout });
   const click = (index, extras = {}) => {
     const event = { button: 0, preventDefault() { this.prevented = true; }, ...extras };
     selectors[index].dispatch('click', event);
@@ -155,7 +159,7 @@ function setup({ hash = '#projects', reduced = false, observers = true, nativeDi
   const selected = () => panels.filter(panel => !panel.hidden).map(panel => panel.id);
   const lastModalAnimation = () => animations.filter(animation => animation.element === dialog).at(-1);
   const completeClose = async () => { lastModalAnimation()?.complete(); await tick(); flushFrames(); };
-  return { panels, selectors, panelContainer, dialogContent, dialog, closeButton, body, stage, section, preference, window, animations, observersCreated, selected, click, lastModalAnimation, completeClose, active: () => activeElement };
+  return { panels, selectors, panelContainer, dialogContent, dialog, closeButton, body, stage, section, preference, window, document, animations, observersCreated, selected, click, lastModalAnimation, completeClose, active: () => activeElement };
 }
 
 test('the neighbourhood starts with no popup and keeps the articles inside the closed dialog', () => {
@@ -291,7 +295,7 @@ test('reduced motion skips animations and changing the preference during close f
   staticApp.closeButton.dispatch('click');
   assert.equal(staticApp.dialog.open, false);
   assert.equal(staticApp.animations.length, 0);
-  assert.equal(staticApp.stage.classes.has('city-is-visible'), false);
+  assert.equal(staticApp.stage.classes.has('harbor-is-visible'), false);
   const app = setup();
   app.observersCreated[0].visibility(true);
   app.click(1);
@@ -308,9 +312,15 @@ test('ambient motion only runs in view, while the entrance runs once', () => {
   const app = setup();
   const observer = app.observersCreated[0];
   observer.visibility(true);
-  assert.equal(app.stage.classes.has('city-is-visible'), true);
+  assert.equal(app.stage.classes.has('harbor-is-visible'), true);
+  app.document.hidden = true;
+  app.document.dispatch('visibilitychange');
+  assert.equal(app.stage.classes.has('harbor-is-visible'), false);
+  app.document.hidden = false;
+  app.document.dispatch('visibilitychange');
+  assert.equal(app.stage.classes.has('harbor-is-visible'), true);
   observer.visibility(false);
-  assert.equal(app.stage.classes.has('city-is-visible'), false);
+  assert.equal(app.stage.classes.has('harbor-is-visible'), false);
   observer.visibility(true);
   assert.equal(app.animations.filter(animation => animation.element === app.stage).length, 1);
   assert.equal(setup({ observers: false }).observersCreated.length, 0);
