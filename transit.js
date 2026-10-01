@@ -5,16 +5,14 @@
   const cars = Array.from(journey.querySelectorAll('.transit-train'));
   const stops = Array.from(journey.querySelectorAll('[data-transit-stop]'));
   const landscape = journey.querySelector('.transit-landscape');
-  const stopViewport = journey.querySelector('.transit-stops-viewport');
   const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const mobile = window.matchMedia('(max-width: 640px)');
   if (!track?.getPointAtLength || !cars.length || !stops.length) return;
 
   const length = track.getTotalLength();
   const positions = stops.map(stop => Number(stop.dataset.progress));
   const start = -.02;
   const end = 1 + 480 / length;
-  const initialProgress = () => mobile.matches ? .32 : .8;
+  const initialProgress = () => .8;
   const scale = 480 / 1100;
   const carEnds = [1100, 675, 360];
   let progress = initialProgress();
@@ -22,12 +20,6 @@
   let frame = null;
   let previousTime = null;
   let currentStop = -1;
-  let manualScrollUntil = 0;
-  // Give touch, trackpad, and keyboard exploration time before following again.
-  ['pointerdown', 'wheel', 'keydown'].forEach(event => stopViewport.addEventListener(event, () => {
-    manualScrollUntil = performance.now() + 8000;
-  }, { passive: true }));
-
   // Extend the tangents so the complete three-car train enters and leaves fully.
   const pointAt = distance => {
     const clamped = Math.max(0, Math.min(length, distance));
@@ -39,10 +31,6 @@
     return { x: point.x + Math.cos(angle) * extension, y: point.y + Math.sin(angle) * extension, angle: angle * 180 / Math.PI };
   };
   const draw = () => {
-    const front = pointAt(progress * length);
-    landscape.setAttribute('viewBox', mobile.matches
-      ? `${Math.max(0, Math.min(732, front.x - 640))} 70 940 840`
-      : '0 0 1672 941');
     cars.forEach(car => {
       const index = Number(car.dataset.trainCar);
       const art = car.querySelector('.train-car-art');
@@ -66,13 +54,6 @@
       beam?.setAttribute('transform', `rotate(${Math.atan2(vy, vx) * 180 / Math.PI})`);
     });
     const active = positions.findIndex(position => progress >= position - .025 && progress <= position + .15);
-    if (mobile.matches && !preference.matches && performance.now() > manualScrollUntil) {
-      // Match the label strip's position to the moving landscape continuously.
-      const coordinate = Math.max(0, Math.min(1, (progress - positions[0]) / (positions.at(-1) - positions[0])));
-      const first = stops[0].offsetLeft + stops[0].offsetWidth / 2;
-      const last = stops.at(-1).offsetLeft + stops.at(-1).offsetWidth / 2;
-      stopViewport.scrollLeft = first + (last - first) * coordinate - stopViewport.clientWidth / 2;
-    }
     if (active === currentStop) return;
     currentStop = active;
     stops.forEach((stop, index) => {
@@ -107,8 +88,6 @@
   else preference.addListener(onPreferenceChange);
   document.addEventListener('visibilitychange', sync);
   if ('MutationObserver' in window) new MutationObserver(sync).observe(document.body, { attributes: true, attributeFilter: ['class'] });
-  if (mobile.addEventListener) mobile.addEventListener('change', draw);
-  else mobile.addListener(draw);
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver(entries => {
       visible = entries[0].isIntersecting;

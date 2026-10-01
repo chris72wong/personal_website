@@ -290,14 +290,12 @@ test('modified and non-primary clicks retain native links', () => {
 
 test('reduced motion skips animations and changing the preference during close finishes cleanup', async () => {
   const staticApp = setup({ reduced: true });
-  staticApp.observersCreated[0].visibility(true);
   staticApp.click(2);
   staticApp.closeButton.dispatch('click');
   assert.equal(staticApp.dialog.open, false);
   assert.equal(staticApp.animations.length, 0);
   assert.equal(staticApp.stage.classes.has('harbor-is-visible'), false);
   const app = setup();
-  app.observersCreated[0].visibility(true);
   app.click(1);
   app.closeButton.dispatch('click');
   app.preference.matches = true;
@@ -308,22 +306,10 @@ test('reduced motion skips animations and changing the preference during close f
   assert.equal(app.animations.every(animation => animation.cancelled), true);
 });
 
-test('ambient motion only runs in view, while the entrance runs once', () => {
+test('the project backdrop stays static with no entrance observer', () => {
   const app = setup();
-  const observer = app.observersCreated[0];
-  observer.visibility(true);
-  assert.equal(app.stage.classes.has('harbor-is-visible'), true);
-  app.document.hidden = true;
-  app.document.dispatch('visibilitychange');
-  assert.equal(app.stage.classes.has('harbor-is-visible'), false);
-  app.document.hidden = false;
-  app.document.dispatch('visibilitychange');
-  assert.equal(app.stage.classes.has('harbor-is-visible'), true);
-  observer.visibility(false);
-  assert.equal(app.stage.classes.has('harbor-is-visible'), false);
-  observer.visibility(true);
-  assert.equal(app.animations.filter(animation => animation.element === app.stage).length, 1);
-  assert.equal(setup({ observers: false }).observersCreated.length, 0);
+  assert.equal(app.observersCreated.length, 0);
+  assert.equal(app.animations.filter(animation => animation.element === app.stage).length, 0);
 });
 
 test('missing dialog support preserves static articles; missing animation support still opens and closes', () => {

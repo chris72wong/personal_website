@@ -1,8 +1,7 @@
 (() => {
-  const scenes = Array.from(document.querySelectorAll('[data-living-scene]'));
+  const scenes = Array.from(document.querySelectorAll('.hero[data-living-scene]'));
   if (!scenes.length) return;
   const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const mobile = window.matchMedia('(max-width: 640px)');
   const visibility = new Map(scenes.map(scene => [scene, false]));
   const sync = () => {
     const enabled = !preference.matches && !document.hidden && !document.body.classList.contains('project-open');
@@ -26,11 +25,6 @@
     window.addEventListener('resize', measure);
     measure();
   }
-  const welcome = document.querySelector('.hero-landscape');
-  const frameWelcome = () => welcome?.setAttribute('viewBox', mobile.matches ? '580 0 1050 896' : '0 0 1754 896');
-  frameWelcome();
-  if (mobile.addEventListener) mobile.addEventListener('change', frameWelcome);
-  else mobile.addListener(frameWelcome);
   if (preference.addEventListener) preference.addEventListener('change', sync);
   else preference.addListener(sync);
   document.addEventListener('visibilitychange', sync);

@@ -10,7 +10,6 @@
   const dialogContent = dialog.querySelector(".project-dialog-content");
   const closeButton = dialog.querySelector(".project-dialog-close");
   const visitLink = dialog.querySelector(".project-dialog-visit");
-  const stage = projectSection.querySelector(".harbor-stage");
   const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
   const panelsById = new Map(panels.map(panel => [panel.id, panel]));
   const session = `${Date.now()}-${Math.random()}`;
@@ -18,12 +17,9 @@
   let opener;
   let scrollPosition;
   let modalAnimation;
-  let entranceAnimation;
   let transitionVersion = 0;
   let isClosing = false;
   let backdropPressed = false;
-  let sceneVisible = !("IntersectionObserver" in window);
-  let sceneEntered = false;
   let pendingReturnPosition;
   const historyState = () => {
     try { return window.history.state; } catch { return null; }
@@ -217,30 +213,9 @@
     openProject(window.location.hash.slice(1), { animate: false });
   }
 
-  const syncMotion = () => {
-    stage.classList.toggle("harbor-is-visible", sceneVisible && !document.hidden && !preference.matches);
-  };
-  syncMotion();
-  document.addEventListener("visibilitychange", syncMotion);
-  if ("IntersectionObserver" in window) {
-    const observer = new IntersectionObserver(entries => {
-      sceneVisible = entries.some(entry => entry.isIntersecting);
-      syncMotion();
-      if (!sceneVisible || sceneEntered || preference.matches || typeof stage.animate !== "function") return;
-      sceneEntered = true;
-      entranceAnimation = stage.animate([
-        { opacity: .4, transform: "translateY(12px)" },
-        { opacity: 1, transform: "translateY(0)" }
-      ], { duration: 500, easing: "ease-out" });
-    }, { threshold: .1 });
-    observer.observe(stage);
-  }
-
   const onPreferenceChange = event => {
-    syncMotion();
     if (!event.matches) return;
     modalAnimation?.cancel();
-    entranceAnimation?.cancel();
   };
   if (preference.addEventListener) preference.addEventListener("change", onPreferenceChange);
   else preference.addListener(onPreferenceChange);
