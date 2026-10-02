@@ -194,7 +194,11 @@ async function checkBrowser(engine) {
           x: Number(document.querySelector('[data-train-car="0"]').getAttribute('transform').match(/translate\(([-\d.]+)/)[1]),
           stop: document.querySelector('.transit-stop.is-current')?.dataset.transitStop ?? null,
           passed: Array.from(document.querySelectorAll('.transit-stop.is-passed'), stop => Number(stop.dataset.transitStop)),
-          connectors: Array.from(document.querySelectorAll('.transit-stop'), stop => Number(stop.style.getPropertyValue('--connector-fill'))),
+          connector: parseFloat(document.querySelector('.transit-stops').style.getPropertyValue('--connector-progress')),
+          glow: Number(getComputedStyle(document.querySelector('.transit-stops'), '::after').opacity),
+          iconGlows: Array.from(document.querySelectorAll('.stop-logo'), logo => Number(getComputedStyle(logo, '::before').opacity)),
+          mask: getComputedStyle(document.querySelector('.transit-stops'), '::after').maskImage,
+          connectorTransition: getComputedStyle(document.querySelector('.transit-stops'), '::after').transitionDuration,
           wheelError: (() => {
             const svg = document.querySelector('.transit-landscape');
             const path = document.querySelector('#transit-track');
@@ -230,26 +234,37 @@ async function checkBrowser(engine) {
       if (sequence.at(-1) !== snapshot.stop) sequence.push(snapshot.stop);
     }
     assert.ok(sequence.join(',').includes('0,1,2,3,0'), `${engine}: Every milestone lights in order across a full loop: ${sequence}`);
-    assert.ok(snapshots.some(snapshot => snapshot.passed.length === 4 && snapshot.connectors.every(fill => fill === 1)), 'All icons and connectors stay lit after the final milestone');
-    assert.ok(snapshots.some(snapshot => snapshot.connectors.some(fill => fill > 0 && fill < 1)), 'Connectors fill progressively between milestones');
+    assert.ok(snapshots.some(snapshot => snapshot.passed.length === 4 && snapshot.connector === 100 && snapshot.glow === 1), 'The completed route stays fully lit before fading');
+    assert.ok(snapshots.some(snapshot => snapshot.connector > 0 && snapshot.connector < 100), 'One continuous connector fills progressively between milestones');
+    assert.ok(snapshots.some(snapshot => snapshot.glow > 0 && snapshot.glow < 1), 'The completed route fades gradually');
+    assert.ok(snapshots.some(snapshot => snapshot.connector === 100 && snapshot.glow === 0), 'The route goes dark before its fill resets');
     for (let index = 1; index < snapshots.length; index++) {
       const distance = snapshots[index].x - snapshots[index - 1].x;
       assert.ok(distance >= 0 || (snapshots[index].x < 0 && snapshots[index - 1].x > 1672), 'Only a full exit resets the forward-moving train');
       if (distance < 0) {
         assert.deepEqual(snapshots[index].passed, [], 'Passed icons reset for the next train loop');
-        assert.ok(snapshots[index].connectors.every(fill => fill === 0), 'Connectors reset for the next train loop');
+        assert.equal(snapshots[index].connector, 0, 'The connector resets for the next train loop');
+        assert.equal(snapshots[index - 1].glow, 0, 'Reset happens only after the completed glow has faded out');
       } else {
         assert.ok(snapshots[index - 1].passed.every(stop => snapshots[index].passed.includes(stop)), 'Passed icons retain their glow as the train advances');
-        assert.ok(snapshots[index].connectors.every((fill, stop) => fill >= snapshots[index - 1].connectors[stop]), 'Connector light never retreats during a crossing');
+        assert.ok(snapshots[index].connector >= snapshots[index - 1].connector, 'Connector light never retreats during a crossing or fade');
       }
-      if (distance >= 0) assert.ok(distance > 8 && distance < 12, 'The train restores its earlier travel speed');
+      if (snapshots[index].glow < 1) {
+        assert.equal(snapshots[index].connector, 100, 'Fading preserves the full line instead of shrinking it');
+        assert.ok(snapshots[index].x > 2100, 'Fading starts after the rear carriage has left');
+        assert.ok(snapshots[index].iconGlows.every(glow => Math.abs(glow - snapshots[index].glow) < .001), 'All passed icons and the line fade at the same opacity');
+      }
+      assert.equal(snapshots[index].connectorTransition, '0s', 'Frame-driven fill cannot restart a CSS transition');
+      assert.ok(snapshots[index].mask.includes('linear-gradient'), 'The rendered line has a continuous feathered reveal');
+      if (distance > 0 && snapshots[index].x < 2100) assert.ok(distance > 8 && distance < 12, 'The train keeps its earlier travel speed');
       assert.ok(snapshots[index].wheelError < .25, `All six bogies stay on the track: ${snapshots[index].wheelError}`);
     }
     await page.evaluate(() => window.restoreFrames());
 
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.waitForTimeout(300);
-    assert.ok(await page.locator('.transit-stop').evaluateAll(stops => stops.every(stop => getComputedStyle(stop, '::after').transitionDuration === '0s')), 'Reduced motion disables connector transitions');
+    assert.equal(await page.locator('.transit-stops').evaluate(stops => getComputedStyle(stops, '::after').transitionDuration), '0s', 'Reduced motion has no connector transitions');
+    await page.locator('.transit-journey').screenshot({ path: path.join(screenshotDirectory, `${engine}-transit.png`) });
     const still = await car.getAttribute('transform'); await page.waitForTimeout(200); assert.equal(await car.getAttribute('transform'), still, 'Reduced motion stops the train');
     await page.emulateMedia({ reducedMotion: 'no-preference' });
     await page.waitForTimeout(100); const moving = await car.getAttribute('transform'); await page.waitForTimeout(200); assert.notEqual(await car.getAttribute('transform'), moving, 'Train resumes');

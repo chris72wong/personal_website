@@ -187,24 +187,23 @@ body.project-open { position: fixed; top: var(--project-scroll-top); inset-inlin
 .transit-stops-viewport:focus-visible { outline: 2px solid #80c7aa; outline-offset: -2px; }
 .transit-stops { position: relative; margin: 0; list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 0; }
 .transit-stop { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 7px; min-width: 0; padding: 10px 14px 12px; border-radius: 8px; }
-.transit-stop::before, .transit-stop::after { content: ''; position: absolute; left: 0; right: 0; top: calc(var(--milestone-logo-size) / 2 + 10px); height: 1px; pointer-events: none; }
-.transit-stop::before { background: #edc77970; box-shadow: 0 0 7px #edc77922; }
-.transit-stop::after { background: #ffe2a0; box-shadow: 0 0 8px #edc77988; transform: scaleX(var(--connector-fill, 0)); transform-origin: left; transition: transform 240ms linear; }
-.transit-stop:first-child::before, .transit-stop:first-child::after { left: 50%; }
-.transit-stop:last-child::before, .transit-stop:last-child::after { right: 50%; }
+.transit-stops::before, .transit-stops::after { content: ''; position: absolute; left: 12.5%; right: 12.5%; top: calc(var(--milestone-logo-size) / 2 + 10px); pointer-events: none; }
+.transit-stops::before { height: 1px; background: #edc77970; box-shadow: 0 0 7px #edc77922; }
+.transit-stops::after { margin-top: -8px; height: 17px; background: linear-gradient(to bottom, transparent, #edc77922 35%, #edc77988 47%, #ffe2a0 50%, #edc77988 53%, #edc77922 65%, transparent); opacity: var(--journey-glow, 1); mask-image: linear-gradient(to right, #000 calc(var(--connector-progress, 0%) - 8px), transparent calc(var(--connector-progress, 0%) + 8px)); }
 .stop-logo { position: relative; z-index: 1; display: grid; place-items: center; width: var(--milestone-logo-size); height: var(--milestone-logo-size); flex-shrink: 0; padding: clamp(5px, .65vw, 11px); margin-bottom: 7px; border-radius: 0; border: 1px solid #efcc87; background: #081c24c9; box-shadow: 0 0 9px #eac37955, inset 0 0 9px #eac37914; backdrop-filter: blur(5px); transition: border-color 240ms, box-shadow 240ms; }
 .stop-logo img { width: 100%; height: 100%; object-fit: contain; }
 .stop-institution, .stop-label { color: #fff1da; font: 500 clamp(15px, 1.45vw, 24px)/1.35 var(--font-code); text-shadow: 0 2px 10px #001019; }
 .stop-institution + .stop-label { font-size: clamp(14px, 1.3vw, 22px); font-weight: 400; }
 .stop-date { color: var(--project-text); font: 500 clamp(14px, 1.2vw, 21px)/1.5 var(--font-code); text-shadow: 0 2px 10px #001019; }
 .stop-institution, .stop-label, .stop-date { transition: text-shadow 240ms; }
-.transit-stop.is-passed .stop-logo { border-color: #f7d99e; box-shadow: 0 0 16px #eac37955, inset 0 0 9px #eac3791c; }
-.transit-stop.is-current .stop-logo { border-color: #ffe9b5; box-shadow: 0 0 0 4px #eac37914, 0 0 24px #eac37966, inset 0 0 10px #eac37922; }
-.transit-stop.is-current :is(.stop-institution, .stop-label, .stop-date) { text-shadow: var(--title-glow), 0 2px 10px #001019; }
+.stop-logo::before, .stop-logo::after { content: ''; position: absolute; inset: -1px; pointer-events: none; border: 1px solid; }
+.stop-logo::before { border-color: #f7d99e; box-shadow: 0 0 16px #eac37955, inset 0 0 9px #eac3791c; opacity: calc(var(--stop-glow, 0) * var(--journey-glow, 1)); }
+.stop-logo::after { border-color: #ffe9b5; box-shadow: 0 0 0 4px #eac37914, 0 0 24px #eac37966, inset 0 0 10px #eac37922; opacity: calc(var(--stop-current-glow, 0) * var(--journey-glow, 1)); }
+.transit-stop :is(.stop-institution, .stop-label, .stop-date) { text-shadow: 0 0 8px rgb(255 255 255 / calc(var(--stop-current-glow, 0) * var(--journey-glow, 1) * .33)), 0 0 20px rgb(255 255 255 / calc(var(--stop-current-glow, 0) * var(--journey-glow, 1) * .13)), 0 2px 10px #001019; transition: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .section-scroll-cue svg { animation: none; }
-  .transit-stop::after, .stop-logo, .stop-institution, .stop-label, .stop-date { transition: none; }
+  .transit-stops::after, .stop-logo, .stop-institution, .stop-label, .stop-date { transition: none; }
 }
 
 /* A 22s flyby and a 1s pause. Endpoints follow the visible crop of the sky. */
@@ -253,7 +252,7 @@ body.project-open { position: fixed; top: var(--project-scroll-top); inset-inlin
   .transit-journey { --milestone-logo-size: clamp(36px, 5.6cqw, 96px); }
   .transit-stops-viewport { top: auto; bottom: 12%; }
   .transit-stop { gap: 5px; padding: 8px 10px; }
-  .transit-stop::before, .transit-stop::after { top: calc(var(--milestone-logo-size) / 2 + 8px); }
+  .transit-stops::before, .transit-stops::after { top: calc(var(--milestone-logo-size) / 2 + 8px); }
   .stop-institution, .stop-label { font-size: clamp(10px, 1.45cqw, 24px); }
   .stop-institution + .stop-label { font-size: clamp(10px, 1.3cqw, 22px); }
   .stop-date { font-size: clamp(10px, 1.2cqw, 21px); }

@@ -5,6 +5,7 @@
   const cars = Array.from(journey.querySelectorAll('.transit-train'));
   const stops = Array.from(journey.querySelectorAll('[data-transit-stop]'));
   const landscape = journey.querySelector('.transit-landscape');
+  const connectors = journey.querySelector('.transit-stops');
   const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
   if (!track?.getPointAtLength || !cars.length || !stops.length) return;
 
@@ -12,6 +13,9 @@
   const positions = stops.map(stop => Number(stop.dataset.progress));
   const start = -.02;
   const end = 1 + 480 / length;
+  const finishHold = .5;
+  const finishFade = 1.4;
+  const finishPause = .4;
   const initialProgress = () => .8;
   const scale = 480 / 1100;
   const carEnds = [1100, 675, 360];
@@ -24,9 +28,12 @@
       ux, uy, denominator: ux * ux + uy * uy, end: carEnds[Number(car.dataset.trainCar)] };
   });
   let progress = initialProgress();
+  let finishTime = 0;
   let visible = !('IntersectionObserver' in window);
   let frame = null;
   let previousTime = null;
+  const clamp = value => Math.max(0, Math.min(1, value));
+  const smoothstep = value => { const t = clamp(value); return t * t * (3 - 2 * t); };
   // Extend the tangents so the complete three-car train enters and leaves fully.
   const pointAt = distance => {
     const clamped = Math.max(0, Math.min(length, distance));
@@ -54,19 +61,21 @@
       art.setAttribute('transform', `matrix(${a} ${b} ${-b} ${a} ${e} ${f})`);
       beam?.setAttribute('transform', `rotate(${Math.atan2(vy, vx) * 180 / Math.PI})`);
     });
-    const active = positions.findIndex(position => progress >= position - .025 && progress <= position + .15);
+    const glow = 1 - smoothstep((finishTime - finishHold) / finishFade);
+    journey.style.setProperty('--journey-glow', glow.toFixed(4));
     const next = positions.findIndex(position => progress < position);
     const last = stops.length - 1;
     const route = next < 0 ? last : next === 0 ? 0 : next - 1 +
       (progress - positions[next - 1]) / (positions[next] - positions[next - 1]);
+    // One reveal spans the entire route, so it cannot split at column edges.
+    connectors.style.setProperty('--connector-progress', `${(clamp(route / last) * 100).toFixed(4)}%`);
     stops.forEach((stop, index) => {
-      stop.classList.toggle('is-current', index === active);
+      const arrival = smoothstep((progress - positions[index] + .025) / .05);
+      const departure = index === last ? 0 : smoothstep((progress - positions[index] - .10) / .08);
+      stop.classList.toggle('is-current', progress >= positions[index] - .025 && (index === last || progress < positions[index] + .18));
       stop.classList.toggle('is-passed', progress >= positions[index] - .025);
-      // Each stop owns half of the connectors on either side of its icon.
-      const left = index === 0 ? 0 : index - .5;
-      const right = index === last ? last : index + .5;
-      const fill = Math.max(0, Math.min(1, (route - left) / (right - left)));
-      stop.style.setProperty('--connector-fill', fill.toFixed(4));
+      stop.style.setProperty('--stop-glow', arrival.toFixed(4));
+      stop.style.setProperty('--stop-current-glow', (arrival * (1 - departure)).toFixed(4));
     });
   };
   const running = () => visible && !document.hidden && !preference.matches && !document.body.classList.contains('project-open');
@@ -75,8 +84,19 @@
     if (!running()) { previousTime = null; return; }
     const delta = previousTime === null ? 0 : Math.min((time - previousTime) / 1000, .1);
     previousTime = time;
-    progress += delta * .06;
-    if (progress > end) progress = start + (progress - end);
+    if (progress < end) {
+      const advanced = progress + delta * .06;
+      progress = Math.min(end, advanced);
+      finishTime = Math.max(0, (advanced - end) / .06);
+    } else {
+      // Hold the completed route, then fade every light together. Reset only
+      // while the glow is dark and the entire train is outside the scene.
+      finishTime += delta;
+      if (finishTime >= finishHold + finishFade + finishPause) {
+        progress = start + (finishTime - finishHold - finishFade - finishPause) * .06;
+        finishTime = 0;
+      }
+    }
     draw();
     frame = requestAnimationFrame(animate);
   };
@@ -89,6 +109,7 @@
   const onPreferenceChange = () => {
     if (preference.matches) {
       progress = initialProgress();
+      finishTime = 0;
       draw();
     }
     sync();
