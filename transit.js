@@ -15,6 +15,14 @@
   const initialProgress = () => .8;
   const scale = 480 / 1100;
   const carEnds = [1100, 675, 360];
+  const carGeometry = cars.map(car => {
+    const art = car.querySelector('.train-car-art');
+    const [ax, ay] = art.dataset.bogieRear.split(',').map(Number);
+    const [bx, by] = art.dataset.bogieFront.split(',').map(Number);
+    const ux = bx - ax, uy = by - ay;
+    return { car, art, beam: car.querySelector('.train-headlight'), ax, ay, bx,
+      ux, uy, denominator: ux * ux + uy * uy, end: carEnds[Number(car.dataset.trainCar)] };
+  });
   let progress = initialProgress();
   let visible = !('IntersectionObserver' in window);
   let frame = null;
@@ -23,33 +31,27 @@
   const pointAt = distance => {
     const clamped = Math.max(0, Math.min(length, distance));
     const point = track.getPointAtLength(clamped);
+    if (distance === clamped) return point;
     const before = track.getPointAtLength(Math.max(0, clamped - 2));
     const after = track.getPointAtLength(Math.min(length, clamped + 2));
     const angle = Math.atan2(after.y - before.y, after.x - before.x);
     const extension = distance - clamped;
-    return { x: point.x + Math.cos(angle) * extension, y: point.y + Math.sin(angle) * extension, angle: angle * 180 / Math.PI };
+    return { x: point.x + Math.cos(angle) * extension, y: point.y + Math.sin(angle) * extension };
   };
   const draw = () => {
-    cars.forEach(car => {
-      const index = Number(car.dataset.trainCar);
-      const art = car.querySelector('.train-car-art');
-      const [ax, ay] = art.dataset.bogieRear.split(',').map(Number);
-      const [bx, by] = art.dataset.bogieFront.split(',').map(Number);
+    carGeometry.forEach(({ car, art, beam, ax, ay, bx, ux, uy, denominator, end }) => {
       const rear = pointAt(progress * length - (1100 - ax) * scale);
       const ahead = pointAt(progress * length - (1100 - bx) * scale);
-      const origin = pointAt(progress * length - (1100 - carEnds[index]) * scale);
+      const origin = pointAt(progress * length - (1100 - end) * scale);
       // Map the two bogie contact points onto the track. Each carriage follows
       // its own chord instead of swinging the entire train from its front tip.
-      const ux = bx - ax, uy = by - ay;
       const vx = ahead.x - rear.x, vy = ahead.y - rear.y;
-      const denominator = ux * ux + uy * uy;
       const a = (vx * ux + vy * uy) / denominator;
       const b = (vy * ux - vx * uy) / denominator;
       const e = rear.x - origin.x - a * ax + b * ay;
       const f = rear.y - origin.y - b * ax - a * ay;
       car.setAttribute('transform', `translate(${origin.x} ${origin.y})`);
       art.setAttribute('transform', `matrix(${a} ${b} ${-b} ${a} ${e} ${f})`);
-      const beam = car.querySelector('.train-headlight');
       beam?.setAttribute('transform', `rotate(${Math.atan2(vy, vx) * 180 / Math.PI})`);
     });
     const active = positions.findIndex(position => progress >= position - .025 && progress <= position + .15);
