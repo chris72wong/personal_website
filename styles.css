@@ -69,6 +69,12 @@ h1 { font-size: clamp(36px, 5vw, 64px); font-weight: 500; line-height: 1.18; let
 @keyframes terminal-cursor { 0%, 55% { opacity: 1; } 56%, 100% { opacity: 0; } }
 .hero-inner { position: absolute; z-index: 2; left: 9%; top: 35%; }
 .hero h1 { color: #f3f7f5; font-size: clamp(38px, 4.85vw, 86px); line-height: 1.16; font-weight: 500; letter-spacing: -.025em; text-shadow: var(--title-glow), 0 2px 20px #00151a66; }
+.hero-socials { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 26px; margin-top: clamp(18px, 1.8vw, 28px); }
+.hero-social-link { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; padding: 8px 0; color: #f3f7f5; font: 500 clamp(13px, .95vw, 16px)/1.4 var(--font-code); letter-spacing: .06em; text-decoration: none; text-shadow: 0 0 8px #ffffff33, 0 0 16px #ffffff14; transition: color 180ms, text-shadow 180ms; }
+.hero-social-link svg { width: 18px; height: 18px; flex-shrink: 0; fill: currentColor; filter: drop-shadow(0 0 3px #ffffff33); transition: filter 180ms; }
+.hero-social-link:hover, .hero-social-link:focus-visible { color: #fff; text-shadow: var(--title-glow); }
+.hero-social-link:hover svg, .hero-social-link:focus-visible svg { filter: drop-shadow(0 0 5px #ffffff66); }
+.hero-social-link:focus-visible { outline: 2px solid #fff; outline-offset: 5px; border-radius: 0; }
 .hero-landscape { display: block; position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 .hero-stage::after { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg, #04121c26, transparent 60%); pointer-events: none; }
 /* A 6.3px/s crossing. Keep the same starting position at twice the earlier speed. */
