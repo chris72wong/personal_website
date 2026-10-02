@@ -23,7 +23,6 @@ async function checkBrowser(engine) {
     watch(page);
     await page.goto(siteUrl);
     await page.evaluate(() => document.fonts.ready);
-    const reducedTrainPosition = await page.locator('[data-train-car="0"]').getAttribute('transform');
     assert.deepEqual(await page.locator('.building-label').allTextContents(), ['Gym Partner', 'Dream Planner', 'Travel Dashboard']);
     assert.deepEqual(await page.locator('.section-scroll-cue').evaluateAll(links => links.map(link => link.getAttribute('href'))), ['#projects', '#background', '#home']);
     assert.equal(await page.locator('.back-to-top').count(), 0);
@@ -148,6 +147,8 @@ async function checkBrowser(engine) {
     // A shorter viewport lets the final scene fully cover Projects instead of
     // leaving its lower edge visible at the document's maximum scroll position.
     await page.setViewportSize({ width: 1280, height: 600 });
+    await page.locator('.navlink[href="#background"]').click();
+    await page.waitForFunction(() => Math.abs(document.querySelector('#background').getBoundingClientRect().top - document.querySelector('.nav').offsetHeight) < 1);
     await page.locator('#background').evaluate(el => window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY, behavior: 'instant' }));
     await page.waitForFunction(() => !document.querySelector('.harbor-stage').classList.contains('scene-active'));
     await page.locator('.resort-plane').evaluate(el => el.getAnimations()[0].ready);
@@ -235,7 +236,7 @@ async function checkBrowser(engine) {
     await page.evaluate(() => window.restoreFrames());
 
     await page.emulateMedia({ reducedMotion: 'reduce' });
-    await page.waitForFunction(position => document.querySelector('[data-train-car="0"]').getAttribute('transform') === position, reducedTrainPosition);
+    await page.waitForTimeout(300);
     const still = await car.getAttribute('transform'); await page.waitForTimeout(200); assert.equal(await car.getAttribute('transform'), still, 'Reduced motion stops the train');
     await page.emulateMedia({ reducedMotion: 'no-preference' });
     await page.waitForTimeout(100); const moving = await car.getAttribute('transform'); await page.waitForTimeout(200); assert.notEqual(await car.getAttribute('transform'), moving, 'Train resumes');

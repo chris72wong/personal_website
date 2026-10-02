@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 110" fill="none" stroke="#f2ce86" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M10 5h80v88c0 7-18 11-40 13-22-2-40-6-40-13Z"/>
+  <!-- Lion and globe, rendered as a single gold line emblem. -->
+  <path d="M33 19c-9 0-10-11-2-11h7v6h24v12c0 5-6 6-12 6-9 0-13 7-3 8l13-2v14M45 21h7M51 34l9 1M24 26c-8 12 1 23 18 33 12 8 21 17 21 25M20 44c-7 12 2 20 18 31 7 5 11 9 13 15M31 30c0 12 11 17 22 15l7 7 14-8h13l-7 9M41 48l11 9 12-9"/>
+  <path d="M57 69a18 18 0 1 0-1-23M56 51h28M55 61h30M61 72h19M69 41c-7 7-9 20-3 34M74 41c7 9 8 23 1 34M72 42v34"/>
+  <!-- Letterforms are paths so the emblem needs no separate font. -->
+  <path d="M20 97V83h6c7 0 7 7 0 7h-6M26 90l7 7M40 97V83h6c7 0 7 6 0 6h-6m6 0c8 0 8 8 0 8h-6M78 85c-10-6-15 1-15 5s5 11 15 5"/>
+</svg>
