@@ -19,7 +19,6 @@
   let visible = !('IntersectionObserver' in window);
   let frame = null;
   let previousTime = null;
-  let currentStop = -1;
   // Extend the tangents so the complete three-car train enters and leaves fully.
   const pointAt = distance => {
     const clamped = Math.max(0, Math.min(length, distance));
@@ -54,10 +53,18 @@
       beam?.setAttribute('transform', `rotate(${Math.atan2(vy, vx) * 180 / Math.PI})`);
     });
     const active = positions.findIndex(position => progress >= position - .025 && progress <= position + .15);
-    if (active === currentStop) return;
-    currentStop = active;
+    const next = positions.findIndex(position => progress < position);
+    const last = stops.length - 1;
+    const route = next < 0 ? last : next === 0 ? 0 : next - 1 +
+      (progress - positions[next - 1]) / (positions[next] - positions[next - 1]);
     stops.forEach((stop, index) => {
       stop.classList.toggle('is-current', index === active);
+      stop.classList.toggle('is-passed', progress >= positions[index] - .025);
+      // Each stop owns half of the connectors on either side of its icon.
+      const left = index === 0 ? 0 : index - .5;
+      const right = index === last ? last : index + .5;
+      const fill = Math.max(0, Math.min(1, (route - left) / (right - left)));
+      stop.style.setProperty('--connector-fill', fill.toFixed(4));
     });
   };
   const running = () => visible && !document.hidden && !preference.matches && !document.body.classList.contains('project-open');

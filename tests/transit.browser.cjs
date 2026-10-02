@@ -23,6 +23,7 @@ async function checkBrowser(engine) {
     watch(page);
     await page.goto(siteUrl);
     await page.evaluate(() => document.fonts.ready);
+    assert.deepEqual(await page.locator('.transit-stop.is-passed').evaluateAll(stops => stops.map(stop => Number(stop.dataset.transitStop))), [0, 1, 2], 'Reduced motion shows passed milestones for the initial static train position');
     assert.deepEqual(await page.locator('.building-label').allTextContents(), ['Gym Partner', 'Dream Planner', 'Travel Dashboard']);
     assert.deepEqual(await page.locator('.section-scroll-cue').evaluateAll(links => links.map(link => link.getAttribute('href'))), ['#projects', '#background', '#home']);
     assert.equal(await page.locator('.back-to-top').count(), 0);
@@ -192,6 +193,8 @@ async function checkBrowser(engine) {
         history.push({
           x: Number(document.querySelector('[data-train-car="0"]').getAttribute('transform').match(/translate\(([-\d.]+)/)[1]),
           stop: document.querySelector('.transit-stop.is-current')?.dataset.transitStop ?? null,
+          passed: Array.from(document.querySelectorAll('.transit-stop.is-passed'), stop => Number(stop.dataset.transitStop)),
+          connectors: Array.from(document.querySelectorAll('.transit-stop'), stop => Number(stop.style.getPropertyValue('--connector-fill'))),
           wheelError: (() => {
             const svg = document.querySelector('.transit-landscape');
             const path = document.querySelector('#transit-track');
@@ -227,9 +230,18 @@ async function checkBrowser(engine) {
       if (sequence.at(-1) !== snapshot.stop) sequence.push(snapshot.stop);
     }
     assert.ok(sequence.join(',').includes('0,1,2,3,0'), `${engine}: Every milestone lights in order across a full loop: ${sequence}`);
+    assert.ok(snapshots.some(snapshot => snapshot.passed.length === 4 && snapshot.connectors.every(fill => fill === 1)), 'All icons and connectors stay lit after the final milestone');
+    assert.ok(snapshots.some(snapshot => snapshot.connectors.some(fill => fill > 0 && fill < 1)), 'Connectors fill progressively between milestones');
     for (let index = 1; index < snapshots.length; index++) {
       const distance = snapshots[index].x - snapshots[index - 1].x;
       assert.ok(distance >= 0 || (snapshots[index].x < 0 && snapshots[index - 1].x > 1672), 'Only a full exit resets the forward-moving train');
+      if (distance < 0) {
+        assert.deepEqual(snapshots[index].passed, [], 'Passed icons reset for the next train loop');
+        assert.ok(snapshots[index].connectors.every(fill => fill === 0), 'Connectors reset for the next train loop');
+      } else {
+        assert.ok(snapshots[index - 1].passed.every(stop => snapshots[index].passed.includes(stop)), 'Passed icons retain their glow as the train advances');
+        assert.ok(snapshots[index].connectors.every((fill, stop) => fill >= snapshots[index - 1].connectors[stop]), 'Connector light never retreats during a crossing');
+      }
       if (distance >= 0) assert.ok(distance > 8 && distance < 12, 'The train restores its earlier travel speed');
       assert.ok(snapshots[index].wheelError < .25, `All six bogies stay on the track: ${snapshots[index].wheelError}`);
     }
@@ -237,6 +249,7 @@ async function checkBrowser(engine) {
 
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.waitForTimeout(300);
+    assert.ok(await page.locator('.transit-stop').evaluateAll(stops => stops.every(stop => getComputedStyle(stop, '::after').transitionDuration === '0s')), 'Reduced motion disables connector transitions');
     const still = await car.getAttribute('transform'); await page.waitForTimeout(200); assert.equal(await car.getAttribute('transform'), still, 'Reduced motion stops the train');
     await page.emulateMedia({ reducedMotion: 'no-preference' });
     await page.waitForTimeout(100); const moving = await car.getAttribute('transform'); await page.waitForTimeout(200); assert.notEqual(await car.getAttribute('transform'), moving, 'Train resumes');
