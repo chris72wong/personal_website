@@ -5,8 +5,8 @@ const test = require('node:test');
 const vm = require('node:vm');
 
 const source = fs.readFileSync(path.join(__dirname, '../projects.js'), 'utf8');
-const ids = ['project-dream-planner', 'project-travel-dashboard', 'project-gym-partner'];
-const titles = ['dream-planner-title', 'travel-dashboard-title', 'gym-partner-title'];
+const ids = ['project-dream-planner', 'project-mirra', 'project-gym-partner'];
+const titles = ['dream-planner-title', 'mirra-title', 'gym-partner-title'];
 const tick = () => new Promise(resolve => setImmediate(resolve));
 
 function setup({ hash = '#projects', reduced = false, observers = true, nativeDialog = true, animationsEnabled = true, restrictedHistory = false, legacyMedia = false } = {}) {

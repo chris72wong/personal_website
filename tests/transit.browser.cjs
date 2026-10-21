@@ -24,7 +24,7 @@ async function checkBrowser(engine) {
     await page.goto(siteUrl);
     await page.evaluate(() => document.fonts.ready);
     assert.deepEqual(await page.locator('.transit-stop.is-passed').evaluateAll(stops => stops.map(stop => Number(stop.dataset.transitStop))), [0, 1, 2], 'Reduced motion shows passed milestones for the initial static train position');
-    assert.deepEqual(await page.locator('.building-label').allTextContents(), ['Gym Partner', 'Dream Planner', 'Travel Dashboard']);
+    assert.deepEqual(await page.locator('.building-label').allTextContents(), ['Dream Planner', 'Mirra', 'Gym Partner']);
     assert.deepEqual(await page.locator('.section-scroll-cue').evaluateAll(links => links.map(link => link.getAttribute('href'))), ['#projects', '#background', '#home']);
     assert.equal(await page.locator('.back-to-top').count(), 0);
     assert.equal(await page.locator('.scene-water, .scene-cloud, .scene-lights, .harbor-boats, filter').count(), 0, 'No filtered scenery or redundant animated overlays');
@@ -41,7 +41,7 @@ async function checkBrowser(engine) {
       const bounds = button.getBoundingClientRect();
       return bounds.height >= 44 && bounds.top > stage.top + stage.height * .73 && bounds.bottom < stage.bottom;
     })), 'Buttons sit beneath the buildings, inside the landscape, with at least 44px height');
-    for (const [building, title] of [['gym', 'gym-partner'], ['dream', 'dream-planner'], ['travel', 'travel-dashboard']]) {
+    for (const [building, title] of [['dream', 'dream-planner'], ['mirra', 'mirra'], ['gym', 'gym-partner']]) {
       const button = page.locator(`.building-${building} .project-trigger`);
       await button.click();
       assert.equal(await page.locator('.project-dialog').getAttribute('aria-labelledby'), `${title}-title`);
@@ -73,8 +73,8 @@ async function checkBrowser(engine) {
       assert.ok(await phone.evaluate(() => window.visualViewport.scale < 1), 'Phone initially fits the desktop overview');
       const meta = await phone.locator('meta[name="viewport"]').getAttribute('content');
       assert.ok(!/maximum-scale|user-scalable/.test(meta), 'Pinch zoom remains available');
-      await phone.locator('.building-gym .project-trigger').tap(); await phone.waitForFunction(() => document.querySelector('.project-dialog').open);
-      assert.equal(await phone.locator('.project-dialog').getAttribute('aria-labelledby'), 'gym-partner-title');
+      await phone.locator('.building-mirra .project-trigger').tap(); await phone.waitForFunction(() => document.querySelector('.project-dialog').open);
+      assert.equal(await phone.locator('.project-dialog').getAttribute('aria-labelledby'), 'mirra-title');
       await phone.locator('.project-dialog-close').tap(); await phone.waitForFunction(() => !document.querySelector('.project-dialog').open);
       if (width === 390) {
         await phone.emulateMedia({ reducedMotion: 'no-preference' });
@@ -122,7 +122,7 @@ async function checkBrowser(engine) {
     assert.equal(flight[3].opacity, 0, 'The plane is hidden after exiting');
     assert.equal(flight[4].opacity, 0, 'The loop includes a quiet gap');
     assert.equal(flight[5].opacity, 1, 'The plane returns within 23 seconds');
-    await page.locator('.building-travel .project-trigger').click();
+    await page.locator('.building-gym .project-trigger').click();
     await page.waitForFunction(() => !document.querySelector('.harbor-stage').classList.contains('scene-active'));
     await page.locator('.resort-plane').evaluate(el => el.getAnimations()[0].ready);
     const modalPause = await planeClock(); await page.waitForTimeout(150); assert.equal(await planeClock(), modalPause, 'The plane pauses during project dialogs');
@@ -278,8 +278,8 @@ async function checkBrowser(engine) {
     assert.equal(await fallback.locator('.project-panel:visible').count(), 3, 'Project articles work without JavaScript');
     assert.equal(await fallback.locator('.project-trigger:visible').count(), 0, 'No inactive buttons without JavaScript');
     assert.equal(await fallback.locator('.building-fallback:visible').count(), 3, 'Usable article links replace buttons without JavaScript');
-    await fallback.locator('.building-gym .building-fallback').tap();
-    assert.equal(new URL(fallback.url()).hash, '#project-gym-partner', 'Fallback link reaches the matching article');
+    await fallback.locator('.building-mirra .building-fallback').tap();
+    assert.equal(new URL(fallback.url()).hash, '#project-mirra', 'Fallback link reaches the matching article');
     assert.equal(await fallback.locator('.stop-logo:visible').count(), 4, 'All milestones remain visible');
     assert.deepEqual(errors, []);
     console.log(`${engine}: desktop/mobile composition, project buttons and keyboard access, plane flyby and pausing, boat motion, full train loop and bogie alignment, reduced motion, touch dialogs, arrows, footer and no-JavaScript checks passed. Screenshots: ${screenshotDirectory}`);
